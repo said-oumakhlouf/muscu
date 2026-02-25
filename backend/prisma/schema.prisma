@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Exercise {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  muscleGroup String
+  imageUrl    String?
+  videoUrl    String?
+  difficulty  String?
+  createdAt   DateTime @default(now())
+}
