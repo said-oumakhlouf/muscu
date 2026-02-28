@@ -12,8 +12,6 @@ export class PrismaService extends PrismaClient {
       throw new Error('DATABASE_URL manquant dans .env');
     }
 
-    console.log('Utilisation de DATABASE_URL :', url); // debug
-
     const pool = new Pool({ connectionString: url }); // ← Pool explicite
     const adapter = new PrismaPg(pool); // ← passe le pool, pas { connectionString }
 
