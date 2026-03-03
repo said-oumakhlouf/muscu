@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { ExercisesModule } from './exercises/exercises.module';
 import { PrismaService } from './prisma.service'; // ajuste chemin
 import { UsersModule } from './users/users.module';
+import { SessionsModule } from './sessions/sessions.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UsersModule } from './users/users.module';
     ExercisesModule,
     AuthModule,
     UsersModule,
+    SessionsModule,
   ],
   providers: [PrismaService],
 })

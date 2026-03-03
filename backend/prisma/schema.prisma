@@ -15,6 +15,7 @@ model Exercise {
   imageUrl    String?
   videoUrl    String?
   difficulty  String?
+  sessions    SessionExercise[]
   createdAt   DateTime @default(now())
 }
 
@@ -23,5 +24,26 @@ model User {
   email       String    @unique
   password    String
   role        String    @default("user")
+  sessions    Session[]
   createdAt   DateTime  @default(now())
+}
+
+model Session {
+  id        Int       @id @default(autoincrement())
+  name      String
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  exercises SessionExercise[]
+  createdAt DateTime  @default(now())
+}
+
+model SessionExercise {
+  id          Int      @id @default(autoincrement())
+  sessionId   Int
+  session     Session  @relation(fields: [sessionId], references: [id])
+  exerciseId  Int
+  exercise    Exercise @relation(fields: [exerciseId], references: [id])
+  sets        Int
+  reps        Int
+  weight      Float?
 }
