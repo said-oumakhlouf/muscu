@@ -496,14 +496,6 @@ export type SessionExerciseUncheckedUpdateManyWithoutSessionNestedInput = {
   deleteMany?: Prisma.SessionExerciseScalarWhereInput | Prisma.SessionExerciseScalarWhereInput[]
 }
 
-export type NullableFloatFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type SessionExerciseCreateWithoutExerciseInput = {
   sets: number
   reps: number

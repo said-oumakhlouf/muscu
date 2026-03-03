@@ -24,6 +24,11 @@ model User {
   email       String    @unique
   password    String
   role        String    @default("user")
+  firstname   String?
+  lastname    String?
+  weight      Float?
+  height      Float?
+  goal        String?
   sessions    Session[]
   createdAt   DateTime  @default(now())
 }

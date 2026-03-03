@@ -6,11 +6,11 @@ import { CreateSessionDto } from './dto/create-session.dto';
 export class SessionsService {
     constructor(private prisma: PrismaService) {}
 
-    async create(createSessionDto: CreateSessionDto, userId: number) {
+    async create(createSessionDto: CreateSessionDto) {
         return this.prisma.session.create({
             data: {
                 name: createSessionDto.name,
-                userId,
+                userId: createSessionDto.userId,
                 exercises: {
                     create: createSessionDto.exercises.map((e) => ({
                         exerciseId: e.exerciseId,
