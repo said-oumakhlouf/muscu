@@ -17,7 +17,7 @@ export default function Navbar() {
             <div className="flex gap-6">
                 <Link href="/" className="hover:text-gray-300">Exercices</Link>
                 <Link href="/sessions" className="hover:text-gray-300">Séances</Link>
-                <button onClick={handleLogout} className="hover:text-gray-300">Connexion</button>
+                <button onClick={handleLogout} className="hover:text-gray-300">Déconnexion</button>
             </div>
         </nav>
     );

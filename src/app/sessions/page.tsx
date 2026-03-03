@@ -3,14 +3,22 @@
 import { useEffect, useState } from 'react';
 import { Session } from '@/types/Session';
 import { sessionService } from '@/services/sessionService';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function SessionsPage() {
     const [sessions, setSessions] = useState<Session[]>([]);
     
+    const { token, isLoading } = useAuth();
+    
     useEffect(() => {
-        const token = localStorage.getItem('token') || '';
-        sessionService.getAll(token).then(setSessions);
-    }, []);
+        if (token) {
+            sessionService.getAll(token).then(setSessions);
+        }
+    }, [token]);
+
+    if (isLoading) {
+        return <div className="flex min-h-screen items-center justify-center">Chargement...</div>;
+    }
 
     return (
         <div className="flex min-h-screen flex-col items-center bg-zinc-50 p-10">
