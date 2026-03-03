@@ -1,11 +1,19 @@
-import { Exercise } from "./Exercise";
+import { Exercise } from './Exercise';
+
+export type SessionExercise = {
+    id: number;
+    sessionId: number;
+    exerciseId: number;
+    sets: number;
+    reps: number;
+    weight?: number;
+    exercise: Exercise;
+};
 
 export type Session = {
-    id: string;
+    id: number;
     name: string;
-    description: string;
-    imageUrl: string;
-    exercices: Exercise[]; // Array of Exercise objects
-    duration: number; // Duration in minutes
-    difficulty: "beginner" | "intermediate" | "advanced";
+    userId: number;
+    createdAt: string;
+    exercises: SessionExercise[];
 };
