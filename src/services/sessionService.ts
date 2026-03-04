@@ -1,34 +1,33 @@
 const API_URL = 'http://localhost:3000/';
 
+const fetchWithAuth = async (url: string, token: string, options?: RequestInit) => {
+    const res = await fetch(url, {
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            ...options?.headers,
+        },
+    });
+    return res.json();
+};
+
 export const sessionService = {
     async getAll(token: string) {
-        const res = await fetch(`${API_URL}sessions`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        const data = await res.json();
+        const data = await fetchWithAuth(`${API_URL}sessions`, token);
         return Array.isArray(data) ? data : [];
     },
     
     async create(token: string, data: { name: string; exercises: { exerciseId: number; sets: number; reps: number; }[] }) {
-        const res = await fetch(`${API_URL}sessions`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
+        return fetchWithAuth(`${API_URL}sessions`, token, {
+            method: "POST",
             body: JSON.stringify(data),
         });
-        return res.json();
     },
 
     async delete(token: string, id: number) {
-        await fetch(`${API_URL}/sessions/${id}`, {
+        await fetchWithAuth(`${API_URL}/sessions/${id}`, token, {
             method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
         });
     },
 }

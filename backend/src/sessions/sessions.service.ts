@@ -43,6 +43,19 @@ export class SessionsService {
         });
     }
 
+    async findByUser(userId: number) {
+        return this.prisma.session.findMany({
+            where: { userId },
+            include: {
+                exercises: {
+                    include: {
+                        exercise: true,
+                    },
+                },
+            },
+        });
+    }
+
     async findOne(id: number, userId: number) {
         return this.prisma.session.findFirst({
             where: { id, userId },

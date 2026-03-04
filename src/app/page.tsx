@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 export default function Home() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const { role } = useAuth();
+  const { role, token } = useAuth();
 
 
   const loadExercises = async () => {
@@ -56,7 +56,7 @@ export default function Home() {
                     </button>
                     <button
                       onClick={async () => {
-                        await exerciseService.delete(exercise.id);
+                        await exerciseService.delete(token || '', exercise.id);
                         loadExercises();
                       }}
                       className="bg-red-500 text-white rounded-lg px-4 py-2 text-sm font-bold hover:bg-red-700"

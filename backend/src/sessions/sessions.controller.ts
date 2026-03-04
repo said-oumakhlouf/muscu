@@ -31,6 +31,13 @@ export class SessionsController {
         return this.sessionsService.findAll(req.user.id);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles('admin')
+    @Get('user/:id')
+    findByUser(@Param('id') id: string) {
+        return this.sessionsService.findByUser(+id);
+    }
+
     @Get(':id')
     findOne(@Param('id') id: string, @Request() req) {
         return this.sessionsService.findOne(+id, req.user.id);

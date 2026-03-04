@@ -1,10 +1,12 @@
 'use client';
 
+import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
     const router = useRouter();
+    const { role } = useAuth();
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -17,6 +19,7 @@ export default function Navbar() {
             <div className="flex gap-6">
                 <Link href="/" className="hover:text-gray-300">Exercices</Link>
                 <Link href="/sessions" className="hover:text-gray-300">Séances</Link>
+                {role === 'admin' && <Link href="/admin" className="hover:text-gray-300">Clients</Link>}
                 <button onClick={handleLogout} className="hover:text-gray-300">Déconnexion</button>
             </div>
         </nav>

@@ -1,5 +1,17 @@
 const API_URL = "http://localhost:3000";
 
+const fetchWithAuth = async (url: string, token: string, options?: RequestInit) => {
+    const res = await fetch(url, {
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            ...options?.headers,
+        },
+    });
+    return res.json();
+};
+
 export const exerciseService = {
     async getAll() {
         const res = await fetch(`${API_URL}/exercises`);
@@ -7,29 +19,23 @@ export const exerciseService = {
         return Array.isArray(data) ? data : [];
     },
 
-    async create(data: { name: string; description: string; muscleGroup: string }) {
-        const res = await fetch(`${API_URL}/exercises`, {
+    async create(token: string, data: { name: string; description: string; muscleGroup: string }) {
+        return fetchWithAuth(`${API_URL}/exercises`, token, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
             body: JSON.stringify(data),
         });
-        return res.json();
     },
 
-    async delete(id: number) {
-        await fetch(`${API_URL}/exercises/${id}`, {
+    async delete(token: string, id: number) {
+        await fetchWithAuth(`${API_URL}/exercises/${id}`, token, {
             method: "DELETE",
         });
     },
 
-    async update(id: number, data: { name: string; description: string; muscleGroup: string }) {
-    const res = await fetch(`${API_URL}/exercises/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-    });
-    return res.json();
+    async update(token: string, id: number, data: { name: string; description: string; muscleGroup: string }) {
+        return fetchWithAuth(`${API_URL}/exercises/${id}`, token, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+        });
     },
 };
