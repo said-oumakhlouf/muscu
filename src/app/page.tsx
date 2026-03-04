@@ -2,7 +2,7 @@
 
 import ExerciseEditForm from '@/components/ExerciseEditForm';
 import ExerciseForm from '@/components/ExerciseForm';
-import { useAuth } from '@/hooks/useAuth';
+import { useOptionalAuth } from '@/hooks/useAuth';
 import { exerciseService } from '@/services/exerciseService';
 import { Exercise } from '@/types/Exercise';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 export default function Home() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const { role, token } = useAuth();
+  const { role, token } = useOptionalAuth();
 
 
   const loadExercises = async () => {

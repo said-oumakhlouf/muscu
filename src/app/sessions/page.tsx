@@ -3,27 +3,29 @@
 import { useEffect, useState } from 'react';
 import { Session } from '@/types/Session';
 import { sessionService } from '@/services/sessionService';
-import { useAuth } from '@/hooks/useAuth';
+import { useOptionalAuth } from '@/hooks/useAuth';
 
 export default function SessionsPage() {
     const [sessions, setSessions] = useState<Session[]>([]);
-    
-    const { token, isLoading } = useAuth();
-    
+    const { token } = useOptionalAuth();
+
     useEffect(() => {
         if (token) {
             sessionService.getAll(token).then(setSessions);
         }
     }, [token]);
 
-    if (isLoading) {
-        return <div className="flex min-h-screen items-center justify-center">Chargement...</div>;
+    if (!token) {
+        return (
+            <div className="flex min-h-screen items-center justify-center">
+                <p className="text-gray-500">Connectez-vous pour voir vos séances</p>
+            </div>
+        );
     }
 
     return (
         <div className="flex min-h-screen flex-col items-center bg-zinc-50 p-10">
             <h1 className="text-5xl font-bold text-gray-800 mb-10">Mes Séances</h1>
-
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 w-full max-w-4xl">
                 {sessions.map((session) => (
                     <div key={session.id} className="bg-white rounded-xl p-6 shadow">
