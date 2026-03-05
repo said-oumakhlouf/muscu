@@ -30,12 +30,14 @@ export type UserAvgAggregateOutputType = {
   id: number | null
   weight: number | null
   height: number | null
+  coachId: number | null
 }
 
 export type UserSumAggregateOutputType = {
   id: number | null
   weight: number | null
   height: number | null
+  coachId: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -48,6 +50,8 @@ export type UserMinAggregateOutputType = {
   weight: number | null
   height: number | null
   goal: string | null
+  gender: string | null
+  coachId: number | null
   createdAt: Date | null
 }
 
@@ -61,6 +65,8 @@ export type UserMaxAggregateOutputType = {
   weight: number | null
   height: number | null
   goal: string | null
+  gender: string | null
+  coachId: number | null
   createdAt: Date | null
 }
 
@@ -74,6 +80,8 @@ export type UserCountAggregateOutputType = {
   weight: number
   height: number
   goal: number
+  gender: number
+  coachId: number
   createdAt: number
   _all: number
 }
@@ -83,12 +91,14 @@ export type UserAvgAggregateInputType = {
   id?: true
   weight?: true
   height?: true
+  coachId?: true
 }
 
 export type UserSumAggregateInputType = {
   id?: true
   weight?: true
   height?: true
+  coachId?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -101,6 +111,8 @@ export type UserMinAggregateInputType = {
   weight?: true
   height?: true
   goal?: true
+  gender?: true
+  coachId?: true
   createdAt?: true
 }
 
@@ -114,6 +126,8 @@ export type UserMaxAggregateInputType = {
   weight?: true
   height?: true
   goal?: true
+  gender?: true
+  coachId?: true
   createdAt?: true
 }
 
@@ -127,6 +141,8 @@ export type UserCountAggregateInputType = {
   weight?: true
   height?: true
   goal?: true
+  gender?: true
+  coachId?: true
   createdAt?: true
   _all?: true
 }
@@ -227,6 +243,8 @@ export type UserGroupByOutputType = {
   weight: number | null
   height: number | null
   goal: string | null
+  gender: string | null
+  coachId: number | null
   createdAt: Date
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
@@ -263,7 +281,11 @@ export type UserWhereInput = {
   weight?: Prisma.FloatNullableFilter<"User"> | number | null
   height?: Prisma.FloatNullableFilter<"User"> | number | null
   goal?: Prisma.StringNullableFilter<"User"> | string | null
+  gender?: Prisma.StringNullableFilter<"User"> | string | null
+  coachId?: Prisma.IntNullableFilter<"User"> | number | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  coach?: Prisma.XOR<Prisma.CoachNullableScalarRelationFilter, Prisma.CoachWhereInput> | null
+  coachProfile?: Prisma.XOR<Prisma.CoachNullableScalarRelationFilter, Prisma.CoachWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
 }
 
@@ -277,7 +299,11 @@ export type UserOrderByWithRelationInput = {
   weight?: Prisma.SortOrderInput | Prisma.SortOrder
   height?: Prisma.SortOrderInput | Prisma.SortOrder
   goal?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  coachId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  coach?: Prisma.CoachOrderByWithRelationInput
+  coachProfile?: Prisma.CoachOrderByWithRelationInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
 }
 
@@ -294,7 +320,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   weight?: Prisma.FloatNullableFilter<"User"> | number | null
   height?: Prisma.FloatNullableFilter<"User"> | number | null
   goal?: Prisma.StringNullableFilter<"User"> | string | null
+  gender?: Prisma.StringNullableFilter<"User"> | string | null
+  coachId?: Prisma.IntNullableFilter<"User"> | number | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  coach?: Prisma.XOR<Prisma.CoachNullableScalarRelationFilter, Prisma.CoachWhereInput> | null
+  coachProfile?: Prisma.XOR<Prisma.CoachNullableScalarRelationFilter, Prisma.CoachWhereInput> | null
   sessions?: Prisma.SessionListRelationFilter
 }, "id" | "email">
 
@@ -308,6 +338,8 @@ export type UserOrderByWithAggregationInput = {
   weight?: Prisma.SortOrderInput | Prisma.SortOrder
   height?: Prisma.SortOrderInput | Prisma.SortOrder
   goal?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  coachId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
@@ -329,6 +361,8 @@ export type UserScalarWhereWithAggregatesInput = {
   weight?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
   height?: Prisma.FloatNullableWithAggregatesFilter<"User"> | number | null
   goal?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  gender?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  coachId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -341,7 +375,10 @@ export type UserCreateInput = {
   weight?: number | null
   height?: number | null
   goal?: string | null
+  gender?: string | null
   createdAt?: Date | string
+  coach?: Prisma.CoachCreateNestedOneWithoutClientsInput
+  coachProfile?: Prisma.CoachCreateNestedOneWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
 }
 
@@ -355,7 +392,10 @@ export type UserUncheckedCreateInput = {
   weight?: number | null
   height?: number | null
   goal?: string | null
+  gender?: string | null
+  coachId?: number | null
   createdAt?: Date | string
+  coachProfile?: Prisma.CoachUncheckedCreateNestedOneWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -368,7 +408,10 @@ export type UserUpdateInput = {
   weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   goal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coach?: Prisma.CoachUpdateOneWithoutClientsNestedInput
+  coachProfile?: Prisma.CoachUpdateOneWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
 }
 
@@ -382,7 +425,10 @@ export type UserUncheckedUpdateInput = {
   weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   goal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coachId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coachProfile?: Prisma.CoachUncheckedUpdateOneWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -396,6 +442,8 @@ export type UserCreateManyInput = {
   weight?: number | null
   height?: number | null
   goal?: string | null
+  gender?: string | null
+  coachId?: number | null
   createdAt?: Date | string
 }
 
@@ -408,6 +456,7 @@ export type UserUpdateManyMutationInput = {
   weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   goal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -421,7 +470,24 @@ export type UserUncheckedUpdateManyInput = {
   weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   goal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coachId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
+}
+
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
+}
+
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -434,6 +500,8 @@ export type UserCountOrderByAggregateInput = {
   weight?: Prisma.SortOrder
   height?: Prisma.SortOrder
   goal?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  coachId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -441,6 +509,7 @@ export type UserAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   weight?: Prisma.SortOrder
   height?: Prisma.SortOrder
+  coachId?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -453,6 +522,8 @@ export type UserMaxOrderByAggregateInput = {
   weight?: Prisma.SortOrder
   height?: Prisma.SortOrder
   goal?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  coachId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -466,6 +537,8 @@ export type UserMinOrderByAggregateInput = {
   weight?: Prisma.SortOrder
   height?: Prisma.SortOrder
   goal?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  coachId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -473,14 +546,74 @@ export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   weight?: Prisma.SortOrder
   height?: Prisma.SortOrder
+  coachId?: Prisma.SortOrder
 }
 
-export type UserScalarRelationFilter = {
-  is?: Prisma.UserWhereInput
-  isNot?: Prisma.UserWhereInput
+export type UserCreateNestedOneWithoutCoachProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCoachProfileInput, Prisma.UserUncheckedCreateWithoutCoachProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCoachProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedManyWithoutCoachInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCoachInput, Prisma.UserUncheckedCreateWithoutCoachInput> | Prisma.UserCreateWithoutCoachInput[] | Prisma.UserUncheckedCreateWithoutCoachInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCoachInput | Prisma.UserCreateOrConnectWithoutCoachInput[]
+  createMany?: Prisma.UserCreateManyCoachInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutCoachInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCoachInput, Prisma.UserUncheckedCreateWithoutCoachInput> | Prisma.UserCreateWithoutCoachInput[] | Prisma.UserUncheckedCreateWithoutCoachInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCoachInput | Prisma.UserCreateOrConnectWithoutCoachInput[]
+  createMany?: Prisma.UserCreateManyCoachInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateOneRequiredWithoutCoachProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCoachProfileInput, Prisma.UserUncheckedCreateWithoutCoachProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCoachProfileInput
+  upsert?: Prisma.UserUpsertWithoutCoachProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCoachProfileInput, Prisma.UserUpdateWithoutCoachProfileInput>, Prisma.UserUncheckedUpdateWithoutCoachProfileInput>
+}
+
+export type UserUpdateManyWithoutCoachNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCoachInput, Prisma.UserUncheckedCreateWithoutCoachInput> | Prisma.UserCreateWithoutCoachInput[] | Prisma.UserUncheckedCreateWithoutCoachInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCoachInput | Prisma.UserCreateOrConnectWithoutCoachInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutCoachInput | Prisma.UserUpsertWithWhereUniqueWithoutCoachInput[]
+  createMany?: Prisma.UserCreateManyCoachInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutCoachInput | Prisma.UserUpdateWithWhereUniqueWithoutCoachInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutCoachInput | Prisma.UserUpdateManyWithWhereWithoutCoachInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutCoachNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCoachInput, Prisma.UserUncheckedCreateWithoutCoachInput> | Prisma.UserCreateWithoutCoachInput[] | Prisma.UserUncheckedCreateWithoutCoachInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCoachInput | Prisma.UserCreateOrConnectWithoutCoachInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutCoachInput | Prisma.UserUpsertWithWhereUniqueWithoutCoachInput[]
+  createMany?: Prisma.UserCreateManyCoachInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutCoachInput | Prisma.UserUpdateWithWhereUniqueWithoutCoachInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutCoachInput | Prisma.UserUpdateManyWithWhereWithoutCoachInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
 export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
   decrement?: number
@@ -502,6 +635,159 @@ export type UserUpdateOneRequiredWithoutSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSessionsInput, Prisma.UserUpdateWithoutSessionsInput>, Prisma.UserUncheckedUpdateWithoutSessionsInput>
 }
 
+export type UserCreateWithoutCoachProfileInput = {
+  email: string
+  password: string
+  role?: string
+  firstname?: string | null
+  lastname?: string | null
+  weight?: number | null
+  height?: number | null
+  goal?: string | null
+  gender?: string | null
+  createdAt?: Date | string
+  coach?: Prisma.CoachCreateNestedOneWithoutClientsInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCoachProfileInput = {
+  id?: number
+  email: string
+  password: string
+  role?: string
+  firstname?: string | null
+  lastname?: string | null
+  weight?: number | null
+  height?: number | null
+  goal?: string | null
+  gender?: string | null
+  coachId?: number | null
+  createdAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCoachProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCoachProfileInput, Prisma.UserUncheckedCreateWithoutCoachProfileInput>
+}
+
+export type UserCreateWithoutCoachInput = {
+  email: string
+  password: string
+  role?: string
+  firstname?: string | null
+  lastname?: string | null
+  weight?: number | null
+  height?: number | null
+  goal?: string | null
+  gender?: string | null
+  createdAt?: Date | string
+  coachProfile?: Prisma.CoachCreateNestedOneWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCoachInput = {
+  id?: number
+  email: string
+  password: string
+  role?: string
+  firstname?: string | null
+  lastname?: string | null
+  weight?: number | null
+  height?: number | null
+  goal?: string | null
+  gender?: string | null
+  createdAt?: Date | string
+  coachProfile?: Prisma.CoachUncheckedCreateNestedOneWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCoachInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCoachInput, Prisma.UserUncheckedCreateWithoutCoachInput>
+}
+
+export type UserCreateManyCoachInputEnvelope = {
+  data: Prisma.UserCreateManyCoachInput | Prisma.UserCreateManyCoachInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithoutCoachProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCoachProfileInput, Prisma.UserUncheckedUpdateWithoutCoachProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCoachProfileInput, Prisma.UserUncheckedCreateWithoutCoachProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCoachProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCoachProfileInput, Prisma.UserUncheckedUpdateWithoutCoachProfileInput>
+}
+
+export type UserUpdateWithoutCoachProfileInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  goal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coach?: Prisma.CoachUpdateOneWithoutClientsNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCoachProfileInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  goal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coachId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithWhereUniqueWithoutCoachInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCoachInput, Prisma.UserUncheckedUpdateWithoutCoachInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCoachInput, Prisma.UserUncheckedCreateWithoutCoachInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutCoachInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCoachInput, Prisma.UserUncheckedUpdateWithoutCoachInput>
+}
+
+export type UserUpdateManyWithWhereWithoutCoachInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutCoachInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.IntFilter<"User"> | number
+  email?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.StringFilter<"User"> | string
+  firstname?: Prisma.StringNullableFilter<"User"> | string | null
+  lastname?: Prisma.StringNullableFilter<"User"> | string | null
+  weight?: Prisma.FloatNullableFilter<"User"> | number | null
+  height?: Prisma.FloatNullableFilter<"User"> | number | null
+  goal?: Prisma.StringNullableFilter<"User"> | string | null
+  gender?: Prisma.StringNullableFilter<"User"> | string | null
+  coachId?: Prisma.IntNullableFilter<"User"> | number | null
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+}
+
 export type UserCreateWithoutSessionsInput = {
   email: string
   password: string
@@ -511,7 +797,10 @@ export type UserCreateWithoutSessionsInput = {
   weight?: number | null
   height?: number | null
   goal?: string | null
+  gender?: string | null
   createdAt?: Date | string
+  coach?: Prisma.CoachCreateNestedOneWithoutClientsInput
+  coachProfile?: Prisma.CoachCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -524,7 +813,10 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   weight?: number | null
   height?: number | null
   goal?: string | null
+  gender?: string | null
+  coachId?: number | null
   createdAt?: Date | string
+  coachProfile?: Prisma.CoachUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -552,7 +844,10 @@ export type UserUpdateWithoutSessionsInput = {
   weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   goal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coach?: Prisma.CoachUpdateOneWithoutClientsNestedInput
+  coachProfile?: Prisma.CoachUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -565,6 +860,68 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   goal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coachId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coachProfile?: Prisma.CoachUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateManyCoachInput = {
+  id?: number
+  email: string
+  password: string
+  role?: string
+  firstname?: string | null
+  lastname?: string | null
+  weight?: number | null
+  height?: number | null
+  goal?: string | null
+  gender?: string | null
+  createdAt?: Date | string
+}
+
+export type UserUpdateWithoutCoachInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  goal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coachProfile?: Prisma.CoachUpdateOneWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCoachInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  goal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  coachProfile?: Prisma.CoachUncheckedUpdateOneWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutCoachInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  firstname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  goal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -609,7 +966,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   weight?: boolean
   height?: boolean
   goal?: boolean
+  gender?: boolean
+  coachId?: boolean
   createdAt?: boolean
+  coach?: boolean | Prisma.User$coachArgs<ExtArgs>
+  coachProfile?: boolean | Prisma.User$coachProfileArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -624,7 +985,10 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   weight?: boolean
   height?: boolean
   goal?: boolean
+  gender?: boolean
+  coachId?: boolean
   createdAt?: boolean
+  coach?: boolean | Prisma.User$coachArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -637,7 +1001,10 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   weight?: boolean
   height?: boolean
   goal?: boolean
+  gender?: boolean
+  coachId?: boolean
   createdAt?: boolean
+  coach?: boolean | Prisma.User$coachArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -650,20 +1017,30 @@ export type UserSelectScalar = {
   weight?: boolean
   height?: boolean
   goal?: boolean
+  gender?: boolean
+  coachId?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "firstname" | "lastname" | "weight" | "height" | "goal" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "firstname" | "lastname" | "weight" | "height" | "goal" | "gender" | "coachId" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  coach?: boolean | Prisma.User$coachArgs<ExtArgs>
+  coachProfile?: boolean | Prisma.User$coachProfileArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  coach?: boolean | Prisma.User$coachArgs<ExtArgs>
+}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  coach?: boolean | Prisma.User$coachArgs<ExtArgs>
+}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    coach: Prisma.$CoachPayload<ExtArgs> | null
+    coachProfile: Prisma.$CoachPayload<ExtArgs> | null
     sessions: Prisma.$SessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -676,6 +1053,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     weight: number | null
     height: number | null
     goal: string | null
+    gender: string | null
+    coachId: number | null
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1071,6 +1450,8 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  coach<T extends Prisma.User$coachArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$coachArgs<ExtArgs>>): Prisma.Prisma__CoachClient<runtime.Types.Result.GetResult<Prisma.$CoachPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  coachProfile<T extends Prisma.User$coachProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$coachProfileArgs<ExtArgs>>): Prisma.Prisma__CoachClient<runtime.Types.Result.GetResult<Prisma.$CoachPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1110,6 +1491,8 @@ export interface UserFieldRefs {
   readonly weight: Prisma.FieldRef<"User", 'Float'>
   readonly height: Prisma.FieldRef<"User", 'Float'>
   readonly goal: Prisma.FieldRef<"User", 'String'>
+  readonly gender: Prisma.FieldRef<"User", 'String'>
+  readonly coachId: Prisma.FieldRef<"User", 'Int'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
@@ -1360,6 +1743,10 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1430,6 +1817,10 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1496,6 +1887,44 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.coach
+ */
+export type User$coachArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Coach
+   */
+  select?: Prisma.CoachSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Coach
+   */
+  omit?: Prisma.CoachOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CoachInclude<ExtArgs> | null
+  where?: Prisma.CoachWhereInput
+}
+
+/**
+ * User.coachProfile
+ */
+export type User$coachProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Coach
+   */
+  select?: Prisma.CoachSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Coach
+   */
+  omit?: Prisma.CoachOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CoachInclude<ExtArgs> | null
+  where?: Prisma.CoachWhereInput
 }
 
 /**

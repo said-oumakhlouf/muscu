@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config'; // ← ajoute
 import { AuthModule } from './auth/auth.module';
+import { CoachesModule } from './coaches/coaches.module';
 import { ExercisesModule } from './exercises/exercises.module';
 import { PrismaService } from './prisma.service'; // ajuste chemin
-import { UsersModule } from './users/users.module';
 import { SessionsModule } from './sessions/sessions.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { SessionsModule } from './sessions/sessions.module';
     AuthModule,
     UsersModule,
     SessionsModule,
+    CoachesModule,
   ],
   providers: [PrismaService],
 })
-export class AppModule {}
+export class AppModule { }

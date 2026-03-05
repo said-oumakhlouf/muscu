@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 export default function Home() {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const { role, token } = useOptionalAuth();
+  const { role, token, isLoading } = useOptionalAuth();
 
 
   const loadExercises = async () => {
@@ -21,6 +21,7 @@ export default function Home() {
     loadExercises();
   }, []);
 
+  if (isLoading) return null;
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-zinc-50 p-10 dark:bg-black">

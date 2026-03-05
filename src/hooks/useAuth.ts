@@ -36,6 +36,7 @@ export function useAuth() {
 export function useOptionalAuth() {
     const [token, setToken] = useState<string | null>(null);
     const [role, setRole] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const t = localStorage.getItem('token');
@@ -44,7 +45,8 @@ export function useOptionalAuth() {
             const decoded = jwtDecode<JwtPayload>(t);
             setRole(decoded.role);
         }
+        setIsLoading(false)
     }, []);
 
-    return { token, role };
+    return { token, role, isLoading};
 }

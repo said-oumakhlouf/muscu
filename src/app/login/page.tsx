@@ -1,5 +1,6 @@
 'use client';
 
+import { useOptionalAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -8,6 +9,14 @@ export default function LoginPage() {
     const [form, setForm] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
 
+    const { token, isLoading } = useOptionalAuth();
+
+    if (isLoading) return null;
+
+    if (token) {
+        router.push('/');
+        return null;
+    }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const res = await fetch('http://localhost:3000/auth/login', {
@@ -23,6 +32,7 @@ export default function LoginPage() {
 
         const data = await res.json();
         localStorage.setItem('token', data.access_token);
+        router.refresh();
         router.push('/sessions');
     };
 
@@ -59,3 +69,4 @@ export default function LoginPage() {
         </div>
     );
 }
+

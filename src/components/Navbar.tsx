@@ -1,20 +1,21 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter} from 'next/navigation';
 import { useOptionalAuth } from '@/hooks/useAuth';
 import { useState } from 'react';
 import { User, LogOut, ChevronDown, Dumbbell, Calendar, Users } from 'lucide-react';
 
 export default function Navbar() {
     const router = useRouter();
-    const { role } = useOptionalAuth();
+    const { role, token } = useOptionalAuth();
     const [menuOpen, setMenuOpen] = useState(false);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         router.push('/login');
     };
+
 
     return (
         <nav className="bg-white border-b border-gray-100 px-8 py-4 flex items-center justify-between shadow-sm">
@@ -50,18 +51,31 @@ export default function Navbar() {
 
                     {menuOpen && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50">
-                            <Link href="/profile" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                <User size={14} />
-                                Mon profil
-                            </Link>
-                            <hr className="my-1 border-gray-100" />
-                            <button
-                                onClick={handleLogout}
-                                className="flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 w-full text-left"
-                            >
-                                <LogOut size={14} />
-                                Se déconnecter
-                            </button>
+                            {token ? (
+                                <>
+                                    <Link href="/profile" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                        <User size={14} />
+                                        Mon profil
+                                    </Link>
+                                    <hr className="my-1 border-gray-100" />
+                                    <button
+                                        onClick={handleLogout}
+                                        className="flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 w-full text-left"
+                                    >
+                                        <LogOut size={14} />
+                                        Se déconnecter
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <Link href="/login" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                        Se connecter
+                                    </Link>
+                                    <Link href="/register" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                        S'inscrire
+                                    </Link>
+                                </>
+                            )}
                         </div>
                     )}
                 </div>

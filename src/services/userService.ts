@@ -1,8 +1,10 @@
 const API_URL = 'http://localhost:3000/';
 
-const fetchWithAuth = async (url: string, token: string) => {
+const fetchWithAuth = async (url: string, token: string, options?: RequestInit) => {
     const res = await fetch(url, {
-        headers: {  Authorization: `Bearer ${token}` },
+        ...options,
+        headers: { Authorization: `Bearer ${token}` },
+        ...options?.headers,
     });
     return res.json();
 };
@@ -20,5 +22,16 @@ export const userService = {
     async getSessions(token: string, userId: number) {
         const data = await fetchWithAuth(`${API_URL}sessions/user/${userId}`, token);
         return Array.isArray(data) ? data : [];
+    },
+
+    async getProfile(token: string) {
+        return fetchWithAuth(`${API_URL}users/profile`, token);
+    },
+
+    async updateProfile(token: string, data: object) {
+        return fetchWithAuth(`${API_URL}users/profile`, token, {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+        });
     },
 }
