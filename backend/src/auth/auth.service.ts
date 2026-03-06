@@ -8,13 +8,30 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
-  async register(email: string, password: string) {
+  async register(
+    email: string,
+    password: string,
+    firstname?: string,
+    lastname?: string,
+    weight?: number,
+    height?: number,
+    goal?: string,
+    gender?: string,
+    coachId?: number,
+  ) {
     const hashedPassword = await bcrypt.hash(password, 10);
     await this.usersService.create({
       email,
       password: hashedPassword,
+      firstname,
+      lastname,
+      weight,
+      height,
+      goal,
+      gender,
+      coachId,
     });
     return { message: 'Utilisateur créé avec succès' };
   }
