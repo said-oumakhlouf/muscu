@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/context/AuthContext';
 import { userService } from '@/services/userService';
+import { useEffect, useState } from 'react';
 
 export default function ProfilePage() {
     const { token, isLoading } = useAuth();

@@ -5,11 +5,12 @@ import ExerciseCard from "./ExerciseCard";
 import ExerciseForm from "./ExerciseForm";
 import { exerciseService } from "@/services/exerciseService";
 import { Exercise } from "@/types/Exercise";
-import { useOptionalAuth } from "@/hooks/useAuth";
+import { useAuth } from '@/context/AuthContext';
 
 export default function ExercisesList() {
     const [exercises, setExercises] = useState<Exercise[]>([]);
-    const { role, token } = useOptionalAuth();
+    const { role, token } = useAuth();
+    
     const [editingId, setEditingId] = useState<number | null>(null);
 
     const loadExercises = async () => {

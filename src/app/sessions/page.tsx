@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react';
 import { Session } from '@/types/Session';
 import { sessionService } from '@/services/sessionService';
-import { useOptionalAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/context/AuthContext';
 
 export default function SessionsPage() {
     const [sessions, setSessions] = useState<Session[]>([]);
-    const { token } = useOptionalAuth();
+    const { token } = useAuth();
 
     useEffect(() => {
         if (token) {

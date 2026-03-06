@@ -1,20 +1,26 @@
 'use client';
 
+import { useAuth } from '@/context/AuthContext';
+import { Calendar, ChevronDown, Dumbbell, LogOut, User, Users } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter} from 'next/navigation';
-import { useOptionalAuth } from '@/hooks/useAuth';
-import { useState } from 'react';
-import { User, LogOut, ChevronDown, Dumbbell, Calendar, Users } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function Navbar() {
+    const pathname = usePathname();
     const router = useRouter();
-    const { role, token } = useOptionalAuth();
+    const { role, token, isLoading, logout } = useAuth();
     const [menuOpen, setMenuOpen] = useState(false);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
+        logout();
         router.push('/login');
     };
+
+    useEffect(() => {
+        setMenuOpen(false);
+    }, [pathname])
 
 
     return (
@@ -42,14 +48,14 @@ export default function Navbar() {
 
                 <div className="relative">
                     <button
-                        onClick={() => setMenuOpen(!menuOpen)}
+                        onClick={() => !isLoading && setMenuOpen(!menuOpen)}
                         className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 rounded-full px-3 py-2 transition"
                     >
                         <User size={16} className="text-gray-700" />
                         <ChevronDown size={14} className="text-gray-500" />
                     </button>
 
-                    {menuOpen && (
+                    {menuOpen && !isLoading && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50">
                             {token ? (
                                 <>

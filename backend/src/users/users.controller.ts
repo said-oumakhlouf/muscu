@@ -24,6 +24,12 @@ export class UsersController {
         return this.usersService.findAll();
     }
 
+    @UseGuards(JwtAuthGuard)
+    @Get('profile')
+    getProfile(@Request() req) {
+        return this.usersService.findOne(req.user.id);
+    }
+
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.usersService.findOne(+id);
@@ -33,11 +39,5 @@ export class UsersController {
     @Patch('profile')
     updateProfile(@Request() req, @Body() UpdateUserDto: UpdateUserDto) {
         return this.usersService.updateProfile(req.user.id, UpdateUserDto);
-    }
-
-    @UseGuards(JwtAuthGuard)
-    @Get('profile')
-    getProfile(@Request() req) {
-        return this.usersService.findOne(req.user.id);
     }
 }

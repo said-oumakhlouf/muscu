@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/context/AuthContext';
 import { userService } from '@/services/userService';
 import { User } from '@/types/User';
 import { Session } from '@/types/Session';
