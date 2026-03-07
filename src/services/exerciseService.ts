@@ -1,16 +1,6 @@
-const API_URL = "http://localhost:3000";
+import { fetchWithAuth } from '@/utils/fetchWithAuth';
 
-const fetchWithAuth = async (url: string, token: string, options?: RequestInit) => {
-    const res = await fetch(url, {
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-            ...options?.headers,
-        },
-    });
-    return res.json();
-};
+const API_URL = "http://localhost:3000";
 
 export const exerciseService = {
     async getAll() {
