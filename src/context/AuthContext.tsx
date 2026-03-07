@@ -2,20 +2,8 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import { JwtPayload, AuthContextType } from '@/interfaces/auth';
 
-interface JwtPayload {
-    sub: number;
-    email: string;
-    role: string;
-}
-
-interface AuthContextType {
-    token: string | null;
-    role: string | null;
-    isLoading: boolean;
-    login: (token: string) => void;
-    logout: () => void;
-}
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
