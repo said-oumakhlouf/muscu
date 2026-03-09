@@ -7,6 +7,7 @@ export interface JwtPayload {
 export interface AuthContextType {
     token: string | null;
     role: string | null;
+    userId: number | null;
     isLoading: boolean;
     login: (token: string) => void;
     logout: () => void;

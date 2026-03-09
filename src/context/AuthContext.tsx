@@ -11,6 +11,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [token, setToken] = useState<string | null>(null);
     const [role, setRole] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [userId, setUserId] = useState<number | null>(null);
 
     useEffect(() => {
         const t = localStorage.getItem('token');
@@ -18,6 +19,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setToken(t);
             const decoded = jwtDecode<JwtPayload>(t);
             setRole(decoded.role);
+            setUserId(decoded.sub)
         }
         setIsLoading(false);
     }, []);
@@ -27,16 +29,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setToken(t);
         const decoded = jwtDecode<JwtPayload>(t);
         setRole(decoded.role);
+        setUserId(decoded.sub);
     };
 
     const logout = () => {
         localStorage.removeItem('token');
         setToken(null);
         setRole(null);
+        setUserId(null)
     };
 
     return (
-        <AuthContext.Provider value={{ token, role, isLoading, login, logout }}>
+        <AuthContext.Provider value={{ token, role, userId ,isLoading, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
