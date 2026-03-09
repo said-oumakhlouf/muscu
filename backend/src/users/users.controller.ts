@@ -30,6 +30,12 @@ export class UsersController {
         return this.usersService.findOne(req.user.id);
     }
 
+    @UseGuards(JwtAuthGuard)
+    @Get('my-clients')
+    getMyClients(@Request() req) {
+        return this.usersService.getClientsByCoach(req.user.id);
+    }
+
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.usersService.findOne(+id);

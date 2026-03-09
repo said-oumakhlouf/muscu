@@ -14,6 +14,11 @@ export const userService = {
         return fetchWithAuth(`${API_URL}users/${id}`, token);
     },
 
+    async getMyClients(token: string) {
+        const data = await fetchWithAuth(`${API_URL}users/my-clients`, token);
+        return Array.isArray(data) ? data : [];
+    },
+
     async getSessions(token: string, userId: number) {
         const data = await fetchWithAuth(`${API_URL}sessions/user/${userId}`, token);
         return Array.isArray(data) ? data : [];

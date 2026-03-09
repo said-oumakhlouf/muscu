@@ -12,7 +12,7 @@ export default function AdminPage() {
 
     useEffect(() => {
         if (token && role === 'admin') {
-            userService.getAll(token).then(setClients);
+            userService.getMyClients(token).then(setClients);
         }
     }, [token, role]);
 
