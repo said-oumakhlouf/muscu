@@ -8,7 +8,7 @@ export const sessionService = {
         return Array.isArray(data) ? data : [];
     },
     
-    async create(token: string, data: { name: string; exercises: { exerciseId: number; sets: number; reps: number; }[] }) {
+    async create(token: string, data: { name: string; userId: number; exercises: { exerciseId: number; sets: number; reps: number; }[] }) {
         return fetchWithAuth(`${API_URL}sessions`, token, {
             method: "POST",
             body: JSON.stringify(data),

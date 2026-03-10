@@ -31,7 +31,7 @@ export default function Navbar() {
             </Link>
 
             <div className="flex items-center gap-6">
-                <Link href="/" className="flex items-center gap-1 text-gray-600 hover:text-black transition text-sm font-medium">
+                <Link href="/exercises" className="flex items-center gap-1 text-gray-600 hover:text-black transition text-sm font-medium">
                     <Dumbbell size={16} />
                     Exercices
                 </Link>

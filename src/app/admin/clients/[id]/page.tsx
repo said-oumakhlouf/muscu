@@ -6,6 +6,7 @@ import { userService } from '@/services/userService';
 import { User } from '@/types/User';
 import { Session } from '@/types/Session';
 import { useParams } from 'next/navigation';
+import CreateSessionForm from '@/components/CreateSessionForm';
 
 export default function ClientDetailPage() {
     const { token, role, isLoading } = useAuth();
@@ -53,6 +54,12 @@ export default function ClientDetailPage() {
                             </div>
                         </div>
                     </div>
+
+                    <CreateSessionForm
+                        token={token!}
+                        clientId={Number(id)}
+                        onCreated={() => userService.getSessions(token!, Number(id)).then(setSessions)}
+                    />
 
                     <div className="w-full max-w-2xl">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Séances</h2>
