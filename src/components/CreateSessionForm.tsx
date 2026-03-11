@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { exerciseService } from '@/services/exerciseService';
 import { sessionService } from '@/services/sessionService';
 import { Exercise } from '@/types/Exercise';
+import toast from 'react-hot-toast';
 
 interface CreateSessionFormProps {
     token: string;
@@ -48,6 +49,7 @@ export default function CreateSessionForm({ token, clientId, onCreated }: Create
         });
         setName('');
         setSelectedExercises([]);
+        toast.success(`Séance "${name}" crée avec succès !`)
         onCreated();
     };
 

@@ -5,7 +5,7 @@ import { UpdateExerciseDto } from './dto/update-exercise.dto';
 
 @Injectable()
 export class ExercisesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(createExerciseDto: CreateExerciseDto) {
     return this.prisma.exercise.create({

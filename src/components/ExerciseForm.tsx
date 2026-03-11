@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import { exerciseService } from '@/services/exerciseService';
+import { useAuth } from '@/context/AuthContext';
 
 interface Props {
     onCreated: () => void;
 }
 
 export default function ExerciseForm({ onCreated }: Props) {
+    const { token } = useAuth();
     const [form, setForm] = useState({
         name: '',
         description: '',
@@ -16,7 +18,7 @@ export default function ExerciseForm({ onCreated }: Props) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        await exerciseService.create(form);
+        await exerciseService.create(token!, form);
         setForm({ name: '', description: '', muscleGroup: '' });
         onCreated();
     };
