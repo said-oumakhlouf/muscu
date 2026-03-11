@@ -15,5 +15,6 @@ export type Session = {
     name: string;
     userId: number;
     createdAt: string;
+    scheduledAt?: string;
     exercises: SessionExercise[];
 };

@@ -21,8 +21,19 @@ export const sessionService = {
     },
 
     async delete(token: string, id: number) {
-        await fetchWithAuth(`${API_URL}/sessions/${id}`, token, {
+        await fetchWithAuth(`${API_URL}sessions/${id}`, token, {
             method: "DELETE",
+        });
+    },
+
+    async update(token: string, id: number, data: {
+        name?: string;
+        scheduledAt?: Date;
+        exercises?: { exerciseId: number; sets: number; reps: number; weight?: number; }[]
+    }) {
+        return fetchWithAuth(`${API_URL}sessions/${id}`, token, {
+            method: "PATCH",
+            body: JSON.stringify(data),
         });
     },
 }

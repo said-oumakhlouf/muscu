@@ -1,9 +1,11 @@
 import {
+    BadRequestException,
     Body,
     Controller,
     Delete,
     Get,
     Param,
+    Patch,
     Post,
     Request,
     UseGuards,
@@ -13,6 +15,7 @@ import { CreateSessionDto } from './dto/create-session.dto';
 import { SessionsService } from './sessions.service';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
+import { UpdateSessionDto } from './dto/update-session.dto';
 
 @Controller('sessions')
 @UseGuards(JwtAuthGuard)
@@ -35,7 +38,9 @@ export class SessionsController {
     @Roles('admin')
     @Get('user/:id')
     findByUser(@Param('id') id: string) {
-        return this.sessionsService.findByUser(+id);
+        const userId = parseInt(id);
+        if (isNaN(userId)) throw new BadRequestException('Invalid user id');
+        return this.sessionsService.findByUser(userId);
     }
 
     @Get(':id')
@@ -46,7 +51,14 @@ export class SessionsController {
     @UseGuards(RolesGuard)
     @Roles('admin')
     @Delete(':id')
-    remove(@Param('id') id: string, @Request() req) {
-        return this.sessionsService.remove(+id, req.user.id);
+    remove(@Param('id') id: string) {
+        return this.sessionsService.remove(+id);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Roles('admin')
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() dto: UpdateSessionDto) {
+        return this.sessionsService.update(+id, dto);
     }
 }

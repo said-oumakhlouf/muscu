@@ -7,17 +7,46 @@ import { User } from '@/types/User';
 import { Session } from '@/types/Session';
 import { useParams } from 'next/navigation';
 import CreateSessionForm from '@/components/CreateSessionForm';
+import { sessionService } from '@/services/sessionService';
 
 export default function ClientDetailPage() {
     const { token, role, isLoading } = useAuth();
     const { id } = useParams();
     const [client, setClient] = useState<User | null>(null);
     const [sessions, setSessions] = useState<Session[]>([]);
+    const [editingSession, setEditingSession] = useState<Session | null>(null);
+    const [deletingSessionId, setDeletingSessionId] = useState<number | null>(null);
+
+    const handleDelete = async () => {
+        if (!deletingSessionId) return;
+        await sessionService.delete(token!, deletingSessionId);
+        setSessions(sessions.filter(s => s.id !== deletingSessionId));
+        setDeletingSessionId(null);
+    };
+
+    const handleUpdate = async () => {
+        if (!editingSession) return;
+        await sessionService.update(token!, editingSession.id, {
+            name: editingSession.name,
+            scheduledAt: editingSession.scheduledAt ? new Date(editingSession.scheduledAt) : undefined,
+            exercises: editingSession.exercises.map(se => ({
+                exerciseId: se.exercise.id,
+                sets: se.sets,
+                reps: se.reps,
+                weight: se.weight,
+            })),
+        });
+        setEditingSession(null);
+        userService.getSessions(token!, Number(id)).then(setSessions);
+    };
+    
 
     useEffect(() => {
-        if (token && role === 'admin') {
-            userService.getOne(token, Number(id)).then(setClient);
-            userService.getSessions(token, Number(id)).then(setSessions);
+        if (token && role === 'admin' && id) {
+            const numericId = Number(id);
+            if (isNaN(numericId)) return;
+            userService.getOne(token, numericId).then(setClient);
+            userService.getSessions(token, numericId).then(setSessions);
         }
     }, [token, role, id]);
 
@@ -65,7 +94,23 @@ export default function ClientDetailPage() {
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Séances</h2>
                         {sessions.map((session) => (
                             <div key={session.id} className="bg-white rounded-xl p-6 shadow mb-4">
-                                <h3 className="text-lg font-bold text-gray-800">{session.name}</h3>
+                                <div className="flex justify-between items-start mb-1">
+                                    <h3 className="text-lg font-bold text-gray-800">{session.name}</h3>
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => setEditingSession(session)}
+                                            className="text-sm px-3 py-1 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50"
+                                        >
+                                            ✏️ Modifier
+                                        </button>
+                                        <button
+                                            onClick={() => setDeletingSessionId(session.id)}
+                                            className="text-sm px-3 py-1 rounded-lg border border-red-200 text-red-500 hover:bg-red-50"
+                                        >
+                                            🗑️ Supprimer
+                                        </button>
+                                    </div>
+                                </div>
                                 <p className="text-sm text-gray-500 mb-3">
                                     {new Date(session.createdAt).toLocaleDateString('fr-FR')}
                                 </p>
@@ -78,6 +123,90 @@ export default function ClientDetailPage() {
                             </div>
                         ))}
                     </div>
+                    {editingSession && (
+                        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-xl">
+                                <h3 className="text-lg font-bold text-gray-800 mb-4">Modifier la séance</h3>
+                                <input
+                                    className="border rounded-lg p-2 w-full text-gray-800 mb-3"
+                                    value={editingSession.name}
+                                    onChange={(e) => setEditingSession({ ...editingSession, name: e.target.value })}
+                                />
+                                {editingSession.exercises.map((se, index) => (
+                                    <div key={se.id} className="flex gap-2 mb-2 items-center">
+                                        <span className="flex-1 text-sm text-gray-700">{se.exercise.name}</span>
+                                        <input
+                                            className="border rounded-lg p-1 w-16 text-center text-gray-800"
+                                            type="number"
+                                            value={se.sets}
+                                            onChange={(e) => {
+                                                const updated = [...editingSession.exercises];
+                                                updated[index] = { ...updated[index], sets: Number(e.target.value) };
+                                                setEditingSession({ ...editingSession, exercises: updated });
+                                            }}
+                                        />
+                                        <input
+                                            className="border rounded-lg p-1 w-16 text-center text-gray-800"
+                                            type="number"
+                                            value={se.reps}
+                                            onChange={(e) => {
+                                                const updated = [...editingSession.exercises];
+                                                updated[index] = { ...updated[index], reps: Number(e.target.value) };
+                                                setEditingSession({ ...editingSession, exercises: updated });
+                                            }}
+                                        />
+                                        <input
+                                            className="border rounded-lg p-1 w-16 text-center text-gray-800"
+                                            type="number"
+                                            placeholder="Kg"
+                                            value={se.weight || ''}
+                                            onChange={(e) => {
+                                                const updated = [...editingSession.exercises];
+                                                updated[index] = { ...updated[index], weight: Number(e.target.value) };
+                                                setEditingSession({ ...editingSession, exercises: updated });
+                                            }}
+                                        />
+                                    </div>
+                                ))}
+                                <div className="flex justify-end gap-3 mt-4">
+                                    <button
+                                        onClick={() => setEditingSession(null)}
+                                        className="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50"
+                                    >
+                                        Annuler
+                                    </button>
+                                    <button
+                                        onClick={handleUpdate}
+                                        className="px-4 py-2 rounded-lg bg-black text-white font-bold hover:bg-zinc-800"
+                                    >
+                                        Sauvegarder
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {deletingSessionId && (
+                        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-xl p-6 w-full max-w-sm shadow-xl">
+                                <h3 className="text-lg font-bold text-gray-800 mb-2">Supprimer la séance ?</h3>
+                                <p className="text-sm text-gray-500 mb-6">Cette action est irréversible.</p>
+                                <div className="flex justify-end gap-3">
+                                    <button
+                                        onClick={() => setDeletingSessionId(null)}
+                                        className="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50"
+                                    >
+                                        Annuler
+                                    </button>
+                                    <button
+                                        onClick={handleDelete}
+                                        className="px-4 py-2 rounded-lg bg-red-500 text-white font-bold hover:bg-red-600"
+                                    >
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </>
             )}
         </div>
