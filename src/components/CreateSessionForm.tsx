@@ -15,6 +15,7 @@ interface CreateSessionFormProps {
 export default function CreateSessionForm({ token, clientId, onCreated }: CreateSessionFormProps) {
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const [name, setName] = useState('');
+    const [scheduledAt, setScheduledAt] = useState('');
     const [selectedExercises, setSelectedExercises] = useState<{
         exerciseId: number;
         sets: number;
@@ -45,6 +46,7 @@ export default function CreateSessionForm({ token, clientId, onCreated }: Create
         await sessionService.create(token, {
             name,
             userId: clientId,
+            scheduledAt: scheduledAt ? new Date(scheduledAt) : undefined,
             exercises: selectedExercises,
         });
         setName('');
@@ -63,6 +65,13 @@ export default function CreateSessionForm({ token, clientId, onCreated }: Create
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
+
+            <input
+                className="border rounded-lg p-2 w-full text-gray-800 mb-4"
+                type="datetime-local"
+                value={scheduledAt}
+                onChange={(e) => setScheduledAt(e.target.value)}
+            /> 
 
             {selectedExercises.map((se, index) => (
                 <div key={index} className="flex gap-2 mb-3 items-center">

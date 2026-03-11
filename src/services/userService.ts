@@ -19,6 +19,11 @@ export const userService = {
         return Array.isArray(data) ? data : [];
     },
 
+    async getMySessions(token: string) {
+        const data = await fetchWithAuth(`${API_URL}users/my-sessions`, token);
+        return Array.isArray(data) ? data : [];
+    },
+
     async getSessions(token: string, userId: number) {
         const data = await fetchWithAuth(`${API_URL}sessions/user/${userId}`, token);
         return Array.isArray(data) ? data : [];

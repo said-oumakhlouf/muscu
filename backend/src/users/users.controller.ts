@@ -31,6 +31,12 @@ export class UsersController {
     }
 
     @UseGuards(JwtAuthGuard)
+    @Get('my-sessions')
+    getMySessions(@Request() req) {
+        return this.usersService.getSessionsByCoach(req.user.id);
+    }
+
+    @UseGuards(JwtAuthGuard)
     @Get('my-clients')
     getMyClients(@Request() req) {
         return this.usersService.getClientsByCoach(req.user.id);

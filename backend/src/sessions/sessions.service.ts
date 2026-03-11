@@ -11,6 +11,7 @@ export class SessionsService {
             data: {
                 name: createSessionDto.name,
                 userId: createSessionDto.userId,
+                scheduledAt: createSessionDto.scheduledAt,
                 exercises: {
                     create: createSessionDto.exercises.map((e) => ({
                         exerciseId: e.exerciseId,
