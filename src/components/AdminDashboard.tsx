@@ -1,7 +1,8 @@
 'use client';
-
 import { User } from '@/types/User';
 import Link from 'next/link';
+import { formatGoal } from '@/utils/goalLabels';
+import Avatar from '@/components/Avatar';
 
 interface AdminDashboardProps {
     clients: User[];
@@ -12,28 +13,6 @@ interface AdminDashboardProps {
         scheduledAt: string;
         user: { firstname: string; lastname: string };
     }[];
-}
-
-const goalLabels: Record<string, string> = {
-    weight_loss: 'Perte de poids',
-    muscle_gain: 'Prise de masse',
-    maintenance: 'Maintien',
-};
-
-const avatarColors = ['#4F46E5', '#0891B2', '#7C3AED', '#059669', '#DB2777', '#7C5CBF'];
-
-function Avatar({ name, size = 36 }: { name: string; size?: number }) {
-    const initials = name?.slice(0, 2).toUpperCase() || '??';
-    const color = avatarColors[name?.charCodeAt(0) % avatarColors.length];
-    return (
-        <div style={{
-            width: size, height: size, borderRadius: '50%', background: color,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: 'white', fontWeight: 600, fontSize: size * 0.35, flexShrink: 0,
-        }}>
-            {initials}
-        </div>
-    );
 }
 
 export default function AdminDashboard({ clients, coachName, upcomingSessions }: AdminDashboardProps) {
@@ -85,7 +64,7 @@ export default function AdminDashboard({ clients, coachName, upcomingSessions }:
                         ) : (
                             upcomingSessions.map((session, i) => (
                                 <div key={session.id} style={{ padding: '12px 22px', display: 'flex', alignItems: 'center', gap: 14, borderBottom: i < upcomingSessions.length - 1 ? '1px solid #F9FAFB' : 'none' }}>
-                                    <Avatar name={session.user.firstname || ''} size={38} />
+                                    <Avatar name={`${session.user.firstname} ${session.user.lastname}`} size={40} />
                                     <div style={{ flex: 1 }}>
                                         <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: '#111827' }}>
                                             {session.user.firstname} {session.user.lastname}
@@ -118,13 +97,13 @@ export default function AdminDashboard({ clients, coachName, upcomingSessions }:
                                     onMouseEnter={e => (e.currentTarget.style.background = '#F9FAFB')}
                                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                                 >
-                                    <Avatar name={client.firstname || client.email} size={38} />
+                                    <Avatar name={`${client.firstname} ${client.lastname}`} size={40} />
                                     <div style={{ flex: 1 }}>
                                         <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: '#111827' }}>
                                             {client.firstname ? `${client.firstname} ${client.lastname}` : client.email}
                                         </p>
                                         <p style={{ margin: '2px 0 0', fontSize: 12, color: '#9CA3AF' }}>
-                                            {client.goal ? goalLabels[client.goal] || client.goal : 'Pas d\'objectif défini'}
+                                            {formatGoal(client.goal)}
                                             {client.weight ? ` · ${client.weight}kg` : ''}
                                         </p>
                                     </div>

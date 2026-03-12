@@ -17,4 +17,5 @@ export type Session = {
     createdAt: string;
     scheduledAt?: string;
     exercises: SessionExercise[];
+    user?: { id: number; firstname: string; lastname: string };
 };

@@ -10,12 +10,12 @@ import {
     Request,
     UseGuards,
 } from '@nestjs/common';
+import { Roles } from 'src/auth/roles.decorator';
+import { RolesGuard } from 'src/auth/roles.guard';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { CreateSessionDto } from './dto/create-session.dto';
-import { SessionsService } from './sessions.service';
-import { RolesGuard } from 'src/auth/roles.guard';
-import { Roles } from 'src/auth/roles.decorator';
 import { UpdateSessionDto } from './dto/update-session.dto';
+import { SessionsService } from './sessions.service';
 
 @Controller('sessions')
 @UseGuards(JwtAuthGuard)
@@ -41,6 +41,13 @@ export class SessionsController {
         const userId = parseInt(id);
         if (isNaN(userId)) throw new BadRequestException('Invalid user id');
         return this.sessionsService.findByUser(userId);
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles('admin')
+    @Get('coach/all')
+    findAllByCoach(@Request() req) {
+        return this.sessionsService.findAllByCoach(req.user.id);
     }
 
     @Get(':id')

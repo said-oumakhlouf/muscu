@@ -8,6 +8,11 @@ export const sessionService = {
         return Array.isArray(data) ? data : [];
     },
     
+    async getAllByCoach(token: string) {
+        const data = await fetchWithAuth(`${API_URL}sessions/coach/all`, token);
+        return Array.isArray(data) ? data : [];
+    },
+    
     async create(token: string, data: {
         name: string;
         userId: number;

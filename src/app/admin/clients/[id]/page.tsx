@@ -1,13 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useAuth } from '@/context/AuthContext';
-import { userService } from '@/services/userService';
-import { User } from '@/types/User';
-import { Session } from '@/types/Session';
-import { useParams } from 'next/navigation';
 import CreateSessionForm from '@/components/CreateSessionForm';
+import StatusBadge from '@/components/StatusBadge';
+import { useAuth } from '@/context/AuthContext';
 import { sessionService } from '@/services/sessionService';
+import { userService } from '@/services/userService';
+import { Session } from '@/types/Session';
+import { User } from '@/types/User';
+import { formatGoal } from '@/utils/goalLabels';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import Avatar from '@/components/Avatar';
 
 export default function ClientDetailPage() {
     const { token, role, isLoading } = useAuth();
@@ -39,7 +42,7 @@ export default function ClientDetailPage() {
         setEditingSession(null);
         userService.getSessions(token!, Number(id)).then(setSessions);
     };
-    
+
 
     useEffect(() => {
         if (token && role === 'admin' && id) {
@@ -58,9 +61,7 @@ export default function ClientDetailPage() {
                 <>
                     <div className="bg-white rounded-xl p-8 shadow w-full max-w-2xl mb-8">
                         <div className="flex items-center gap-6">
-                            <div className="w-20 h-20 rounded-full bg-zinc-200 flex items-center justify-center text-3xl">
-                                👤
-                            </div>
+                            <Avatar name={`${client.firstname} ${client.lastname}`} size={80} />
                             <div>
                                 <h1 className="text-3xl font-bold text-gray-800">
                                     {client.firstname} {client.lastname}
@@ -78,48 +79,48 @@ export default function ClientDetailPage() {
                                 <p className="text-sm text-gray-500">Taille</p>
                             </div>
                             <div className="bg-zinc-50 rounded-lg p-4 text-center">
-                                <p className="text-2xl font-bold text-gray-800">{client.goal ?? '—'}</p>
+                                <p className="text-2xl font-bold text-gray-800">{formatGoal(client.goal)}</p>
                                 <p className="text-sm text-gray-500">Objectif</p>
                             </div>
                         </div>
                     </div>
 
-                    <CreateSessionForm
-                        token={token!}
-                        clientId={Number(id)}
-                        onCreated={() => userService.getSessions(token!, Number(id)).then(setSessions)}
-                    />
+                    <div className="w-full max-w-2xl">
+                        <CreateSessionForm
+                            token={token!}
+                            clientId={Number(id)}
+                            onCreated={() => userService.getSessions(token!, Number(id)).then(setSessions)}
+                        />
+                    </div>
 
                     <div className="w-full max-w-2xl">
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">Séances</h2>
                         {sessions.map((session) => (
-                            <div key={session.id} className="bg-white rounded-xl p-6 shadow mb-4">
-                                <div className="flex justify-between items-start mb-1">
-                                    <h3 className="text-lg font-bold text-gray-800">{session.name}</h3>
-                                    <div className="flex gap-2">
-                                        <button
-                                            onClick={() => setEditingSession(session)}
-                                            className="text-sm px-3 py-1 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50"
-                                        >
-                                            ✏️ Modifier
-                                        </button>
-                                        <button
-                                            onClick={() => setDeletingSessionId(session.id)}
-                                            className="text-sm px-3 py-1 rounded-lg border border-red-200 text-red-500 hover:bg-red-50"
-                                        >
-                                            🗑️ Supprimer
-                                        </button>
+                            <div key={session.id} className="bg-white rounded-xl px-5 py-4 border border-gray-100 shadow-sm flex items-center gap-4 mb-3">
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-0.5">
+                                        <h3 className="font-bold text-gray-800">{session.name}</h3>
+                                        <StatusBadge scheduledAt={session.scheduledAt} />
                                     </div>
+                                    <p className="text-xs text-gray-400">
+                                        {session.exercises.length} exercice{session.exercises.length !== 1 ? 's' : ''}
+                                        {session.scheduledAt && ` · ${new Date(session.scheduledAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`}
+                                    </p>
                                 </div>
-                                <p className="text-sm text-gray-500 mb-3">
-                                    {new Date(session.createdAt).toLocaleDateString('fr-FR')}
-                                </p>
-                                {session.exercises.map((se) => (
-                                    <div key={se.id} className="text-gray-600 text-sm py-1 border-b">
-                                        {se.exercise.name} — {se.sets} séries x {se.reps} reps
-                                        {se.weight ? ` @ ${se.weight}kg` : ''}
-                                    </div>
-                                ))}
+                                <div className="flex gap-2 shrink-0">
+                                    <button
+                                        onClick={() => setEditingSession(session)}
+                                        className="text-sm px-3 py-1 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50"
+                                    >
+                                        ✏️ Modifier
+                                    </button>
+                                    <button
+                                        onClick={() => setDeletingSessionId(session.id)}
+                                        className="text-sm px-3 py-1 rounded-lg border border-red-200 text-red-500 hover:bg-red-50"
+                                    >
+                                        🗑️ Supprimer
+                                    </button>
+                                </div>
                             </div>
                         ))}
                     </div>
