@@ -53,9 +53,6 @@ export default function AdminDashboard({ clients, coachName, upcomingSessions }:
                     <h1 style={{ fontSize: 26, fontWeight: 700, letterSpacing: '-0.03em', margin: 0 }}>Bienvenue, {coachName} 👋</h1>
                     <p style={{ color: '#6B7280', fontSize: 14, marginTop: 4 }}>{clients.length} clients actifs</p>
                 </div>
-                <Link href="/admin/clients/new" style={{ padding: '8px 16px', borderRadius: 8, border: 'none', background: '#111827', color: 'white', fontSize: 13, fontWeight: 600, cursor: 'pointer', textDecoration: 'none' }}>
-                    + Créer séance
-                </Link>
             </div>
 
             {/* Stats */}
