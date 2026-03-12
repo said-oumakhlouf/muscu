@@ -17,6 +17,8 @@ model Exercise {
     difficulty  String?
     sessions    SessionExercise[]
     createdAt   DateTime @default(now())
+    coachId     Int?
+    coach       Coach?   @relation("CoachExercises", fields: [coachId], references: [id])
 }
 
 model Coach {
@@ -28,6 +30,7 @@ model Coach {
     photoUrl    String?
     clients     User[]   @relation("CoachClients")
     createdAt   DateTime @default(now())
+    exercises   Exercise[] @relation("CoachExercises")
 }
 
 model User {

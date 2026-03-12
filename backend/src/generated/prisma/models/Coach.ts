@@ -230,6 +230,7 @@ export type CoachWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Coach"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   clients?: Prisma.UserListRelationFilter
+  exercises?: Prisma.ExerciseListRelationFilter
 }
 
 export type CoachOrderByWithRelationInput = {
@@ -241,6 +242,7 @@ export type CoachOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   clients?: Prisma.UserOrderByRelationAggregateInput
+  exercises?: Prisma.ExerciseOrderByRelationAggregateInput
 }
 
 export type CoachWhereUniqueInput = Prisma.AtLeast<{
@@ -255,6 +257,7 @@ export type CoachWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Coach"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   clients?: Prisma.UserListRelationFilter
+  exercises?: Prisma.ExerciseListRelationFilter
 }, "id" | "userId">
 
 export type CoachOrderByWithAggregationInput = {
@@ -290,6 +293,7 @@ export type CoachCreateInput = {
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
   clients?: Prisma.UserCreateNestedManyWithoutCoachInput
+  exercises?: Prisma.ExerciseCreateNestedManyWithoutCoachInput
 }
 
 export type CoachUncheckedCreateInput = {
@@ -300,6 +304,7 @@ export type CoachUncheckedCreateInput = {
   photoUrl?: string | null
   createdAt?: Date | string
   clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
+  exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutCoachInput
 }
 
 export type CoachUpdateInput = {
@@ -309,6 +314,7 @@ export type CoachUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
   clients?: Prisma.UserUpdateManyWithoutCoachNestedInput
+  exercises?: Prisma.ExerciseUpdateManyWithoutCoachNestedInput
 }
 
 export type CoachUncheckedUpdateInput = {
@@ -319,6 +325,7 @@ export type CoachUncheckedUpdateInput = {
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
+  exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutCoachNestedInput
 }
 
 export type CoachCreateManyInput = {
@@ -344,6 +351,11 @@ export type CoachUncheckedUpdateManyInput = {
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CoachNullableScalarRelationFilter = {
+  is?: Prisma.CoachWhereInput | null
+  isNot?: Prisma.CoachWhereInput | null
 }
 
 export type CoachCountOrderByAggregateInput = {
@@ -383,9 +395,20 @@ export type CoachSumOrderByAggregateInput = {
   userId?: Prisma.SortOrder
 }
 
-export type CoachNullableScalarRelationFilter = {
-  is?: Prisma.CoachWhereInput | null
-  isNot?: Prisma.CoachWhereInput | null
+export type CoachCreateNestedOneWithoutExercisesInput = {
+  create?: Prisma.XOR<Prisma.CoachCreateWithoutExercisesInput, Prisma.CoachUncheckedCreateWithoutExercisesInput>
+  connectOrCreate?: Prisma.CoachCreateOrConnectWithoutExercisesInput
+  connect?: Prisma.CoachWhereUniqueInput
+}
+
+export type CoachUpdateOneWithoutExercisesNestedInput = {
+  create?: Prisma.XOR<Prisma.CoachCreateWithoutExercisesInput, Prisma.CoachUncheckedCreateWithoutExercisesInput>
+  connectOrCreate?: Prisma.CoachCreateOrConnectWithoutExercisesInput
+  upsert?: Prisma.CoachUpsertWithoutExercisesInput
+  disconnect?: Prisma.CoachWhereInput | boolean
+  delete?: Prisma.CoachWhereInput | boolean
+  connect?: Prisma.CoachWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CoachUpdateToOneWithWhereWithoutExercisesInput, Prisma.CoachUpdateWithoutExercisesInput>, Prisma.CoachUncheckedUpdateWithoutExercisesInput>
 }
 
 export type CoachCreateNestedOneWithoutClientsInput = {
@@ -436,12 +459,67 @@ export type CoachUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CoachUpdateToOneWithWhereWithoutUserInput, Prisma.CoachUpdateWithoutUserInput>, Prisma.CoachUncheckedUpdateWithoutUserInput>
 }
 
+export type CoachCreateWithoutExercisesInput = {
+  bio?: string | null
+  specialty?: string | null
+  photoUrl?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
+  clients?: Prisma.UserCreateNestedManyWithoutCoachInput
+}
+
+export type CoachUncheckedCreateWithoutExercisesInput = {
+  id?: number
+  userId: number
+  bio?: string | null
+  specialty?: string | null
+  photoUrl?: string | null
+  createdAt?: Date | string
+  clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
+}
+
+export type CoachCreateOrConnectWithoutExercisesInput = {
+  where: Prisma.CoachWhereUniqueInput
+  create: Prisma.XOR<Prisma.CoachCreateWithoutExercisesInput, Prisma.CoachUncheckedCreateWithoutExercisesInput>
+}
+
+export type CoachUpsertWithoutExercisesInput = {
+  update: Prisma.XOR<Prisma.CoachUpdateWithoutExercisesInput, Prisma.CoachUncheckedUpdateWithoutExercisesInput>
+  create: Prisma.XOR<Prisma.CoachCreateWithoutExercisesInput, Prisma.CoachUncheckedCreateWithoutExercisesInput>
+  where?: Prisma.CoachWhereInput
+}
+
+export type CoachUpdateToOneWithWhereWithoutExercisesInput = {
+  where?: Prisma.CoachWhereInput
+  data: Prisma.XOR<Prisma.CoachUpdateWithoutExercisesInput, Prisma.CoachUncheckedUpdateWithoutExercisesInput>
+}
+
+export type CoachUpdateWithoutExercisesInput = {
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
+  clients?: Prisma.UserUpdateManyWithoutCoachNestedInput
+}
+
+export type CoachUncheckedUpdateWithoutExercisesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
+}
+
 export type CoachCreateWithoutClientsInput = {
   bio?: string | null
   specialty?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
+  exercises?: Prisma.ExerciseCreateNestedManyWithoutCoachInput
 }
 
 export type CoachUncheckedCreateWithoutClientsInput = {
@@ -451,6 +529,7 @@ export type CoachUncheckedCreateWithoutClientsInput = {
   specialty?: string | null
   photoUrl?: string | null
   createdAt?: Date | string
+  exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutCoachInput
 }
 
 export type CoachCreateOrConnectWithoutClientsInput = {
@@ -464,6 +543,7 @@ export type CoachCreateWithoutUserInput = {
   photoUrl?: string | null
   createdAt?: Date | string
   clients?: Prisma.UserCreateNestedManyWithoutCoachInput
+  exercises?: Prisma.ExerciseCreateNestedManyWithoutCoachInput
 }
 
 export type CoachUncheckedCreateWithoutUserInput = {
@@ -473,6 +553,7 @@ export type CoachUncheckedCreateWithoutUserInput = {
   photoUrl?: string | null
   createdAt?: Date | string
   clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
+  exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutCoachInput
 }
 
 export type CoachCreateOrConnectWithoutUserInput = {
@@ -497,6 +578,7 @@ export type CoachUpdateWithoutClientsInput = {
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
+  exercises?: Prisma.ExerciseUpdateManyWithoutCoachNestedInput
 }
 
 export type CoachUncheckedUpdateWithoutClientsInput = {
@@ -506,6 +588,7 @@ export type CoachUncheckedUpdateWithoutClientsInput = {
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutCoachNestedInput
 }
 
 export type CoachUpsertWithoutUserInput = {
@@ -525,6 +608,7 @@ export type CoachUpdateWithoutUserInput = {
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUpdateManyWithoutCoachNestedInput
+  exercises?: Prisma.ExerciseUpdateManyWithoutCoachNestedInput
 }
 
 export type CoachUncheckedUpdateWithoutUserInput = {
@@ -534,6 +618,7 @@ export type CoachUncheckedUpdateWithoutUserInput = {
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
+  exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutCoachNestedInput
 }
 
 
@@ -543,10 +628,12 @@ export type CoachUncheckedUpdateWithoutUserInput = {
 
 export type CoachCountOutputType = {
   clients: number
+  exercises: number
 }
 
 export type CoachCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   clients?: boolean | CoachCountOutputTypeCountClientsArgs
+  exercises?: boolean | CoachCountOutputTypeCountExercisesArgs
 }
 
 /**
@@ -566,6 +653,13 @@ export type CoachCountOutputTypeCountClientsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.UserWhereInput
 }
 
+/**
+ * CoachCountOutputType without action
+ */
+export type CoachCountOutputTypeCountExercisesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExerciseWhereInput
+}
+
 
 export type CoachSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -576,6 +670,7 @@ export type CoachSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   clients?: boolean | Prisma.Coach$clientsArgs<ExtArgs>
+  exercises?: boolean | Prisma.Coach$exercisesArgs<ExtArgs>
   _count?: boolean | Prisma.CoachCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["coach"]>
 
@@ -612,6 +707,7 @@ export type CoachOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
 export type CoachInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   clients?: boolean | Prisma.Coach$clientsArgs<ExtArgs>
+  exercises?: boolean | Prisma.Coach$exercisesArgs<ExtArgs>
   _count?: boolean | Prisma.CoachCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CoachIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -626,6 +722,7 @@ export type $CoachPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     clients: Prisma.$UserPayload<ExtArgs>[]
+    exercises: Prisma.$ExercisePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1030,6 +1127,7 @@ export interface Prisma__CoachClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   clients<T extends Prisma.Coach$clientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Coach$clientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  exercises<T extends Prisma.Coach$exercisesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Coach$exercisesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExercisePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1482,6 +1580,30 @@ export type Coach$clientsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+}
+
+/**
+ * Coach.exercises
+ */
+export type Coach$exercisesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Exercise
+   */
+  select?: Prisma.ExerciseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Exercise
+   */
+  omit?: Prisma.ExerciseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExerciseInclude<ExtArgs> | null
+  where?: Prisma.ExerciseWhereInput
+  orderBy?: Prisma.ExerciseOrderByWithRelationInput | Prisma.ExerciseOrderByWithRelationInput[]
+  cursor?: Prisma.ExerciseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExerciseScalarFieldEnum | Prisma.ExerciseScalarFieldEnum[]
 }
 
 /**

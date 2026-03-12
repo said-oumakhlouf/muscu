@@ -82,7 +82,8 @@ export const ExerciseScalarFieldEnum = {
   imageUrl: 'imageUrl',
   videoUrl: 'videoUrl',
   difficulty: 'difficulty',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  coachId: 'coachId'
 } as const
 
 export type ExerciseScalarFieldEnum = (typeof ExerciseScalarFieldEnum)[keyof typeof ExerciseScalarFieldEnum]
