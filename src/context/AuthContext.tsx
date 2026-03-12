@@ -14,7 +14,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [userId, setUserId] = useState<number | null>(null);
 
     useEffect(() => {
-        const t = localStorage.getItem('token');
+        const t = sessionStorage.getItem('token');
         if (t) {
             setToken(t);
             const decoded = jwtDecode<JwtPayload>(t);
@@ -25,7 +25,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     const login = (t: string) => {
-        localStorage.setItem('token', t);
+        sessionStorage.setItem('token', t);
         setToken(t);
         const decoded = jwtDecode<JwtPayload>(t);
         setRole(decoded.role);
@@ -33,7 +33,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     const logout = () => {
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
         setToken(null);
         setRole(null);
         setUserId(null)
