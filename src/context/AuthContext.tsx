@@ -12,6 +12,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [role, setRole] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [userId, setUserId] = useState<number | null>(null);
+    
 
     useEffect(() => {
         const t = sessionStorage.getItem('token');

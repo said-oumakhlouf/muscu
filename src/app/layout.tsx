@@ -1,18 +1,14 @@
 import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/context/AuthContext";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const barlow = Barlow_Condensed({
+  subsets: ['latin'],
+  weight: ['900'],
+  variable: '--font-barlow',
 });
 
 export const metadata: Metadata = {
@@ -27,8 +23,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#F3EEFF]`}
+      <body  
+        className={`${barlow.variable} antialiased bg-[#F3EEFF]`}
       >
         <AuthProvider >
           <Navbar />
