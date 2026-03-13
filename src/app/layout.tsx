@@ -5,6 +5,7 @@ import { Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const barlow = Barlow_Condensed({
   subsets: ['latin'],
@@ -31,6 +32,7 @@ export default function RootLayout({
           <Navbar />
           <Toaster position="top-right" />
           {children}
+          <ScrollToTop />
           <Footer />
         </AuthProvider>
       </body>
