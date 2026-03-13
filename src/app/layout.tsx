@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import Footer from "@/components/Footer";
 
 const barlow = Barlow_Condensed({
   subsets: ['latin'],
@@ -30,6 +31,7 @@ export default function RootLayout({
           <Navbar />
           <Toaster position="top-right" />
           {children}
+          <Footer />
         </AuthProvider>
       </body>
     </html>
