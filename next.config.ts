@@ -5,6 +5,12 @@ const nextConfig = {
       { pathname: '/icons/**' },
       { pathname: '/public/**' },
     ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
   },
 };
 

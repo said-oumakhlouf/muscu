@@ -3,7 +3,10 @@ import CoachWelcome from '@/components/CoachWelcome';
 import Hero from '@/components/Hero';
 import HomeCoaches from '@/components/HomeCoaches';
 import HomeCTA from '@/components/HomeCTA';
+import HomeFAQ from '@/components/HomeFAQ';
 import HomeFeatures from '@/components/HomeFeatures';
+import HomeHowItWorks from '@/components/HomeHowItWorks';
+import HomeTransformation from '@/components/HomeTransfprmation';
 import { useAuth } from '@/context/AuthContext';
 
 
@@ -18,8 +21,11 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       <Hero />
       <HomeFeatures />
+      <HomeTransformation />
+      <HomeHowItWorks />
       <HomeCoaches />
       <HomeCTA />
+      <HomeFAQ />
     </div>
   );
 }
