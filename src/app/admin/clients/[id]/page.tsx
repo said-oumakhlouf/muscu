@@ -1,5 +1,6 @@
 'use client';
 
+import Avatar from '@/components/Avatar';
 import CreateSessionForm from '@/components/CreateSessionForm';
 import StatusBadge from '@/components/StatusBadge';
 import { useAuth } from '@/context/AuthContext';
@@ -10,7 +11,6 @@ import { User } from '@/types/User';
 import { formatGoal } from '@/utils/goalLabels';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Avatar from '@/components/Avatar';
 
 export default function ClientDetailPage() {
     const { token, role, isLoading } = useAuth();

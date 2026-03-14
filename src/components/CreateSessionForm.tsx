@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { exerciseService } from '@/services/exerciseService';
 import { sessionService } from '@/services/sessionService';
 import { Exercise } from '@/types/Exercise';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 interface CreateSessionFormProps {
@@ -59,84 +59,99 @@ export default function CreateSessionForm({ token, clientId, onCreated }: Create
     };
 
     return (
-        <div className="w-full mb-6">
+        <div className="w-full">
+            {/* Toggle button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-2 text-sm font-medium text-gray-700 border border-gray-200 bg-white rounded-xl px-4 py-3 w-full hover:bg-gray-50 transition-colors"
+                className={`flex items-center gap-2 text-sm font-medium w-full px-4 py-3 rounded-xl border transition-colors ${isOpen
+                    ? 'border-[#6C5CE7]/20 text-[#6C5CE7] bg-[#f0eeff]'
+                    : 'border-black/[0.06] text-gray-500 bg-[#F5F5FB] hover:bg-[#eeeeff] hover:text-[#6C5CE7]'
+                    }`}
             >
-                <span className="text-lg">{isOpen ? '✕' : '+'}</span>
+                <span className="text-base">{isOpen ? '✕' : '+'}</span>
                 <span>{isOpen ? 'Fermer' : 'Nouvelle séance'}</span>
             </button>
 
             {isOpen && (
-                <div className="bg-white rounded-xl p-6 shadow border border-gray-100 mt-2">
-                    <input
-                        className="border rounded-lg p-2 w-full text-gray-800 mb-4"
-                        placeholder="Nom de la séance"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
+                <div className="mt-4 flex flex-col gap-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-widest text-[#9990cc]">
+                        Nouvelle séance
+                    </p>
 
-                    <input
-                        className="border rounded-lg p-2 w-full text-gray-800 mb-4"
-                        type="datetime-local"
-                        value={scheduledAt}
-                        onChange={(e) => setScheduledAt(e.target.value)}
-                    />
-
-                    {selectedExercises.map((se, index) => (
-                        <div key={index} className="flex gap-2 mb-3 items-center">
-                            <select
-                                className="border rounded-lg p-2 flex-1 text-gray-800"
-                                value={se.exerciseId}
-                                onChange={(e) => updateExercise(index, 'exerciseId', Number(e.target.value))}
-                            >
-                                <option value={0}>Choisir un exercice</option>
-                                {exercises.map((ex) => (
-                                    <option key={ex.id} value={ex.id}>{ex.name}</option>
-                                ))}
-                            </select>
+                    {/* Nom + date */}
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-medium text-gray-400">Nom de la séance</label>
                             <input
-                                className="border rounded-lg p-2 w-16 text-gray-800 text-center"
-                                type="number"
-                                placeholder="Séries"
-                                value={se.sets}
-                                onChange={(e) => updateExercise(index, 'sets', Number(e.target.value))}
+                                className="bg-[#F5F5FB] border border-[#6C5CE7]/15 rounded-xl px-3 py-2.5 text-sm text-[#1a1a2e] outline-none focus:border-[#6C5CE7] focus:bg-[#faf9ff] transition-colors placeholder:text-gray-300 w-full"
+                                placeholder="ex: Cardio, Jambes..."
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                             />
-                            <input
-                                className="border rounded-lg p-2 w-16 text-gray-800 text-center"
-                                type="number"
-                                placeholder="Reps"
-                                value={se.reps}
-                                onChange={(e) => updateExercise(index, 'reps', Number(e.target.value))}
-                            />
-                            <input
-                                className="border rounded-lg p-2 w-16 text-gray-800 text-center"
-                                type="number"
-                                placeholder="Kg"
-                                value={se.weight || ''}
-                                onChange={(e) => updateExercise(index, 'weight', Number(e.target.value))}
-                            />
-                            <button
-                                onClick={() => removeExercise(index)}
-                                className="text-red-500 hover:text-red-700 font-bold"
-                            >
-                                ✕
-                            </button>
                         </div>
-                    ))}
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-medium text-gray-400">Date prévue</label>
+                            <input
+                                className="bg-[#F5F5FB] border border-[#6C5CE7]/15 rounded-xl px-3 py-2.5 text-sm text-[#1a1a2e] outline-none focus:border-[#6C5CE7] focus:bg-[#faf9ff] transition-colors w-full"
+                                type="datetime-local"
+                                value={scheduledAt}
+                                onChange={(e) => setScheduledAt(e.target.value)}
+                            />
+                        </div>
+                    </div>
 
-                    <div className="flex gap-3 mt-4">
+                    {/* Exercices */}
+                    {selectedExercises.length > 0 && (
+                        <div className="flex flex-col gap-2">
+                            <div className="grid grid-cols-[1fr_64px_64px_64px_24px] gap-2 px-1">
+                                {['Exercice', 'Séries', 'Reps', 'Kg', ''].map((h) => (
+                                    <p key={h} className="text-[10px] font-semibold uppercase tracking-wider text-[#9990cc]">{h}</p>
+                                ))}
+                            </div>
+                            {selectedExercises.map((se, index) => (
+                                <div key={index} className="grid grid-cols-[1fr_64px_64px_64px_24px] gap-2 items-center">
+                                    <select
+                                        className="bg-[#F5F5FB] border border-[#6C5CE7]/15 rounded-xl px-3 py-2 text-sm text-[#1a1a2e] outline-none focus:border-[#6C5CE7] appearance-none cursor-pointer"
+                                        value={se.exerciseId}
+                                        onChange={(e) => updateExercise(index, 'exerciseId', Number(e.target.value))}
+                                    >
+                                        <option value={0}>Choisir</option>
+                                        {exercises.map((ex) => (
+                                            <option key={ex.id} value={ex.id}>{ex.name}</option>
+                                        ))}
+                                    </select>
+                                    {['sets', 'reps', 'weight'].map((field) => (
+                                        <input
+                                            key={field}
+                                            className="bg-[#F5F5FB] border border-[#6C5CE7]/15 rounded-xl p-2 text-sm text-[#1a1a2e] text-center outline-none focus:border-[#6C5CE7] transition-colors"
+                                            type="number"
+                                            value={field === 'weight' ? se.weight || '' : (se as any)[field]}
+                                            onChange={(e) => updateExercise(index, field, Number(e.target.value))}
+                                        />
+                                    ))}
+                                    <button
+                                        onClick={() => removeExercise(index)}
+                                        className="text-red-400 hover:text-red-600 text-sm font-bold transition-colors"
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Actions */}
+                    <div className="flex gap-3">
                         <button
                             onClick={addExercise}
-                            className="border border-gray-300 text-gray-700 rounded-lg px-4 py-2 hover:bg-gray-50"
+                            className="text-sm px-4 py-2 rounded-xl border border-[#6C5CE7]/20 text-[#6C5CE7] hover:bg-[#f0eeff] transition-colors"
                         >
                             + Exercice
                         </button>
                         <button
                             onClick={handleSubmit}
                             disabled={!name || selectedExercises.length === 0}
-                            className="bg-black text-white rounded-lg px-4 py-2 font-bold hover:bg-zinc-800 disabled:bg-gray-300"
+                            className="text-sm px-4 py-2 rounded-xl bg-[#6C5CE7] hover:bg-[#5a4bd0] text-white font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                         >
                             Créer la séance
                         </button>
