@@ -43,7 +43,6 @@ export default function ClientDetailPage() {
         userService.getSessions(token!, Number(id)).then(setSessions);
     };
 
-
     useEffect(() => {
         if (token && role === 'admin' && id) {
             const numericId = Number(id);
@@ -53,39 +52,52 @@ export default function ClientDetailPage() {
         }
     }, [token, role, id]);
 
-    if (isLoading) return <div className="flex min-h-screen items-center justify-center">Chargement...</div>;
+    if (isLoading)
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-[#EEEEF8]">
+                Chargement...
+            </div>
+        );
 
     return (
-        <div className="flex min-h-screen flex-col items-center bg-zinc-50 p-10">
+        <div className="flex min-h-screen flex-col bg-[#EEEEF8] p-10">
             {client && (
-                <>
-                    <div className="bg-white rounded-xl p-8 shadow w-full max-w-2xl mb-8">
-                        <div className="flex items-center gap-6">
-                            <Avatar name={`${client.firstname} ${client.lastname}`} size={80} />
+                <div className="mx-auto w-full max-w-2xl flex flex-col gap-5">
+
+                    {/* Card client */}
+                    <div className="bg-white rounded-2xl border border-black/[0.06] p-7">
+
+                        {/* Avatar + nom */}
+                        <div className="flex items-center gap-5 pb-6 border-b border-black/[0.06]">
+                            <Avatar name={`${client.firstname} ${client.lastname}`} size={64} />
                             <div>
-                                <h1 className="text-3xl font-bold text-gray-800">
+                                <h1 className="text-xl font-semibold text-[#1a1a2e]">
                                     {client.firstname} {client.lastname}
                                 </h1>
-                                <p className="text-gray-500">{client.email}</p>
+                                <p className="text-sm text-gray-400 mt-0.5">{client.email}</p>
                             </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-4 mt-6">
-                            <div className="bg-zinc-50 rounded-lg p-4 text-center">
-                                <p className="text-2xl font-bold text-gray-800">{client.weight ?? '—'}kg</p>
-                                <p className="text-sm text-gray-500">Poids</p>
-                            </div>
-                            <div className="bg-zinc-50 rounded-lg p-4 text-center">
-                                <p className="text-2xl font-bold text-gray-800">{client.height ?? '—'}cm</p>
-                                <p className="text-sm text-gray-500">Taille</p>
-                            </div>
-                            <div className="bg-zinc-50 rounded-lg p-4 text-center">
-                                <p className="text-2xl font-bold text-gray-800">{formatGoal(client.goal)}</p>
-                                <p className="text-sm text-gray-500">Objectif</p>
-                            </div>
+
+                        {/* Stats */}
+                        <div className="grid grid-cols-3 gap-3 mt-6">
+                            {[
+                                { label: 'Poids', value: client.weight ? `${client.weight}` : '_', unit: 'kg' },
+                                { label: 'Taille', value: client.height ? `${client.height}` : '—', unit: client.height ? 'cm' : '' },
+                                { label: 'Objectif', value: formatGoal(client.goal), unit: '' },
+                            ].map(({ label, value, unit }) => (
+                                <div key={label} className="bg-[#F5F5FB] rounded-xl p-4 text-center">
+                                    <p className="text-lg font-bold text-[#1a1a2e]">
+                                        {value}
+                                        {unit && <span className="text-xs font-normal text-gray-400 ml-0.5">{unit}</span>}
+                                    </p>
+                                    <p className="text-xs text-[#9990cc] font-medium mt-1">{label}</p>
+                                </div>
+                            ))}
                         </div>
                     </div>
 
-                    <div className="w-full max-w-2xl">
+                    {/* Formulaire nouvelle séance */}
+                    <div className="bg-white rounded-2xl border border-black/[0.06] p-7">
                         <CreateSessionForm
                             token={token!}
                             clientId={Number(id)}
@@ -93,92 +105,104 @@ export default function ClientDetailPage() {
                         />
                     </div>
 
-                    <div className="w-full max-w-2xl">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">Séances</h2>
-                        {sessions.map((session) => (
-                            <div key={session.id} className="bg-white rounded-xl px-5 py-4 border border-gray-100 shadow-sm flex items-center gap-4 mb-3">
-                                <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 mb-0.5">
-                                        <h3 className="font-bold text-gray-800">{session.name}</h3>
-                                        <StatusBadge scheduledAt={session.scheduledAt} />
+                    {/* Liste séances */}
+                    <div>
+                        <p className="text-[11px] font-semibold uppercase tracking-widest text-[#9990cc] mb-3 px-1">
+                            Séances
+                        </p>
+                        <div className="flex flex-col gap-3">
+                            {sessions.length === 0 && (
+                                <div className="bg-white rounded-2xl border border-black/[0.06] p-8 text-center text-gray-400 text-sm">
+                                    Aucune séance pour ce client.
+                                </div>
+                            )}
+                            {sessions.map((session) => (
+                                <div
+                                    key={session.id}
+                                    className="bg-white rounded-2xl border border-black/[0.06] px-6 py-4 flex items-center gap-4"
+                                >
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <h3 className="font-semibold text-[#1a1a2e] text-sm">{session.name}</h3>
+                                            <StatusBadge scheduledAt={session.scheduledAt} />
+                                        </div>
+                                        <p className="text-xs text-gray-400">
+                                            {session.exercises.length} exercice{session.exercises.length !== 1 ? 's' : ''}
+                                            {session.scheduledAt && ` · ${new Date(session.scheduledAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`}
+                                        </p>
                                     </div>
-                                    <p className="text-xs text-gray-400">
-                                        {session.exercises.length} exercice{session.exercises.length !== 1 ? 's' : ''}
-                                        {session.scheduledAt && ` · ${new Date(session.scheduledAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`}
-                                    </p>
+                                    <div className="flex gap-2 shrink-0">
+                                        <button
+                                            onClick={() => setEditingSession(session)}
+                                            className="text-xs px-3 py-1.5 rounded-lg border border-[#6C5CE7]/20 text-[#6C5CE7] hover:bg-[#f0eeff] transition-colors"
+                                        >
+                                            ✏️ Modifier
+                                        </button>
+                                        <button
+                                            onClick={() => setDeletingSessionId(session.id)}
+                                            className="text-xs px-3 py-1.5 rounded-lg border border-red-200 text-red-400 hover:bg-red-50 transition-colors"
+                                        >
+                                            🗑️ Supprimer
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="flex gap-2 shrink-0">
-                                    <button
-                                        onClick={() => setEditingSession(session)}
-                                        className="text-sm px-3 py-1 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50"
-                                    >
-                                        ✏️ Modifier
-                                    </button>
-                                    <button
-                                        onClick={() => setDeletingSessionId(session.id)}
-                                        className="text-sm px-3 py-1 rounded-lg border border-red-200 text-red-500 hover:bg-red-50"
-                                    >
-                                        🗑️ Supprimer
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
+
+                    {/* Modal modifier séance */}
                     {editingSession && (
-                        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                            <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-xl">
-                                <h3 className="text-lg font-bold text-gray-800 mb-4">Modifier la séance</h3>
-                                <input
-                                    className="border rounded-lg p-2 w-full text-gray-800 mb-3"
-                                    value={editingSession.name}
-                                    onChange={(e) => setEditingSession({ ...editingSession, name: e.target.value })}
-                                />
+                        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-2xl p-7 w-full max-w-md border border-black/[0.06]">
+                                <h3 className="text-base font-semibold text-[#1a1a2e] mb-5">Modifier la séance</h3>
+
+                                <div className="flex flex-col gap-1.5 mb-4">
+                                    <label className="text-xs font-medium text-gray-400">Nom de la séance</label>
+                                    <input
+                                        className="bg-[#F5F5FB] border border-[#6C5CE7]/15 rounded-xl px-3 py-2.5 text-sm text-[#1a1a2e] outline-none focus:border-[#6C5CE7] focus:bg-[#faf9ff] transition-colors w-full"
+                                        value={editingSession.name}
+                                        onChange={(e) => setEditingSession({ ...editingSession, name: e.target.value })}
+                                    />
+                                </div>
+
+                                <p className="text-[11px] font-semibold uppercase tracking-widest text-[#9990cc] mb-3">
+                                    Exercices
+                                </p>
+
                                 {editingSession.exercises.map((se, index) => (
                                     <div key={se.id} className="flex gap-2 mb-2 items-center">
-                                        <span className="flex-1 text-sm text-gray-700">{se.exercise.name}</span>
-                                        <input
-                                            className="border rounded-lg p-1 w-16 text-center text-gray-800"
-                                            type="number"
-                                            value={se.sets}
-                                            onChange={(e) => {
-                                                const updated = [...editingSession.exercises];
-                                                updated[index] = { ...updated[index], sets: Number(e.target.value) };
-                                                setEditingSession({ ...editingSession, exercises: updated });
-                                            }}
-                                        />
-                                        <input
-                                            className="border rounded-lg p-1 w-16 text-center text-gray-800"
-                                            type="number"
-                                            value={se.reps}
-                                            onChange={(e) => {
-                                                const updated = [...editingSession.exercises];
-                                                updated[index] = { ...updated[index], reps: Number(e.target.value) };
-                                                setEditingSession({ ...editingSession, exercises: updated });
-                                            }}
-                                        />
-                                        <input
-                                            className="border rounded-lg p-1 w-16 text-center text-gray-800"
-                                            type="number"
-                                            placeholder="Kg"
-                                            value={se.weight || ''}
-                                            onChange={(e) => {
-                                                const updated = [...editingSession.exercises];
-                                                updated[index] = { ...updated[index], weight: Number(e.target.value) };
-                                                setEditingSession({ ...editingSession, exercises: updated });
-                                            }}
-                                        />
+                                        <span className="flex-1 text-sm text-[#1a1a2e] truncate">{se.exercise.name}</span>
+                                        {[
+                                            { key: 'sets', placeholder: 'Séries' },
+                                            { key: 'reps', placeholder: 'Reps' },
+                                            { key: 'weight', placeholder: 'Kg' },
+                                        ].map(({ key, placeholder }) => (
+                                            <input
+                                                key={key}
+                                                className="bg-[#F5F5FB] border border-[#6C5CE7]/15 rounded-lg p-1.5 w-16 text-center text-sm text-[#1a1a2e] outline-none focus:border-[#6C5CE7] transition-colors"
+                                                type="number"
+                                                placeholder={placeholder}
+                                                value={(se as any)[key] || ''}
+                                                onChange={(e) => {
+                                                    const updated = [...editingSession.exercises];
+                                                    updated[index] = { ...updated[index], [key]: Number(e.target.value) };
+                                                    setEditingSession({ ...editingSession, exercises: updated });
+                                                }}
+                                            />
+                                        ))}
                                     </div>
                                 ))}
-                                <div className="flex justify-end gap-3 mt-4">
+
+                                <div className="flex justify-end gap-3 mt-6">
                                     <button
                                         onClick={() => setEditingSession(null)}
-                                        className="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50"
+                                        className="px-4 py-2 rounded-xl border border-black/[0.08] text-sm text-gray-500 hover:bg-gray-50 transition-colors"
                                     >
                                         Annuler
                                     </button>
                                     <button
                                         onClick={handleUpdate}
-                                        className="px-4 py-2 rounded-lg bg-black text-white font-bold hover:bg-zinc-800"
+                                        className="px-4 py-2 rounded-xl bg-[#6C5CE7] hover:bg-[#5a4bd0] text-white text-sm font-semibold transition-colors"
                                     >
                                         Sauvegarder
                                     </button>
@@ -186,21 +210,23 @@ export default function ClientDetailPage() {
                             </div>
                         </div>
                     )}
+
+                    {/* Modal supprimer séance */}
                     {deletingSessionId && (
-                        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                            <div className="bg-white rounded-xl p-6 w-full max-w-sm shadow-xl">
-                                <h3 className="text-lg font-bold text-gray-800 mb-2">Supprimer la séance ?</h3>
-                                <p className="text-sm text-gray-500 mb-6">Cette action est irréversible.</p>
+                        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-2xl p-7 w-full max-w-sm border border-black/[0.06]">
+                                <h3 className="text-base font-semibold text-[#1a1a2e] mb-2">Supprimer la séance ?</h3>
+                                <p className="text-sm text-gray-400 mb-6">Cette action est irréversible.</p>
                                 <div className="flex justify-end gap-3">
                                     <button
                                         onClick={() => setDeletingSessionId(null)}
-                                        className="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50"
+                                        className="px-4 py-2 rounded-xl border border-black/[0.08] text-sm text-gray-500 hover:bg-gray-50 transition-colors"
                                     >
                                         Annuler
                                     </button>
                                     <button
                                         onClick={handleDelete}
-                                        className="px-4 py-2 rounded-lg bg-red-500 text-white font-bold hover:bg-red-600"
+                                        className="px-4 py-2 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-semibold transition-colors"
                                     >
                                         Supprimer
                                     </button>
@@ -208,7 +234,8 @@ export default function ClientDetailPage() {
                             </div>
                         </div>
                     )}
-                </>
+
+                </div>
             )}
         </div>
     );
