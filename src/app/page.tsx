@@ -1,6 +1,7 @@
 'use client';
 import CoachWelcome from '@/components/CoachWelcome';
 import Hero from '@/components/Hero';
+import HomeCertifications from '@/components/HomeCertifications';
 import HomeCoaches from '@/components/HomeCoaches';
 import HomeCTA from '@/components/HomeCTA';
 import HomeFAQ from '@/components/HomeFAQ';
@@ -23,6 +24,7 @@ export default function Home() {
       <HomeFeatures />
       <HomeTransformation />
       <HomeHowItWorks />
+      <HomeCertifications />
       <HomeCoaches />
       <HomeCTA />
       <HomeFAQ />
