@@ -7,7 +7,7 @@ import HomeCTA from '@/components/HomeCTA';
 import HomeFAQ from '@/components/HomeFAQ';
 import HomeFeatures from '@/components/HomeFeatures';
 import HomeHowItWorks from '@/components/HomeHowItWorks';
-import HomeTransformation from '@/components/HomeTransfprmation';
+import HomeTransformation from '@/components/HomeTransformation';
 import { useAuth } from '@/context/AuthContext';
 
 

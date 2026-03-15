@@ -1,9 +1,8 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
+import Link from 'next/link';
 
 const stats = [
     { value: '500+', label: 'Coachs certifiés' },
@@ -16,20 +15,20 @@ const logos = ['Nike', 'Adidas', 'Decathlon', 'MyProtein', 'Gymshark'];
 export default function Hero() {
     return (
         <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-8 overflow-hidden">
-            {/* Image plein écran */}
+            {/* Vidéo plein écran */}
             <div className="absolute inset-0 z-0">
-                <Image
-                    src="/assets/muscu-sombre.jpg"
-                    alt="Musculation"
-                    fill
-                    sizes="100vw"
-                    className="object-cover object-left"
-                    priority
-                />
-                <div className="absolute inset-0 bg-[#1A1A2E]/70" />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#1A1A2E]" />
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover object-center"
+                >
+                    <source src="assets/videos/corde.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-[#1A1A2E]/20" />
+                <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-[#1A1A2E]" />
             </div>
-
             {/* Contenu */}
             <div className="relative z-10 flex flex-col items-center max-w-4xl pt-16">
 
