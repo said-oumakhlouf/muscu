@@ -388,7 +388,9 @@ export const ModelName = {
   Coach: 'Coach',
   User: 'User',
   Session: 'Session',
-  SessionExercise: 'SessionExercise'
+  SessionExercise: 'SessionExercise',
+  Subscription: 'Subscription',
+  StripeConnect: 'StripeConnect'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "exercise" | "coach" | "user" | "session" | "sessionExercise"
+    modelProps: "exercise" | "coach" | "user" | "session" | "sessionExercise" | "subscription" | "stripeConnect"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +780,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Subscription: {
+      payload: Prisma.$SubscriptionPayload<ExtArgs>
+      fields: Prisma.SubscriptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SubscriptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SubscriptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        findFirst: {
+          args: Prisma.SubscriptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SubscriptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        findMany: {
+          args: Prisma.SubscriptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>[]
+        }
+        create: {
+          args: Prisma.SubscriptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        createMany: {
+          args: Prisma.SubscriptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SubscriptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>[]
+        }
+        delete: {
+          args: Prisma.SubscriptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        update: {
+          args: Prisma.SubscriptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.SubscriptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SubscriptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SubscriptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.SubscriptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        aggregate: {
+          args: Prisma.SubscriptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSubscription>
+        }
+        groupBy: {
+          args: Prisma.SubscriptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SubscriptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SubscriptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SubscriptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    StripeConnect: {
+      payload: Prisma.$StripeConnectPayload<ExtArgs>
+      fields: Prisma.StripeConnectFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StripeConnectFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeConnectPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StripeConnectFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeConnectPayload>
+        }
+        findFirst: {
+          args: Prisma.StripeConnectFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeConnectPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StripeConnectFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeConnectPayload>
+        }
+        findMany: {
+          args: Prisma.StripeConnectFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeConnectPayload>[]
+        }
+        create: {
+          args: Prisma.StripeConnectCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeConnectPayload>
+        }
+        createMany: {
+          args: Prisma.StripeConnectCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StripeConnectCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeConnectPayload>[]
+        }
+        delete: {
+          args: Prisma.StripeConnectDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeConnectPayload>
+        }
+        update: {
+          args: Prisma.StripeConnectUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeConnectPayload>
+        }
+        deleteMany: {
+          args: Prisma.StripeConnectDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StripeConnectUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StripeConnectUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeConnectPayload>[]
+        }
+        upsert: {
+          args: Prisma.StripeConnectUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StripeConnectPayload>
+        }
+        aggregate: {
+          args: Prisma.StripeConnectAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStripeConnect>
+        }
+        groupBy: {
+          args: Prisma.StripeConnectGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StripeConnectGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StripeConnectCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StripeConnectCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -887,6 +1037,32 @@ export const SessionExerciseScalarFieldEnum = {
 export type SessionExerciseScalarFieldEnum = (typeof SessionExerciseScalarFieldEnum)[keyof typeof SessionExerciseScalarFieldEnum]
 
 
+export const SubscriptionScalarFieldEnum = {
+  id: 'id',
+  coachId: 'coachId',
+  stripeCustomerId: 'stripeCustomerId',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  plan: 'plan',
+  status: 'status',
+  currentPeriodEnd: 'currentPeriodEnd',
+  createdAt: 'createdAt'
+} as const
+
+export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const StripeConnectScalarFieldEnum = {
+  id: 'id',
+  coachId: 'coachId',
+  stripeAccountId: 'stripeAccountId',
+  onboardingComplete: 'onboardingComplete',
+  payoutsEnabled: 'payoutsEnabled',
+  createdAt: 'createdAt'
+} as const
+
+export type StripeConnectScalarFieldEnum = (typeof StripeConnectScalarFieldEnum)[keyof typeof StripeConnectScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -970,6 +1146,13 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 /**
@@ -1072,6 +1255,8 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   session?: Prisma.SessionOmit
   sessionExercise?: Prisma.SessionExerciseOmit
+  subscription?: Prisma.SubscriptionOmit
+  stripeConnect?: Prisma.StripeConnectOmit
 }
 
 /* Types for Logging */

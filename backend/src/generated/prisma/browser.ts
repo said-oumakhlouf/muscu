@@ -42,3 +42,13 @@ export type Session = Prisma.SessionModel
  * 
  */
 export type SessionExercise = Prisma.SessionExerciseModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model StripeConnect
+ * 
+ */
+export type StripeConnect = Prisma.StripeConnectModel

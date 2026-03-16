@@ -231,6 +231,8 @@ export type CoachWhereInput = {
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   clients?: Prisma.UserListRelationFilter
   exercises?: Prisma.ExerciseListRelationFilter
+  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  stripeConnect?: Prisma.XOR<Prisma.StripeConnectNullableScalarRelationFilter, Prisma.StripeConnectWhereInput> | null
 }
 
 export type CoachOrderByWithRelationInput = {
@@ -243,6 +245,8 @@ export type CoachOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput
   clients?: Prisma.UserOrderByRelationAggregateInput
   exercises?: Prisma.ExerciseOrderByRelationAggregateInput
+  subscription?: Prisma.SubscriptionOrderByWithRelationInput
+  stripeConnect?: Prisma.StripeConnectOrderByWithRelationInput
 }
 
 export type CoachWhereUniqueInput = Prisma.AtLeast<{
@@ -258,6 +262,8 @@ export type CoachWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   clients?: Prisma.UserListRelationFilter
   exercises?: Prisma.ExerciseListRelationFilter
+  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  stripeConnect?: Prisma.XOR<Prisma.StripeConnectNullableScalarRelationFilter, Prisma.StripeConnectWhereInput> | null
 }, "id" | "userId">
 
 export type CoachOrderByWithAggregationInput = {
@@ -294,6 +300,8 @@ export type CoachCreateInput = {
   user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
   clients?: Prisma.UserCreateNestedManyWithoutCoachInput
   exercises?: Prisma.ExerciseCreateNestedManyWithoutCoachInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutCoachInput
+  stripeConnect?: Prisma.StripeConnectCreateNestedOneWithoutCoachInput
 }
 
 export type CoachUncheckedCreateInput = {
@@ -305,6 +313,8 @@ export type CoachUncheckedCreateInput = {
   createdAt?: Date | string
   clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
   exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutCoachInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCoachInput
+  stripeConnect?: Prisma.StripeConnectUncheckedCreateNestedOneWithoutCoachInput
 }
 
 export type CoachUpdateInput = {
@@ -315,6 +325,8 @@ export type CoachUpdateInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
   clients?: Prisma.UserUpdateManyWithoutCoachNestedInput
   exercises?: Prisma.ExerciseUpdateManyWithoutCoachNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutCoachNestedInput
+  stripeConnect?: Prisma.StripeConnectUpdateOneWithoutCoachNestedInput
 }
 
 export type CoachUncheckedUpdateInput = {
@@ -326,6 +338,8 @@ export type CoachUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
   exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutCoachNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCoachNestedInput
+  stripeConnect?: Prisma.StripeConnectUncheckedUpdateOneWithoutCoachNestedInput
 }
 
 export type CoachCreateManyInput = {
@@ -395,6 +409,11 @@ export type CoachSumOrderByAggregateInput = {
   userId?: Prisma.SortOrder
 }
 
+export type CoachScalarRelationFilter = {
+  is?: Prisma.CoachWhereInput
+  isNot?: Prisma.CoachWhereInput
+}
+
 export type CoachCreateNestedOneWithoutExercisesInput = {
   create?: Prisma.XOR<Prisma.CoachCreateWithoutExercisesInput, Prisma.CoachUncheckedCreateWithoutExercisesInput>
   connectOrCreate?: Prisma.CoachCreateOrConnectWithoutExercisesInput
@@ -459,6 +478,34 @@ export type CoachUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CoachUpdateToOneWithWhereWithoutUserInput, Prisma.CoachUpdateWithoutUserInput>, Prisma.CoachUncheckedUpdateWithoutUserInput>
 }
 
+export type CoachCreateNestedOneWithoutSubscriptionInput = {
+  create?: Prisma.XOR<Prisma.CoachCreateWithoutSubscriptionInput, Prisma.CoachUncheckedCreateWithoutSubscriptionInput>
+  connectOrCreate?: Prisma.CoachCreateOrConnectWithoutSubscriptionInput
+  connect?: Prisma.CoachWhereUniqueInput
+}
+
+export type CoachUpdateOneRequiredWithoutSubscriptionNestedInput = {
+  create?: Prisma.XOR<Prisma.CoachCreateWithoutSubscriptionInput, Prisma.CoachUncheckedCreateWithoutSubscriptionInput>
+  connectOrCreate?: Prisma.CoachCreateOrConnectWithoutSubscriptionInput
+  upsert?: Prisma.CoachUpsertWithoutSubscriptionInput
+  connect?: Prisma.CoachWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CoachUpdateToOneWithWhereWithoutSubscriptionInput, Prisma.CoachUpdateWithoutSubscriptionInput>, Prisma.CoachUncheckedUpdateWithoutSubscriptionInput>
+}
+
+export type CoachCreateNestedOneWithoutStripeConnectInput = {
+  create?: Prisma.XOR<Prisma.CoachCreateWithoutStripeConnectInput, Prisma.CoachUncheckedCreateWithoutStripeConnectInput>
+  connectOrCreate?: Prisma.CoachCreateOrConnectWithoutStripeConnectInput
+  connect?: Prisma.CoachWhereUniqueInput
+}
+
+export type CoachUpdateOneRequiredWithoutStripeConnectNestedInput = {
+  create?: Prisma.XOR<Prisma.CoachCreateWithoutStripeConnectInput, Prisma.CoachUncheckedCreateWithoutStripeConnectInput>
+  connectOrCreate?: Prisma.CoachCreateOrConnectWithoutStripeConnectInput
+  upsert?: Prisma.CoachUpsertWithoutStripeConnectInput
+  connect?: Prisma.CoachWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CoachUpdateToOneWithWhereWithoutStripeConnectInput, Prisma.CoachUpdateWithoutStripeConnectInput>, Prisma.CoachUncheckedUpdateWithoutStripeConnectInput>
+}
+
 export type CoachCreateWithoutExercisesInput = {
   bio?: string | null
   specialty?: string | null
@@ -466,6 +513,8 @@ export type CoachCreateWithoutExercisesInput = {
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
   clients?: Prisma.UserCreateNestedManyWithoutCoachInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutCoachInput
+  stripeConnect?: Prisma.StripeConnectCreateNestedOneWithoutCoachInput
 }
 
 export type CoachUncheckedCreateWithoutExercisesInput = {
@@ -476,6 +525,8 @@ export type CoachUncheckedCreateWithoutExercisesInput = {
   photoUrl?: string | null
   createdAt?: Date | string
   clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCoachInput
+  stripeConnect?: Prisma.StripeConnectUncheckedCreateNestedOneWithoutCoachInput
 }
 
 export type CoachCreateOrConnectWithoutExercisesInput = {
@@ -501,6 +552,8 @@ export type CoachUpdateWithoutExercisesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
   clients?: Prisma.UserUpdateManyWithoutCoachNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutCoachNestedInput
+  stripeConnect?: Prisma.StripeConnectUpdateOneWithoutCoachNestedInput
 }
 
 export type CoachUncheckedUpdateWithoutExercisesInput = {
@@ -511,6 +564,8 @@ export type CoachUncheckedUpdateWithoutExercisesInput = {
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCoachNestedInput
+  stripeConnect?: Prisma.StripeConnectUncheckedUpdateOneWithoutCoachNestedInput
 }
 
 export type CoachCreateWithoutClientsInput = {
@@ -520,6 +575,8 @@ export type CoachCreateWithoutClientsInput = {
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
   exercises?: Prisma.ExerciseCreateNestedManyWithoutCoachInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutCoachInput
+  stripeConnect?: Prisma.StripeConnectCreateNestedOneWithoutCoachInput
 }
 
 export type CoachUncheckedCreateWithoutClientsInput = {
@@ -530,6 +587,8 @@ export type CoachUncheckedCreateWithoutClientsInput = {
   photoUrl?: string | null
   createdAt?: Date | string
   exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutCoachInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCoachInput
+  stripeConnect?: Prisma.StripeConnectUncheckedCreateNestedOneWithoutCoachInput
 }
 
 export type CoachCreateOrConnectWithoutClientsInput = {
@@ -544,6 +603,8 @@ export type CoachCreateWithoutUserInput = {
   createdAt?: Date | string
   clients?: Prisma.UserCreateNestedManyWithoutCoachInput
   exercises?: Prisma.ExerciseCreateNestedManyWithoutCoachInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutCoachInput
+  stripeConnect?: Prisma.StripeConnectCreateNestedOneWithoutCoachInput
 }
 
 export type CoachUncheckedCreateWithoutUserInput = {
@@ -554,6 +615,8 @@ export type CoachUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string
   clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
   exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutCoachInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCoachInput
+  stripeConnect?: Prisma.StripeConnectUncheckedCreateNestedOneWithoutCoachInput
 }
 
 export type CoachCreateOrConnectWithoutUserInput = {
@@ -579,6 +642,8 @@ export type CoachUpdateWithoutClientsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
   exercises?: Prisma.ExerciseUpdateManyWithoutCoachNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutCoachNestedInput
+  stripeConnect?: Prisma.StripeConnectUpdateOneWithoutCoachNestedInput
 }
 
 export type CoachUncheckedUpdateWithoutClientsInput = {
@@ -589,6 +654,8 @@ export type CoachUncheckedUpdateWithoutClientsInput = {
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutCoachNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCoachNestedInput
+  stripeConnect?: Prisma.StripeConnectUncheckedUpdateOneWithoutCoachNestedInput
 }
 
 export type CoachUpsertWithoutUserInput = {
@@ -609,6 +676,8 @@ export type CoachUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUpdateManyWithoutCoachNestedInput
   exercises?: Prisma.ExerciseUpdateManyWithoutCoachNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutCoachNestedInput
+  stripeConnect?: Prisma.StripeConnectUpdateOneWithoutCoachNestedInput
 }
 
 export type CoachUncheckedUpdateWithoutUserInput = {
@@ -619,6 +688,132 @@ export type CoachUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
   exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutCoachNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCoachNestedInput
+  stripeConnect?: Prisma.StripeConnectUncheckedUpdateOneWithoutCoachNestedInput
+}
+
+export type CoachCreateWithoutSubscriptionInput = {
+  bio?: string | null
+  specialty?: string | null
+  photoUrl?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
+  clients?: Prisma.UserCreateNestedManyWithoutCoachInput
+  exercises?: Prisma.ExerciseCreateNestedManyWithoutCoachInput
+  stripeConnect?: Prisma.StripeConnectCreateNestedOneWithoutCoachInput
+}
+
+export type CoachUncheckedCreateWithoutSubscriptionInput = {
+  id?: number
+  userId: number
+  bio?: string | null
+  specialty?: string | null
+  photoUrl?: string | null
+  createdAt?: Date | string
+  clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
+  exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutCoachInput
+  stripeConnect?: Prisma.StripeConnectUncheckedCreateNestedOneWithoutCoachInput
+}
+
+export type CoachCreateOrConnectWithoutSubscriptionInput = {
+  where: Prisma.CoachWhereUniqueInput
+  create: Prisma.XOR<Prisma.CoachCreateWithoutSubscriptionInput, Prisma.CoachUncheckedCreateWithoutSubscriptionInput>
+}
+
+export type CoachUpsertWithoutSubscriptionInput = {
+  update: Prisma.XOR<Prisma.CoachUpdateWithoutSubscriptionInput, Prisma.CoachUncheckedUpdateWithoutSubscriptionInput>
+  create: Prisma.XOR<Prisma.CoachCreateWithoutSubscriptionInput, Prisma.CoachUncheckedCreateWithoutSubscriptionInput>
+  where?: Prisma.CoachWhereInput
+}
+
+export type CoachUpdateToOneWithWhereWithoutSubscriptionInput = {
+  where?: Prisma.CoachWhereInput
+  data: Prisma.XOR<Prisma.CoachUpdateWithoutSubscriptionInput, Prisma.CoachUncheckedUpdateWithoutSubscriptionInput>
+}
+
+export type CoachUpdateWithoutSubscriptionInput = {
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
+  clients?: Prisma.UserUpdateManyWithoutCoachNestedInput
+  exercises?: Prisma.ExerciseUpdateManyWithoutCoachNestedInput
+  stripeConnect?: Prisma.StripeConnectUpdateOneWithoutCoachNestedInput
+}
+
+export type CoachUncheckedUpdateWithoutSubscriptionInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
+  exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutCoachNestedInput
+  stripeConnect?: Prisma.StripeConnectUncheckedUpdateOneWithoutCoachNestedInput
+}
+
+export type CoachCreateWithoutStripeConnectInput = {
+  bio?: string | null
+  specialty?: string | null
+  photoUrl?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
+  clients?: Prisma.UserCreateNestedManyWithoutCoachInput
+  exercises?: Prisma.ExerciseCreateNestedManyWithoutCoachInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutCoachInput
+}
+
+export type CoachUncheckedCreateWithoutStripeConnectInput = {
+  id?: number
+  userId: number
+  bio?: string | null
+  specialty?: string | null
+  photoUrl?: string | null
+  createdAt?: Date | string
+  clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
+  exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutCoachInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCoachInput
+}
+
+export type CoachCreateOrConnectWithoutStripeConnectInput = {
+  where: Prisma.CoachWhereUniqueInput
+  create: Prisma.XOR<Prisma.CoachCreateWithoutStripeConnectInput, Prisma.CoachUncheckedCreateWithoutStripeConnectInput>
+}
+
+export type CoachUpsertWithoutStripeConnectInput = {
+  update: Prisma.XOR<Prisma.CoachUpdateWithoutStripeConnectInput, Prisma.CoachUncheckedUpdateWithoutStripeConnectInput>
+  create: Prisma.XOR<Prisma.CoachCreateWithoutStripeConnectInput, Prisma.CoachUncheckedCreateWithoutStripeConnectInput>
+  where?: Prisma.CoachWhereInput
+}
+
+export type CoachUpdateToOneWithWhereWithoutStripeConnectInput = {
+  where?: Prisma.CoachWhereInput
+  data: Prisma.XOR<Prisma.CoachUpdateWithoutStripeConnectInput, Prisma.CoachUncheckedUpdateWithoutStripeConnectInput>
+}
+
+export type CoachUpdateWithoutStripeConnectInput = {
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
+  clients?: Prisma.UserUpdateManyWithoutCoachNestedInput
+  exercises?: Prisma.ExerciseUpdateManyWithoutCoachNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutCoachNestedInput
+}
+
+export type CoachUncheckedUpdateWithoutStripeConnectInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
+  exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutCoachNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCoachNestedInput
 }
 
 
@@ -671,6 +866,8 @@ export type CoachSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   clients?: boolean | Prisma.Coach$clientsArgs<ExtArgs>
   exercises?: boolean | Prisma.Coach$exercisesArgs<ExtArgs>
+  subscription?: boolean | Prisma.Coach$subscriptionArgs<ExtArgs>
+  stripeConnect?: boolean | Prisma.Coach$stripeConnectArgs<ExtArgs>
   _count?: boolean | Prisma.CoachCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["coach"]>
 
@@ -708,6 +905,8 @@ export type CoachInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   clients?: boolean | Prisma.Coach$clientsArgs<ExtArgs>
   exercises?: boolean | Prisma.Coach$exercisesArgs<ExtArgs>
+  subscription?: boolean | Prisma.Coach$subscriptionArgs<ExtArgs>
+  stripeConnect?: boolean | Prisma.Coach$stripeConnectArgs<ExtArgs>
   _count?: boolean | Prisma.CoachCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CoachIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -723,6 +922,8 @@ export type $CoachPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     user: Prisma.$UserPayload<ExtArgs>
     clients: Prisma.$UserPayload<ExtArgs>[]
     exercises: Prisma.$ExercisePayload<ExtArgs>[]
+    subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
+    stripeConnect: Prisma.$StripeConnectPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1128,6 +1329,8 @@ export interface Prisma__CoachClient<T, Null = never, ExtArgs extends runtime.Ty
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   clients<T extends Prisma.Coach$clientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Coach$clientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   exercises<T extends Prisma.Coach$exercisesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Coach$exercisesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExercisePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  subscription<T extends Prisma.Coach$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Coach$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  stripeConnect<T extends Prisma.Coach$stripeConnectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Coach$stripeConnectArgs<ExtArgs>>): Prisma.Prisma__StripeConnectClient<runtime.Types.Result.GetResult<Prisma.$StripeConnectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1604,6 +1807,44 @@ export type Coach$exercisesArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.ExerciseScalarFieldEnum | Prisma.ExerciseScalarFieldEnum[]
+}
+
+/**
+ * Coach.subscription
+ */
+export type Coach$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Subscription
+   */
+  select?: Prisma.SubscriptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Subscription
+   */
+  omit?: Prisma.SubscriptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionInclude<ExtArgs> | null
+  where?: Prisma.SubscriptionWhereInput
+}
+
+/**
+ * Coach.stripeConnect
+ */
+export type Coach$stripeConnectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StripeConnect
+   */
+  select?: Prisma.StripeConnectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StripeConnect
+   */
+  omit?: Prisma.StripeConnectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeConnectInclude<ExtArgs> | null
+  where?: Prisma.StripeConnectWhereInput
 }
 
 /**

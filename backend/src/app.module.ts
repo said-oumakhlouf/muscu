@@ -5,6 +5,7 @@ import { CoachesModule } from './coaches/coaches.module';
 import { ExercisesModule } from './exercises/exercises.module';
 import { PrismaService } from './prisma.service'; // ajuste chemin
 import { SessionsModule } from './sessions/sessions.module';
+import { StripeModule } from './stripe/stripe.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -18,6 +19,7 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     SessionsModule,
     CoachesModule,
+    StripeModule,
   ],
   providers: [PrismaService],
 })

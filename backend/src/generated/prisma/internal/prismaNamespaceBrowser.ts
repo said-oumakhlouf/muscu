@@ -55,7 +55,9 @@ export const ModelName = {
   Coach: 'Coach',
   User: 'User',
   Session: 'Session',
-  SessionExercise: 'SessionExercise'
+  SessionExercise: 'SessionExercise',
+  Subscription: 'Subscription',
+  StripeConnect: 'StripeConnect'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -142,6 +144,32 @@ export const SessionExerciseScalarFieldEnum = {
 } as const
 
 export type SessionExerciseScalarFieldEnum = (typeof SessionExerciseScalarFieldEnum)[keyof typeof SessionExerciseScalarFieldEnum]
+
+
+export const SubscriptionScalarFieldEnum = {
+  id: 'id',
+  coachId: 'coachId',
+  stripeCustomerId: 'stripeCustomerId',
+  stripeSubscriptionId: 'stripeSubscriptionId',
+  plan: 'plan',
+  status: 'status',
+  currentPeriodEnd: 'currentPeriodEnd',
+  createdAt: 'createdAt'
+} as const
+
+export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const StripeConnectScalarFieldEnum = {
+  id: 'id',
+  coachId: 'coachId',
+  stripeAccountId: 'stripeAccountId',
+  onboardingComplete: 'onboardingComplete',
+  payoutsEnabled: 'payoutsEnabled',
+  createdAt: 'createdAt'
+} as const
+
+export type StripeConnectScalarFieldEnum = (typeof StripeConnectScalarFieldEnum)[keyof typeof StripeConnectScalarFieldEnum]
 
 
 export const SortOrder = {

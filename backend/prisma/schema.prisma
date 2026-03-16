@@ -31,6 +31,8 @@ model Coach {
     clients     User[]   @relation("CoachClients")
     createdAt   DateTime @default(now())
     exercises   Exercise[] @relation("CoachExercises")
+    subscription  Subscription?
+    stripeConnect StripeConnect?
 }
 
 model User {
@@ -71,4 +73,26 @@ model SessionExercise {
     sets        Int
     reps        Int
     weight      Float?
+}
+
+model Subscription {
+  id                   Int      @id @default(autoincrement())
+  coachId              Int      @unique
+  coach                Coach    @relation(fields: [coachId], references: [id])
+  stripeCustomerId     String   @unique
+  stripeSubscriptionId String   @unique
+  plan                 String   // "starter" | "pro" | "elite"
+  status               String   // "active" | "past_due" | "canceled"
+  currentPeriodEnd     DateTime
+  createdAt            DateTime @default(now())
+}
+
+model StripeConnect {
+  id                 Int     @id @default(autoincrement())
+  coachId            Int     @unique
+  coach              Coach   @relation(fields: [coachId], references: [id])
+  stripeAccountId    String  @unique
+  onboardingComplete Boolean @default(false)
+  payoutsEnabled     Boolean @default(false)
+  createdAt          DateTime @default(now())
 }
