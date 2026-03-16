@@ -104,4 +104,10 @@ export class StripeService {
         };
         return plans[priceId] ?? 'starter';
     }
+
+    getSubscriptionByCoachId(coachId: number) {
+        return this.prisma.subscription.findUnique({
+            where: { coachId },
+        }) as Promise<object | null>;
+    }
 }

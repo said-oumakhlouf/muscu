@@ -1,13 +1,16 @@
 import {
     Body,
     Controller,
+    Get,
     Headers,
     HttpCode,
     Post,
     RawBodyRequest,
     Req,
+    Request,
+    UseGuards,
 } from '@nestjs/common';
-import { Request } from 'express';
+import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { StripeService } from './stripe.service';
 
 @Controller('stripe')
@@ -76,5 +79,14 @@ export class StripeController {
         }
 
         return { received: true };
+    }
+
+    @Get('status')
+    @UseGuards(JwtAuthGuard)
+    async getStatus(@Request() req): Promise<object> {
+        const coachId = req.user.coachId;
+        const subscription =
+            await this.stripeService.getSubscriptionByCoachId(coachId);
+        return subscription ?? { plan: null, status: 'inactive' };
     }
 }
