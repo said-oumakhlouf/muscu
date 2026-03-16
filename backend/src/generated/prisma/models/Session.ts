@@ -29,11 +29,13 @@ export type AggregateSession = {
 export type SessionAvgAggregateOutputType = {
   id: number | null
   userId: number | null
+  calories: number | null
 }
 
 export type SessionSumAggregateOutputType = {
   id: number | null
   userId: number | null
+  calories: number | null
 }
 
 export type SessionMinAggregateOutputType = {
@@ -42,6 +44,8 @@ export type SessionMinAggregateOutputType = {
   userId: number | null
   scheduledAt: Date | null
   createdAt: Date | null
+  calories: number | null
+  intensity: string | null
 }
 
 export type SessionMaxAggregateOutputType = {
@@ -50,6 +54,8 @@ export type SessionMaxAggregateOutputType = {
   userId: number | null
   scheduledAt: Date | null
   createdAt: Date | null
+  calories: number | null
+  intensity: string | null
 }
 
 export type SessionCountAggregateOutputType = {
@@ -58,6 +64,8 @@ export type SessionCountAggregateOutputType = {
   userId: number
   scheduledAt: number
   createdAt: number
+  calories: number
+  intensity: number
   _all: number
 }
 
@@ -65,11 +73,13 @@ export type SessionCountAggregateOutputType = {
 export type SessionAvgAggregateInputType = {
   id?: true
   userId?: true
+  calories?: true
 }
 
 export type SessionSumAggregateInputType = {
   id?: true
   userId?: true
+  calories?: true
 }
 
 export type SessionMinAggregateInputType = {
@@ -78,6 +88,8 @@ export type SessionMinAggregateInputType = {
   userId?: true
   scheduledAt?: true
   createdAt?: true
+  calories?: true
+  intensity?: true
 }
 
 export type SessionMaxAggregateInputType = {
@@ -86,6 +98,8 @@ export type SessionMaxAggregateInputType = {
   userId?: true
   scheduledAt?: true
   createdAt?: true
+  calories?: true
+  intensity?: true
 }
 
 export type SessionCountAggregateInputType = {
@@ -94,6 +108,8 @@ export type SessionCountAggregateInputType = {
   userId?: true
   scheduledAt?: true
   createdAt?: true
+  calories?: true
+  intensity?: true
   _all?: true
 }
 
@@ -189,6 +205,8 @@ export type SessionGroupByOutputType = {
   userId: number
   scheduledAt: Date | null
   createdAt: Date
+  calories: number | null
+  intensity: string | null
   _count: SessionCountAggregateOutputType | null
   _avg: SessionAvgAggregateOutputType | null
   _sum: SessionSumAggregateOutputType | null
@@ -220,6 +238,8 @@ export type SessionWhereInput = {
   userId?: Prisma.IntFilter<"Session"> | number
   scheduledAt?: Prisma.DateTimeNullableFilter<"Session"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Session"> | Date | string
+  calories?: Prisma.IntNullableFilter<"Session"> | number | null
+  intensity?: Prisma.StringNullableFilter<"Session"> | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   exercises?: Prisma.SessionExerciseListRelationFilter
 }
@@ -230,6 +250,8 @@ export type SessionOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  calories?: Prisma.SortOrderInput | Prisma.SortOrder
+  intensity?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   exercises?: Prisma.SessionExerciseOrderByRelationAggregateInput
 }
@@ -243,6 +265,8 @@ export type SessionWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.IntFilter<"Session"> | number
   scheduledAt?: Prisma.DateTimeNullableFilter<"Session"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Session"> | Date | string
+  calories?: Prisma.IntNullableFilter<"Session"> | number | null
+  intensity?: Prisma.StringNullableFilter<"Session"> | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   exercises?: Prisma.SessionExerciseListRelationFilter
 }, "id">
@@ -253,6 +277,8 @@ export type SessionOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  calories?: Prisma.SortOrderInput | Prisma.SortOrder
+  intensity?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SessionCountOrderByAggregateInput
   _avg?: Prisma.SessionAvgOrderByAggregateInput
   _max?: Prisma.SessionMaxOrderByAggregateInput
@@ -269,12 +295,16 @@ export type SessionScalarWhereWithAggregatesInput = {
   userId?: Prisma.IntWithAggregatesFilter<"Session"> | number
   scheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Session"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Session"> | Date | string
+  calories?: Prisma.IntNullableWithAggregatesFilter<"Session"> | number | null
+  intensity?: Prisma.StringNullableWithAggregatesFilter<"Session"> | string | null
 }
 
 export type SessionCreateInput = {
   name: string
   scheduledAt?: Date | string | null
   createdAt?: Date | string
+  calories?: number | null
+  intensity?: string | null
   user: Prisma.UserCreateNestedOneWithoutSessionsInput
   exercises?: Prisma.SessionExerciseCreateNestedManyWithoutSessionInput
 }
@@ -285,6 +315,8 @@ export type SessionUncheckedCreateInput = {
   userId: number
   scheduledAt?: Date | string | null
   createdAt?: Date | string
+  calories?: number | null
+  intensity?: string | null
   exercises?: Prisma.SessionExerciseUncheckedCreateNestedManyWithoutSessionInput
 }
 
@@ -292,6 +324,8 @@ export type SessionUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calories?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  intensity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutSessionsNestedInput
   exercises?: Prisma.SessionExerciseUpdateManyWithoutSessionNestedInput
 }
@@ -302,6 +336,8 @@ export type SessionUncheckedUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calories?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  intensity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   exercises?: Prisma.SessionExerciseUncheckedUpdateManyWithoutSessionNestedInput
 }
 
@@ -311,12 +347,16 @@ export type SessionCreateManyInput = {
   userId: number
   scheduledAt?: Date | string | null
   createdAt?: Date | string
+  calories?: number | null
+  intensity?: string | null
 }
 
 export type SessionUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calories?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  intensity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SessionUncheckedUpdateManyInput = {
@@ -325,6 +365,8 @@ export type SessionUncheckedUpdateManyInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calories?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  intensity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SessionListRelationFilter = {
@@ -343,11 +385,14 @@ export type SessionCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  calories?: Prisma.SortOrder
+  intensity?: Prisma.SortOrder
 }
 
 export type SessionAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  calories?: Prisma.SortOrder
 }
 
 export type SessionMaxOrderByAggregateInput = {
@@ -356,6 +401,8 @@ export type SessionMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  calories?: Prisma.SortOrder
+  intensity?: Prisma.SortOrder
 }
 
 export type SessionMinOrderByAggregateInput = {
@@ -364,11 +411,14 @@ export type SessionMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   scheduledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  calories?: Prisma.SortOrder
+  intensity?: Prisma.SortOrder
 }
 
 export type SessionSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  calories?: Prisma.SortOrder
 }
 
 export type SessionScalarRelationFilter = {
@@ -440,6 +490,8 @@ export type SessionCreateWithoutUserInput = {
   name: string
   scheduledAt?: Date | string | null
   createdAt?: Date | string
+  calories?: number | null
+  intensity?: string | null
   exercises?: Prisma.SessionExerciseCreateNestedManyWithoutSessionInput
 }
 
@@ -448,6 +500,8 @@ export type SessionUncheckedCreateWithoutUserInput = {
   name: string
   scheduledAt?: Date | string | null
   createdAt?: Date | string
+  calories?: number | null
+  intensity?: string | null
   exercises?: Prisma.SessionExerciseUncheckedCreateNestedManyWithoutSessionInput
 }
 
@@ -486,12 +540,16 @@ export type SessionScalarWhereInput = {
   userId?: Prisma.IntFilter<"Session"> | number
   scheduledAt?: Prisma.DateTimeNullableFilter<"Session"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Session"> | Date | string
+  calories?: Prisma.IntNullableFilter<"Session"> | number | null
+  intensity?: Prisma.StringNullableFilter<"Session"> | string | null
 }
 
 export type SessionCreateWithoutExercisesInput = {
   name: string
   scheduledAt?: Date | string | null
   createdAt?: Date | string
+  calories?: number | null
+  intensity?: string | null
   user: Prisma.UserCreateNestedOneWithoutSessionsInput
 }
 
@@ -501,6 +559,8 @@ export type SessionUncheckedCreateWithoutExercisesInput = {
   userId: number
   scheduledAt?: Date | string | null
   createdAt?: Date | string
+  calories?: number | null
+  intensity?: string | null
 }
 
 export type SessionCreateOrConnectWithoutExercisesInput = {
@@ -523,6 +583,8 @@ export type SessionUpdateWithoutExercisesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calories?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  intensity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutSessionsNestedInput
 }
 
@@ -532,6 +594,8 @@ export type SessionUncheckedUpdateWithoutExercisesInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calories?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  intensity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SessionCreateManyUserInput = {
@@ -539,12 +603,16 @@ export type SessionCreateManyUserInput = {
   name: string
   scheduledAt?: Date | string | null
   createdAt?: Date | string
+  calories?: number | null
+  intensity?: string | null
 }
 
 export type SessionUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calories?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  intensity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   exercises?: Prisma.SessionExerciseUpdateManyWithoutSessionNestedInput
 }
 
@@ -553,6 +621,8 @@ export type SessionUncheckedUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calories?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  intensity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   exercises?: Prisma.SessionExerciseUncheckedUpdateManyWithoutSessionNestedInput
 }
 
@@ -561,6 +631,8 @@ export type SessionUncheckedUpdateManyWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   scheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  calories?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  intensity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -600,6 +672,8 @@ export type SessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   userId?: boolean
   scheduledAt?: boolean
   createdAt?: boolean
+  calories?: boolean
+  intensity?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   exercises?: boolean | Prisma.Session$exercisesArgs<ExtArgs>
   _count?: boolean | Prisma.SessionCountOutputTypeDefaultArgs<ExtArgs>
@@ -611,6 +685,8 @@ export type SessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   userId?: boolean
   scheduledAt?: boolean
   createdAt?: boolean
+  calories?: boolean
+  intensity?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
@@ -620,6 +696,8 @@ export type SessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   userId?: boolean
   scheduledAt?: boolean
   createdAt?: boolean
+  calories?: boolean
+  intensity?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["session"]>
 
@@ -629,9 +707,11 @@ export type SessionSelectScalar = {
   userId?: boolean
   scheduledAt?: boolean
   createdAt?: boolean
+  calories?: boolean
+  intensity?: boolean
 }
 
-export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "userId" | "scheduledAt" | "createdAt", ExtArgs["result"]["session"]>
+export type SessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "userId" | "scheduledAt" | "createdAt" | "calories" | "intensity", ExtArgs["result"]["session"]>
 export type SessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   exercises?: boolean | Prisma.Session$exercisesArgs<ExtArgs>
@@ -656,6 +736,8 @@ export type $SessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     userId: number
     scheduledAt: Date | null
     createdAt: Date
+    calories: number | null
+    intensity: string | null
   }, ExtArgs["result"]["session"]>
   composites: {}
 }
@@ -1086,6 +1168,8 @@ export interface SessionFieldRefs {
   readonly userId: Prisma.FieldRef<"Session", 'Int'>
   readonly scheduledAt: Prisma.FieldRef<"Session", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Session", 'DateTime'>
+  readonly calories: Prisma.FieldRef<"Session", 'Int'>
+  readonly intensity: Prisma.FieldRef<"Session", 'String'>
 }
     
 

@@ -13,6 +13,8 @@ export class SessionsService {
                 name: createSessionDto.name,
                 userId: createSessionDto.userId,
                 scheduledAt: createSessionDto.scheduledAt,
+                calories: createSessionDto.calories,
+                intensity: createSessionDto.intensity,
                 exercises: {
                     create: createSessionDto.exercises.map((e) => ({
                         exerciseId: e.exerciseId,
@@ -23,11 +25,7 @@ export class SessionsService {
                 },
             },
             include: {
-                exercises: {
-                    include: {
-                        exercise: true,
-                    },
-                },
+                exercises: { include: { exercise: true } },
             },
         });
     }
@@ -36,11 +34,7 @@ export class SessionsService {
         return this.prisma.session.findMany({
             where: { userId },
             include: {
-                exercises: {
-                    include: {
-                        exercise: true,
-                    },
-                },
+                exercises: { include: { exercise: true } },
             },
         });
     }
@@ -73,11 +67,7 @@ export class SessionsService {
         return this.prisma.session.findMany({
             where: { userId },
             include: {
-                exercises: {
-                    include: {
-                        exercise: true,
-                    },
-                },
+                exercises: { include: { exercise: true } },
             },
         });
     }
@@ -86,11 +76,7 @@ export class SessionsService {
         return this.prisma.session.findFirst({
             where: { id, userId },
             include: {
-                exercises: {
-                    include: {
-                        exercise: true,
-                    },
-                },
+                exercises: { include: { exercise: true } },
             },
         });
     }
@@ -116,6 +102,10 @@ export class SessionsService {
             data: {
                 ...(dto.name && { name: dto.name }),
                 ...(dto.scheduledAt && { scheduledAt: dto.scheduledAt }),
+                ...(dto.calories !== undefined && { calories: dto.calories }),
+                ...(dto.intensity !== undefined && {
+                    intensity: dto.intensity,
+                }),
                 ...(dto.exercises && {
                     exercises: {
                         create: dto.exercises.map((e) => ({

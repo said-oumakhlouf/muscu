@@ -59,6 +59,8 @@ model Session {
     exercises   SessionExercise[]
     scheduledAt DateTime?
     createdAt   DateTime          @default(now())
+    calories    Int?
+    intensity   String?  // "low" | "medium" | "high"
 }
 model SessionExercise {
     id          Int      @id @default(autoincrement())

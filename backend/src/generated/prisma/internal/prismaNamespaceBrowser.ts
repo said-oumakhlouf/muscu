@@ -124,7 +124,9 @@ export const SessionScalarFieldEnum = {
   name: 'name',
   userId: 'userId',
   scheduledAt: 'scheduledAt',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  calories: 'calories',
+  intensity: 'intensity'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]

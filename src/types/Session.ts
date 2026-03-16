@@ -16,6 +16,8 @@ export type Session = {
     userId: number;
     createdAt: string;
     scheduledAt?: string;
+    calories?: number;
+    intensity?: 'low' | 'medium' | 'high';
     exercises: SessionExercise[];
     user?: { id: number; firstname: string; lastname: string };
 };

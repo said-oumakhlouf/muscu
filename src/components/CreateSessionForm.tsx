@@ -12,11 +12,21 @@ interface CreateSessionFormProps {
     onCreated: () => void;
 }
 
+type Intensity = 'low' | 'medium' | 'high';
+
+const INTENSITY_LABELS: Record<Intensity, string> = {
+    low: 'Faible',
+    medium: 'Moyenne',
+    high: 'Élevée',
+};
+
 export default function CreateSessionForm({ token, clientId, onCreated }: CreateSessionFormProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const [name, setName] = useState('');
     const [scheduledAt, setScheduledAt] = useState('');
+    const [calories, setCalories] = useState<number | ''>('');
+    const [intensity, setIntensity] = useState<Intensity | ''>('');
     const [selectedExercises, setSelectedExercises] = useState<{
         exerciseId: number;
         sets: number;
@@ -48,10 +58,14 @@ export default function CreateSessionForm({ token, clientId, onCreated }: Create
             name,
             userId: clientId,
             scheduledAt: scheduledAt ? new Date(scheduledAt) : undefined,
+            calories: calories !== '' ? calories : undefined,
+            intensity: intensity !== '' ? intensity : undefined,
             exercises: selectedExercises,
         });
         setName('');
         setScheduledAt('');
+        setCalories('');
+        setIntensity('');
         setSelectedExercises([]);
         setIsOpen(false);
         toast.success(`Séance "${name}" créée avec succès !`);
@@ -97,6 +111,33 @@ export default function CreateSessionForm({ token, clientId, onCreated }: Create
                                 value={scheduledAt}
                                 onChange={(e) => setScheduledAt(e.target.value)}
                             />
+                        </div>
+                    </div>
+
+                    {/* Calories + Intensité */}
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-medium text-gray-400">Calories estimées</label>
+                            <input
+                                className="bg-[#F5F5FB] border border-[#6C5CE7]/15 rounded-xl px-3 py-2.5 text-sm text-[#1a1a2e] outline-none focus:border-[#6C5CE7] focus:bg-[#faf9ff] transition-colors placeholder:text-gray-300 w-full"
+                                type="number"
+                                placeholder="ex: 300"
+                                value={calories}
+                                onChange={(e) => setCalories(e.target.value !== '' ? Number(e.target.value) : '')}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-medium text-gray-400">Intensité</label>
+                            <select
+                                className="bg-[#F5F5FB] border border-[#6C5CE7]/15 rounded-xl px-3 py-2.5 text-sm text-[#1a1a2e] outline-none focus:border-[#6C5CE7] focus:bg-[#faf9ff] transition-colors appearance-none cursor-pointer w-full"
+                                value={intensity}
+                                onChange={(e) => setIntensity(e.target.value as Intensity | '')}
+                            >
+                                <option value="">— Choisir</option>
+                                {(Object.entries(INTENSITY_LABELS) as [Intensity, string][]).map(([val, label]) => (
+                                    <option key={val} value={val}>{label}</option>
+                                ))}
+                            </select>
                         </div>
                     </div>
 
