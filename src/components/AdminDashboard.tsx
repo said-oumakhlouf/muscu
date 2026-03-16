@@ -1,8 +1,8 @@
 'use client';
+import Avatar from '@/components/common/Avatar';
 import { User } from '@/types/User';
-import Link from 'next/link';
 import { formatGoal } from '@/utils/goalLabels';
-import Avatar from '@/components/Avatar';
+import Link from 'next/link';
 
 interface AdminDashboardProps {
     clients: User[];

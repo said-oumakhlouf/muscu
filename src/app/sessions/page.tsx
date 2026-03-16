@@ -1,15 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Session } from '@/types/Session';
+import Avatar from '@/components/common/Avatar';
+import StatusBadge from '@/components/common/StatusBadge';
+import { useAuth } from '@/context/AuthContext';
 import { sessionService } from '@/services/sessionService';
 import { userService } from '@/services/userService';
-import { useAuth } from '@/context/AuthContext';
+import { Session } from '@/types/Session';
 import { User } from '@/types/User';
-import Link from 'next/link';
-import Avatar from '@/components/Avatar';
 import { getSessionStatus } from '@/utils/sessionStatus';
-import StatusBadge from '@/components/StatusBadge';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function SessionsPage() {
     const { token, role, isLoading } = useAuth();
@@ -77,8 +77,8 @@ export default function SessionsPage() {
                         <button
                             onClick={() => setSelectedClientId('all')}
                             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedClientId === 'all'
-                                    ? 'bg-gray-900 text-white'
-                                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                                ? 'bg-gray-900 text-white'
+                                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
                                 }`}
                         >
                             Tous
@@ -88,8 +88,8 @@ export default function SessionsPage() {
                                 key={client.id}
                                 onClick={() => setSelectedClientId(client.id)}
                                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedClientId === client.id
-                                        ? 'bg-gray-900 text-white'
-                                        : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                                    ? 'bg-gray-900 text-white'
+                                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
                                     }`}
                             >
                                 {client.firstname} {client.lastname}
