@@ -10,6 +10,7 @@ import HomeFeatures from '@/components/HomeFeatures';
 import HomeHowItWorks from '@/components/HomeHowItWorks';
 import HomeTransformation from '@/components/HomeTransformation';
 import { useAuth } from '@/context/AuthContext';
+import HomePricing from '@/components/home/HomePricing';
 
 export default function Home() {
   const { token, role, isLoading } = useAuth();
@@ -27,6 +28,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       <Hero />
       <HomeFeatures />
+      <HomePricing />
       <HomeTransformation />
       <HomeHowItWorks />
       <HomeCertifications />
