@@ -1,7 +1,7 @@
 'use client';
 
-import Avatar from '@/components/common/Avatar';
-import StatusBadge from '@/components/common/StatusBadge';
+import StatusBadge from '@/components/ui/StatusBadge';
+import Avatar from '@/components/ui/Avatar';
 import { useAuth } from '@/context/AuthContext';
 import { sessionService } from '@/services/sessionService';
 import { userService } from '@/services/userService';

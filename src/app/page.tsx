@@ -1,16 +1,16 @@
 'use client';
-import CoachWelcome from '@/components/CoachWelcome';
-import ClientDashboard from '@/components/ClientDashboard';
-import Hero from '@/components/Hero';
-import HomeCertifications from '@/components/HomeCertifications';
-import HomeCoaches from '@/components/HomeCoaches';
-import HomeCTA from '@/components/HomeCTA';
-import HomeFAQ from '@/components/HomeFAQ';
-import HomeFeatures from '@/components/HomeFeatures';
-import HomeHowItWorks from '@/components/HomeHowItWorks';
-import HomeTransformation from '@/components/HomeTransformation';
-import { useAuth } from '@/context/AuthContext';
+import ClientDashboard from '@/components/client/ClientDashboard';
+import CoachWelcome from '@/components/coach/CoachWelcome';
+import Hero from '@/components/home/Hero';
 import HomePricing from '@/components/home/HomePricing';
+import HomeCertifications from '@/components/home/HomeCertifications';
+import HomeCoaches from '@/components/home/HomeCoaches';
+import HomeCTA from '@/components/home/HomeCTA';
+import HomeFAQ from '@/components/home/HomeFAQ';
+import HomeFeatures from '@/components/home/HomeFeatures';
+import HomeHowItWorks from '@/components/home/HomeHowItWorks';
+import HomeTransformation from '@/components/home/HomeTransformation';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Home() {
   const { token, role, isLoading } = useAuth();

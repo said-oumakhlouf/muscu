@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { userService } from '@/services/userService';
 import { useAuth } from '@/context/AuthContext';
 import { User } from '@/types/User';
-import AdminDashboard from '@/components/AdminDashboard';
+import AdminDashboard from '@/components/admin/AdminDashboard';
 import { useRouter } from 'next/navigation';
 import { fetchWithAuth } from '@/utils/fetchWithAuth';
 

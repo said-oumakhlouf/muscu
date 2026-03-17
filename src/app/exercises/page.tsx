@@ -1,6 +1,6 @@
 "use client"
 
-import ExercisesList from "@/components/ExercisesList"
+import ExercisesList from "@/components/exercises/ExercisesList"
 
 export default function ExercisesPage() {
     return (

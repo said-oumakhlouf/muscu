@@ -1,4 +1,4 @@
-import CoachesList from '@/components/CoachesList';
+import CoachesList from '@/components/coach/CoachesList';
 
 export default function HomeCoaches() {
     return (

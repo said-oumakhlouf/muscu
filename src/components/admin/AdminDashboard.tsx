@@ -1,5 +1,5 @@
 'use client';
-import Avatar from '@/components/common/Avatar';
+import Avatar from '@/components/ui/Avatar';
 import { User } from '@/types/User';
 import { formatGoal } from '@/utils/goalLabels';
 import Link from 'next/link';

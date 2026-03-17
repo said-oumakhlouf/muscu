@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { Coach } from '@/types/Coach';
 import { FormData } from '@/interfaces/register';
-import StepIndicator from './register/StepIndicator';
-import StepPersonal from './register/StepPersonal';
-import StepCredentials from './register/StepCredential';
-import StepPhysical from './register/StepPhysical';
-import StepCoach from './register/StepCoach';
+import { Coach } from '@/types/Coach';
+import { useState } from 'react';
+import StepCoach from './StepCoach';
+import StepCredentials from './StepCredential';
+import StepIndicator from './StepIndicator';
+import StepPersonal from './StepPersonal';
+import StepPhysical from './StepPhysical';
 
 interface RegisterStepperProps {
     coaches: Coach[];
@@ -76,8 +76,8 @@ export default function RegisterStepper({ coaches, onSubmit, error }: RegisterSt
                     <button
                         onClick={() => isStepValid() && setStep(step + 1)}
                         className={`flex-1 rounded-xl py-3 text-sm font-semibold transition-colors ${isStepValid()
-                                ? 'bg-[#6C5CE7] hover:bg-[#5a4bd0] text-white'
-                                : 'bg-gray-100 text-gray-300 cursor-not-allowed'
+                            ? 'bg-[#6C5CE7] hover:bg-[#5a4bd0] text-white'
+                            : 'bg-gray-100 text-gray-300 cursor-not-allowed'
                             }`}
                     >
                         Suivant

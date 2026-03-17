@@ -1,11 +1,11 @@
 'use client';
 
+import RegisterStepper from '@/components/register/RegisterStepper';
 import { useAuth } from '@/context/AuthContext';
 import { coachService } from '@/services/coachService';
 import { Coach } from '@/types/Coach';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import RegisterStepper from '@/components/RegisterStepper';
 
 export default function RegisterPage() {
     const router = useRouter();

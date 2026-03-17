@@ -1,17 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import MuscleGroupsCard from '@/components/client/dashboard/MuscleGroupsCard';
+import ProgressRing from '@/components/client/dashboard/ProgressRing';
+import RecentSessionsCard from '@/components/client/dashboard/RecentSessionsCard';
+import WeeklyChart from '@/components/client/dashboard/WeeklyChart';
+import StatCard from '@/components/ui/StatCard';
 import { useAuth } from '@/context/AuthContext';
-import { fetchWithAuth } from '@/utils/fetchWithAuth';
 import { Session } from '@/types/Session';
 import { computeStreak } from '@/utils/computeStreak';
+import { fetchWithAuth } from '@/utils/fetchWithAuth';
 import { getWeeklyData } from '@/utils/getWeeklyData';
-import { CheckCircle, Flame, Calendar, Zap } from 'lucide-react';
-import StatCard from '@/components/common/StatCard';
-import ProgressRing from '@/components/client/dashboard/ProgressRing';
-import WeeklyChart from '@/components/client/dashboard/WeeklyChart';
-import RecentSessionsCard from '@/components/client/dashboard/RecentSessionsCard';
-import MuscleGroupsCard from '@/components/client/dashboard/MuscleGroupsCard';
+import { Calendar, CheckCircle, Flame, Zap } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 const MONTHLY_GOAL = 12;
 
