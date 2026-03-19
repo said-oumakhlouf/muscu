@@ -1,20 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
 import Link from 'next/link';
-
-const stats = [
-    { value: '500+', label: 'Coachs certifiés' },
-    { value: '10k+', label: 'Sportifs actifs' },
-    { value: '98%', label: 'Satisfaction' },
-];
-
-const logos = ['Nike', 'Adidas', 'Decathlon', 'MyProtein', 'Gymshark'];
 
 export default function Hero() {
     return (
-        <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-8 overflow-hidden">
+        <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-8 overflow-hidden pb-24">
             {/* Vidéo plein écran */}
             <div className="absolute inset-0 z-0">
                 <video
@@ -84,47 +75,6 @@ export default function Hero() {
                         Voir les coachs
                     </Link>
                 </motion.div>
-
-                {/* Stats */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.5 }}
-                    className="flex gap-12 mb-16"
-                >
-                    {stats.map((s) => (
-                        <div key={s.label} className="flex flex-col items-center">
-                            <span className="text-4xl font-black text-white" style={{ fontFamily: 'var(--font-barlow)' }}>
-                                {s.value}
-                            </span>
-                            <span className="text-white/50 text-sm mt-1">{s.label}</span>
-                        </div>
-                    ))}
-                </motion.div>
-
-                {/* Social proof */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.7 }}
-                    className="flex flex-col items-center gap-3"
-                >
-                    <div className="flex items-center gap-1 mb-1">
-                        {[...Array(5)].map((_, i) => (
-                            <Star key={i} size={14} className="text-yellow-400 fill-yellow-400" />
-                        ))}
-                        <span className="text-white/50 text-sm ml-2">4.9/5 · +2 400 avis</span>
-                    </div>
-                    <p className="text-white/30 text-xs uppercase tracking-widest">Ils nous font confiance</p>
-                    <div className="flex gap-6 items-center">
-                        {logos.map((l) => (
-                            <span key={l} className="text-white/20 font-black text-sm tracking-widest uppercase">
-                                {l}
-                            </span>
-                        ))}
-                    </div>
-                </motion.div>
-
             </div>
         </section>
     );

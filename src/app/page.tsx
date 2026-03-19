@@ -7,7 +7,6 @@ import HomeCertifications from '@/components/home/HomeCertifications';
 import HomeCoaches from '@/components/home/HomeCoaches';
 import HomeCTA from '@/components/home/HomeCTA';
 import HomeFAQ from '@/components/home/HomeFAQ';
-import HomeFeatures from '@/components/home/HomeFeatures';
 import HomeHowItWorks from '@/components/home/HomeHowItWorks';
 import HomeTransformation from '@/components/home/HomeTransformation';
 import { useAuth } from '@/context/AuthContext';
@@ -27,7 +26,6 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <Hero />
-      <HomeFeatures />
       <HomePricing />
       <HomeTransformation />
       <HomeHowItWorks />
