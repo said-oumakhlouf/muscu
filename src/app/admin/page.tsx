@@ -20,21 +20,22 @@ export default function AdminPage() {
     const [coachName, setCoachName] = useState('');
     const router = useRouter();
 
+    const loadData = () => {
+        if (!token) return;
+        userService.getMyClients(token).then(setClients);
+        userService.getMySessions(token).then(setUpcomingSessions);
+    };
+
     useEffect(() => {
         if (token && role === 'coach') {
-            // Vérification abonnement
             fetchWithAuth('http://localhost:3000/stripe/status', token).then((sub) => {
-                if (sub && sub.status === 'canceled') {
+                if (sub?.status === 'canceled') {
                     router.push('/billing');
                     return;
                 }
-                // Chargement données dashboard
-                userService.getMyClients(token).then(setClients);
+                loadData();
                 userService.getProfile(token).then((data) => {
                     setCoachName(data.firstname || data.email);
-                });
-                userService.getMySessions(token).then((data) => {
-                    setUpcomingSessions(data);
                 });
             });
         }
@@ -45,7 +46,12 @@ export default function AdminPage() {
 
     return (
         <div className="flex min-h-screen flex-col items-center p-10">
-            <AdminDashboard clients={clients} coachName={coachName} upcomingSessions={upcomingSessions} />
+            <AdminDashboard
+                clients={clients}
+                coachName={coachName}
+                upcomingSessions={upcomingSessions}
+                onClientAdded={loadData}
+            />
         </div>
     );
 }

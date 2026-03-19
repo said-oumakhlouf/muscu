@@ -1,8 +1,13 @@
 'use client';
+
 import Avatar from '@/components/ui/Avatar';
+import { useAuth } from '@/context/AuthContext';
+import { fetchWithAuth } from '@/utils/fetchWithAuth';
 import { User } from '@/types/User';
 import { formatGoal } from '@/utils/goalLabels';
 import Link from 'next/link';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 interface AdminDashboardProps {
     clients: User[];
@@ -13,9 +18,37 @@ interface AdminDashboardProps {
         scheduledAt: string;
         user: { firstname: string; lastname: string };
     }[];
+    onClientAdded: () => void;
 }
 
-export default function AdminDashboard({ clients, coachName, upcomingSessions }: AdminDashboardProps) {
+export default function AdminDashboard({ clients, coachName, upcomingSessions, onClientAdded }: AdminDashboardProps) {
+    const { token } = useAuth();
+    const [modalOpen, setModalOpen] = useState(false);
+    const [form, setForm] = useState({ email: '', firstname: '', lastname: '', password: '' });
+    const [loading, setLoading] = useState(false);
+
+    const handleInvite = async () => {
+        if (!form.email || !form.firstname || !form.lastname || !form.password) {
+            toast.error('Tous les champs sont obligatoires');
+            return;
+        }
+        setLoading(true);
+        try {
+            await fetchWithAuth('http://localhost:3000/users/invite', token!, {
+                method: 'POST',
+                body: JSON.stringify(form),
+            });
+            toast.success(`${form.firstname} a été ajouté !`);
+            setModalOpen(false);
+            setForm({ email: '', firstname: '', lastname: '', password: '' });
+            onClientAdded();
+        } catch {
+            toast.error('Erreur lors de la création du client');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const stats = [
         { label: 'Clients actifs', value: String(clients.length), delta: 'total', icon: '👤' },
         { label: 'Poids moyen', value: clients.filter(c => c.weight).length > 0 ? `${Math.round(clients.reduce((acc, c) => acc + (Number(c.weight) || 0), 0) / clients.filter(c => c.weight).length)}kg` : '—', delta: 'moyenne', icon: '⚖️' },
@@ -24,58 +57,119 @@ export default function AdminDashboard({ clients, coachName, upcomingSessions }:
     ];
 
     return (
-        <div style={{ fontFamily: "'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif", minHeight: '100vh', color: '#111827', width: '100%', maxWidth: 1200 }}>
+        <div className="w-full max-w-5xl">
+
+            {/* Modal */}
+            {modalOpen && (
+                <div
+                    className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center"
+                    onClick={() => setModalOpen(false)}
+                >
+                    <div
+                        className="bg-white rounded-2xl p-7 w-full max-w-md flex flex-col gap-4"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <div>
+                            <h2 className="text-lg font-bold text-gray-900">Inviter un client</h2>
+                            <p className="text-sm text-gray-400 mt-1">Le client pourra se connecter avec ces identifiants</p>
+                        </div>
+
+                        {[
+                            { key: 'firstname', placeholder: 'Prénom', type: 'text' },
+                            { key: 'lastname', placeholder: 'Nom', type: 'text' },
+                            { key: 'email', placeholder: 'Email', type: 'email' },
+                            { key: 'password', placeholder: 'Mot de passe temporaire', type: 'password' },
+                        ].map(field => (
+                            <input
+                                key={field.key}
+                                type={field.type}
+                                placeholder={field.placeholder}
+                                value={form[field.key as keyof typeof form]}
+                                onChange={e => setForm(prev => ({ ...prev, [field.key]: e.target.value }))}
+                                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-[#7C5CBF] transition"
+                            />
+                        ))}
+
+                        <div className="flex gap-3 mt-1">
+                            <button
+                                onClick={() => setModalOpen(false)}
+                                className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-500 hover:bg-gray-50 transition"
+                            >
+                                Annuler
+                            </button>
+                            <button
+                                onClick={handleInvite}
+                                disabled={loading}
+                                className="flex-1 py-2.5 rounded-xl bg-[#7C5CBF] text-white text-sm font-semibold hover:bg-[#6B4DAF] transition disabled:opacity-60"
+                            >
+                                {loading ? 'Création...' : 'Créer le compte'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Header */}
-            <div style={{ marginBottom: 28, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+            <div className="flex items-start justify-between mb-7">
                 <div>
-                    <h1 style={{ fontSize: 26, fontWeight: 700, letterSpacing: '-0.03em', margin: 0 }}>Bienvenue, {coachName} 👋</h1>
-                    <p style={{ color: '#6B7280', fontSize: 14, marginTop: 4 }}>{clients.length} clients actifs</p>
+                    <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+                        Bienvenue, {coachName} 👋
+                    </h1>
+                    <p className="text-sm text-gray-400 mt-1">{clients.length} clients actifs</p>
                 </div>
+                <button
+                    onClick={() => setModalOpen(true)}
+                    className="px-5 py-2.5 rounded-xl bg-[#7C5CBF] text-white text-sm font-semibold hover:bg-[#6B4DAF] transition"
+                >
+                    + Inviter un client
+                </button>
             </div>
 
             {/* Stats */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 28 }}>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-7">
                 {stats.map((stat, i) => (
-                    <div key={i} style={{ background: 'white', borderRadius: 12, padding: '20px 22px', border: '1px solid #E5E7EB' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div key={i} className="bg-white rounded-xl p-5 border border-gray-100">
+                        <div className="flex justify-between items-start">
                             <div>
-                                <p style={{ fontSize: 12, color: '#6B7280', fontWeight: 500, margin: '0 0 8px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{stat.label}</p>
-                                <p style={{ fontSize: 30, fontWeight: 700, margin: 0, letterSpacing: '-0.04em', lineHeight: 1 }}>{stat.value}</p>
-                                <p style={{ fontSize: 12, color: '#7C5CBF', margin: '6px 0 0', fontWeight: 500 }}>{stat.delta}</p>
+                                <p className="text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-2">{stat.label}</p>
+                                <p className="text-3xl font-bold tracking-tight leading-none">{stat.value}</p>
+                                <p className="text-xs text-[#7C5CBF] font-medium mt-1.5">{stat.delta}</p>
                             </div>
-                            <span style={{ fontSize: 22 }}>{stat.icon}</span>
+                            <span className="text-xl">{stat.icon}</span>
                         </div>
                     </div>
                 ))}
             </div>
 
             {/* Bottom grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
                 {/* Prochaines séances */}
-                <div style={{ background: 'white', borderRadius: 12, border: '1px solid #E5E7EB', overflow: 'hidden' }}>
-                    <div style={{ padding: '18px 22px', borderBottom: '1px solid #F3F4F6' }}>
-                        <h2 style={{ margin: 0, fontSize: 15, fontWeight: 700, letterSpacing: '-0.02em' }}>Prochaines séances</h2>
+                <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+                    <div className="px-5 py-4 border-b border-gray-50">
+                        <h2 className="text-sm font-bold text-gray-900">Prochaines séances</h2>
                     </div>
-                    <div style={{ padding: '8px 0' }}>
+                    <div>
                         {upcomingSessions.length === 0 ? (
-                            <p style={{ padding: '16px 22px', color: '#9CA3AF', fontSize: 13 }}>Aucune séance planifiée</p>
+                            <p className="px-5 py-4 text-sm text-gray-400">Aucune séance planifiée</p>
                         ) : (
                             upcomingSessions.map((session, i) => (
-                                <div key={session.id} style={{ padding: '12px 22px', display: 'flex', alignItems: 'center', gap: 14, borderBottom: i < upcomingSessions.length - 1 ? '1px solid #F9FAFB' : 'none' }}>
-                                    <Avatar name={`${session.user.firstname} ${session.user.lastname}`} size={40} />
-                                    <div style={{ flex: 1 }}>
-                                        <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: '#111827' }}>
+                                <div
+                                    key={session.id}
+                                    className={`px-5 py-3.5 flex items-center gap-3 ${i < upcomingSessions.length - 1 ? 'border-b border-gray-50' : ''}`}
+                                >
+                                    <Avatar name={`${session.user.firstname} ${session.user.lastname}`} size={38} />
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-semibold text-gray-800">
                                             {session.user.firstname} {session.user.lastname}
                                         </p>
-                                        <p style={{ margin: '2px 0 0', fontSize: 12, color: '#9CA3AF' }}>{session.name}</p>
+                                        <p className="text-xs text-gray-400 truncate">{session.name}</p>
                                     </div>
-                                    <div style={{ textAlign: 'right' }}>
-                                        <p style={{ margin: 0, fontWeight: 700, fontSize: 14, color: '#374151' }}>
+                                    <div className="text-right shrink-0">
+                                        <p className="text-sm font-bold text-gray-700">
                                             {new Date(session.scheduledAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
                                         </p>
-                                        <p style={{ margin: '2px 0 0', fontSize: 12, color: '#9CA3AF' }}>
+                                        <p className="text-xs text-gray-400">
                                             {new Date(session.scheduledAt).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
                                         </p>
                                     </div>
@@ -86,33 +180,34 @@ export default function AdminDashboard({ clients, coachName, upcomingSessions }:
                 </div>
 
                 {/* Clients */}
-                <div style={{ background: 'white', borderRadius: 12, border: '1px solid #E5E7EB', overflow: 'hidden' }}>
-                    <div style={{ padding: '18px 22px', borderBottom: '1px solid #F3F4F6', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <h2 style={{ margin: 0, fontSize: 15, fontWeight: 700, letterSpacing: '-0.02em' }}>Mes clients</h2>
+                <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+                    <div className="px-5 py-4 border-b border-gray-50 flex justify-between items-center">
+                        <h2 className="text-sm font-bold text-gray-900">Mes clients</h2>
                     </div>
-                    <div style={{ padding: '8px 0' }}>
-                        {clients.map((client, i) => (
-                            <Link key={client.id} href={`/admin/clients/${client.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                <div style={{ padding: '12px 22px', display: 'flex', alignItems: 'center', gap: 14, borderBottom: i < clients.length - 1 ? '1px solid #F9FAFB' : 'none', cursor: 'pointer' }}
-                                    onMouseEnter={e => (e.currentTarget.style.background = '#F9FAFB')}
-                                    onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                    <div>
+                        {clients.length === 0 ? (
+                            <p className="px-5 py-4 text-sm text-gray-400">Aucun client pour l'instant</p>
+                        ) : (
+                            clients.map((client, i) => (
+                                <Link
+                                    key={client.id}
+                                    href={`/admin/clients/${client.id}`}
+                                    className={`px-5 py-3.5 flex items-center gap-3 hover:bg-gray-50 transition-colors ${i < clients.length - 1 ? 'border-b border-gray-50' : ''}`}
                                 >
-                                    <Avatar name={`${client.firstname} ${client.lastname}`} size={40} />
-                                    <div style={{ flex: 1 }}>
-                                        <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: '#111827' }}>
+                                    <Avatar name={`${client.firstname} ${client.lastname}`} size={38} />
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-semibold text-gray-800">
                                             {client.firstname ? `${client.firstname} ${client.lastname}` : client.email}
                                         </p>
-                                        <p style={{ margin: '2px 0 0', fontSize: 12, color: '#9CA3AF' }}>
+                                        <p className="text-xs text-gray-400 truncate">
                                             {formatGoal(client.goal)}
                                             {client.weight ? ` · ${client.weight}kg` : ''}
                                         </p>
                                     </div>
-                                    <button style={{ padding: '5px 12px', borderRadius: 7, border: '1px solid #E5E7EB', background: 'transparent', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: '#374151' }}>
-                                        Voir
-                                    </button>
-                                </div>
-                            </Link>
-                        ))}
+                                    <span className="text-xs text-[#7C5CBF] font-medium shrink-0">Voir →</span>
+                                </Link>
+                            ))
+                        )}
                     </div>
                 </div>
             </div>

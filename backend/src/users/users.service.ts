@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -116,6 +117,40 @@ export class UsersService {
             },
             orderBy: { scheduledAt: 'asc' },
             take: 5,
+        });
+    }
+
+    async inviteClient(
+        coachUserId: number,
+        data: {
+            email: string;
+            firstname: string;
+            lastname: string;
+            password: string;
+        },
+    ) {
+        const coach = await this.prisma.coach.findUnique({
+            where: { userId: coachUserId },
+        });
+        if (!coach) throw new Error('Coach introuvable');
+
+        const hashedPassword = await bcrypt.hash(data.password, 10);
+
+        return this.prisma.user.create({
+            data: {
+                email: data.email,
+                firstname: data.firstname,
+                lastname: data.lastname,
+                password: hashedPassword,
+                role: 'client',
+                coachId: coach.id,
+            },
+            select: {
+                id: true,
+                email: true,
+                firstname: true,
+                lastname: true,
+            },
         });
     }
 

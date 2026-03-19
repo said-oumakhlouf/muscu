@@ -4,6 +4,7 @@ import {
     Get,
     Param,
     Patch,
+    Post,
     Request,
     UseGuards,
 } from '@nestjs/common';
@@ -22,6 +23,22 @@ export class UsersController {
     @Get()
     findAll() {
         return this.usersService.findAll();
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('coach')
+    @Post('invite')
+    inviteClient(
+        @Request() req,
+        @Body()
+        body: {
+            email: string;
+            firstname: string;
+            lastname: string;
+            password: string;
+        },
+    ) {
+        return this.usersService.inviteClient(req.user.id, body);
     }
 
     @UseGuards(JwtAuthGuard)
