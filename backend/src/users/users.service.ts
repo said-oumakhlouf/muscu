@@ -5,11 +5,29 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-    constructor(private prisma: PrismaService) { }
+    constructor(private prisma: PrismaService) {}
 
     async create(createUserDto: CreateUserDto) {
         return this.prisma.user.create({
             data: createUserDto,
+        });
+    }
+
+    async createCoachProfile(
+        userId: number,
+        data: {
+            speciality?: string;
+            bio?: string;
+            hourlyRate?: number;
+        },
+    ) {
+        return this.prisma.coach.create({
+            data: {
+                userId,
+                specialty: data.speciality,
+                bio: data.bio,
+                hourlyRate: data.hourlyRate,
+            },
         });
     }
 
@@ -39,7 +57,7 @@ export class UsersService {
 
     async findAll() {
         return this.prisma.user.findMany({
-            where: { role: 'user' },
+            where: { role: 'client' },
             select: {
                 id: true,
                 email: true,

@@ -987,6 +987,7 @@ export const CoachScalarFieldEnum = {
   userId: 'userId',
   bio: 'bio',
   specialty: 'specialty',
+  hourlyRate: 'hourlyRate',
   photoUrl: 'photoUrl',
   createdAt: 'createdAt'
 } as const

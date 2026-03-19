@@ -29,11 +29,13 @@ export type AggregateCoach = {
 export type CoachAvgAggregateOutputType = {
   id: number | null
   userId: number | null
+  hourlyRate: number | null
 }
 
 export type CoachSumAggregateOutputType = {
   id: number | null
   userId: number | null
+  hourlyRate: number | null
 }
 
 export type CoachMinAggregateOutputType = {
@@ -41,6 +43,7 @@ export type CoachMinAggregateOutputType = {
   userId: number | null
   bio: string | null
   specialty: string | null
+  hourlyRate: number | null
   photoUrl: string | null
   createdAt: Date | null
 }
@@ -50,6 +53,7 @@ export type CoachMaxAggregateOutputType = {
   userId: number | null
   bio: string | null
   specialty: string | null
+  hourlyRate: number | null
   photoUrl: string | null
   createdAt: Date | null
 }
@@ -59,6 +63,7 @@ export type CoachCountAggregateOutputType = {
   userId: number
   bio: number
   specialty: number
+  hourlyRate: number
   photoUrl: number
   createdAt: number
   _all: number
@@ -68,11 +73,13 @@ export type CoachCountAggregateOutputType = {
 export type CoachAvgAggregateInputType = {
   id?: true
   userId?: true
+  hourlyRate?: true
 }
 
 export type CoachSumAggregateInputType = {
   id?: true
   userId?: true
+  hourlyRate?: true
 }
 
 export type CoachMinAggregateInputType = {
@@ -80,6 +87,7 @@ export type CoachMinAggregateInputType = {
   userId?: true
   bio?: true
   specialty?: true
+  hourlyRate?: true
   photoUrl?: true
   createdAt?: true
 }
@@ -89,6 +97,7 @@ export type CoachMaxAggregateInputType = {
   userId?: true
   bio?: true
   specialty?: true
+  hourlyRate?: true
   photoUrl?: true
   createdAt?: true
 }
@@ -98,6 +107,7 @@ export type CoachCountAggregateInputType = {
   userId?: true
   bio?: true
   specialty?: true
+  hourlyRate?: true
   photoUrl?: true
   createdAt?: true
   _all?: true
@@ -194,6 +204,7 @@ export type CoachGroupByOutputType = {
   userId: number
   bio: string | null
   specialty: string | null
+  hourlyRate: number | null
   photoUrl: string | null
   createdAt: Date
   _count: CoachCountAggregateOutputType | null
@@ -226,6 +237,7 @@ export type CoachWhereInput = {
   userId?: Prisma.IntFilter<"Coach"> | number
   bio?: Prisma.StringNullableFilter<"Coach"> | string | null
   specialty?: Prisma.StringNullableFilter<"Coach"> | string | null
+  hourlyRate?: Prisma.FloatNullableFilter<"Coach"> | number | null
   photoUrl?: Prisma.StringNullableFilter<"Coach"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Coach"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -240,6 +252,7 @@ export type CoachOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
   specialty?: Prisma.SortOrderInput | Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrderInput | Prisma.SortOrder
   photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -257,6 +270,7 @@ export type CoachWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CoachWhereInput | Prisma.CoachWhereInput[]
   bio?: Prisma.StringNullableFilter<"Coach"> | string | null
   specialty?: Prisma.StringNullableFilter<"Coach"> | string | null
+  hourlyRate?: Prisma.FloatNullableFilter<"Coach"> | number | null
   photoUrl?: Prisma.StringNullableFilter<"Coach"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Coach"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -271,6 +285,7 @@ export type CoachOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
   specialty?: Prisma.SortOrderInput | Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrderInput | Prisma.SortOrder
   photoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.CoachCountOrderByAggregateInput
@@ -288,6 +303,7 @@ export type CoachScalarWhereWithAggregatesInput = {
   userId?: Prisma.IntWithAggregatesFilter<"Coach"> | number
   bio?: Prisma.StringNullableWithAggregatesFilter<"Coach"> | string | null
   specialty?: Prisma.StringNullableWithAggregatesFilter<"Coach"> | string | null
+  hourlyRate?: Prisma.FloatNullableWithAggregatesFilter<"Coach"> | number | null
   photoUrl?: Prisma.StringNullableWithAggregatesFilter<"Coach"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Coach"> | Date | string
 }
@@ -295,6 +311,7 @@ export type CoachScalarWhereWithAggregatesInput = {
 export type CoachCreateInput = {
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
@@ -309,6 +326,7 @@ export type CoachUncheckedCreateInput = {
   userId: number
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
@@ -320,6 +338,7 @@ export type CoachUncheckedCreateInput = {
 export type CoachUpdateInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
@@ -334,6 +353,7 @@ export type CoachUncheckedUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
@@ -347,6 +367,7 @@ export type CoachCreateManyInput = {
   userId: number
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
 }
@@ -354,6 +375,7 @@ export type CoachCreateManyInput = {
 export type CoachUpdateManyMutationInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -363,6 +385,7 @@ export type CoachUncheckedUpdateManyInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -377,6 +400,7 @@ export type CoachCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   specialty?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -384,6 +408,7 @@ export type CoachCountOrderByAggregateInput = {
 export type CoachAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
 }
 
 export type CoachMaxOrderByAggregateInput = {
@@ -391,6 +416,7 @@ export type CoachMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   specialty?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -400,6 +426,7 @@ export type CoachMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   specialty?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
   photoUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -407,6 +434,7 @@ export type CoachMinOrderByAggregateInput = {
 export type CoachSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  hourlyRate?: Prisma.SortOrder
 }
 
 export type CoachScalarRelationFilter = {
@@ -428,6 +456,14 @@ export type CoachUpdateOneWithoutExercisesNestedInput = {
   delete?: Prisma.CoachWhereInput | boolean
   connect?: Prisma.CoachWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.CoachUpdateToOneWithWhereWithoutExercisesInput, Prisma.CoachUpdateWithoutExercisesInput>, Prisma.CoachUncheckedUpdateWithoutExercisesInput>
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type CoachCreateNestedOneWithoutClientsInput = {
@@ -509,6 +545,7 @@ export type CoachUpdateOneRequiredWithoutStripeConnectNestedInput = {
 export type CoachCreateWithoutExercisesInput = {
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
@@ -522,6 +559,7 @@ export type CoachUncheckedCreateWithoutExercisesInput = {
   userId: number
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
@@ -548,6 +586,7 @@ export type CoachUpdateToOneWithWhereWithoutExercisesInput = {
 export type CoachUpdateWithoutExercisesInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
@@ -561,6 +600,7 @@ export type CoachUncheckedUpdateWithoutExercisesInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
@@ -571,6 +611,7 @@ export type CoachUncheckedUpdateWithoutExercisesInput = {
 export type CoachCreateWithoutClientsInput = {
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
@@ -584,6 +625,7 @@ export type CoachUncheckedCreateWithoutClientsInput = {
   userId: number
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   exercises?: Prisma.ExerciseUncheckedCreateNestedManyWithoutCoachInput
@@ -599,6 +641,7 @@ export type CoachCreateOrConnectWithoutClientsInput = {
 export type CoachCreateWithoutUserInput = {
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   clients?: Prisma.UserCreateNestedManyWithoutCoachInput
@@ -611,6 +654,7 @@ export type CoachUncheckedCreateWithoutUserInput = {
   id?: number
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
@@ -638,6 +682,7 @@ export type CoachUpdateToOneWithWhereWithoutClientsInput = {
 export type CoachUpdateWithoutClientsInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
@@ -651,6 +696,7 @@ export type CoachUncheckedUpdateWithoutClientsInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   exercises?: Prisma.ExerciseUncheckedUpdateManyWithoutCoachNestedInput
@@ -672,6 +718,7 @@ export type CoachUpdateToOneWithWhereWithoutUserInput = {
 export type CoachUpdateWithoutUserInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUpdateManyWithoutCoachNestedInput
@@ -684,6 +731,7 @@ export type CoachUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
@@ -695,6 +743,7 @@ export type CoachUncheckedUpdateWithoutUserInput = {
 export type CoachCreateWithoutSubscriptionInput = {
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
@@ -708,6 +757,7 @@ export type CoachUncheckedCreateWithoutSubscriptionInput = {
   userId: number
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
@@ -734,6 +784,7 @@ export type CoachUpdateToOneWithWhereWithoutSubscriptionInput = {
 export type CoachUpdateWithoutSubscriptionInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
@@ -747,6 +798,7 @@ export type CoachUncheckedUpdateWithoutSubscriptionInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
@@ -757,6 +809,7 @@ export type CoachUncheckedUpdateWithoutSubscriptionInput = {
 export type CoachCreateWithoutStripeConnectInput = {
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCoachProfileInput
@@ -770,6 +823,7 @@ export type CoachUncheckedCreateWithoutStripeConnectInput = {
   userId: number
   bio?: string | null
   specialty?: string | null
+  hourlyRate?: number | null
   photoUrl?: string | null
   createdAt?: Date | string
   clients?: Prisma.UserUncheckedCreateNestedManyWithoutCoachInput
@@ -796,6 +850,7 @@ export type CoachUpdateToOneWithWhereWithoutStripeConnectInput = {
 export type CoachUpdateWithoutStripeConnectInput = {
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCoachProfileNestedInput
@@ -809,6 +864,7 @@ export type CoachUncheckedUpdateWithoutStripeConnectInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   photoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.UserUncheckedUpdateManyWithoutCoachNestedInput
@@ -861,6 +917,7 @@ export type CoachSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   userId?: boolean
   bio?: boolean
   specialty?: boolean
+  hourlyRate?: boolean
   photoUrl?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -876,6 +933,7 @@ export type CoachSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   userId?: boolean
   bio?: boolean
   specialty?: boolean
+  hourlyRate?: boolean
   photoUrl?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -886,6 +944,7 @@ export type CoachSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   userId?: boolean
   bio?: boolean
   specialty?: boolean
+  hourlyRate?: boolean
   photoUrl?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -896,11 +955,12 @@ export type CoachSelectScalar = {
   userId?: boolean
   bio?: boolean
   specialty?: boolean
+  hourlyRate?: boolean
   photoUrl?: boolean
   createdAt?: boolean
 }
 
-export type CoachOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "bio" | "specialty" | "photoUrl" | "createdAt", ExtArgs["result"]["coach"]>
+export type CoachOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "bio" | "specialty" | "hourlyRate" | "photoUrl" | "createdAt", ExtArgs["result"]["coach"]>
 export type CoachInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   clients?: boolean | Prisma.Coach$clientsArgs<ExtArgs>
@@ -930,6 +990,7 @@ export type $CoachPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     userId: number
     bio: string | null
     specialty: string | null
+    hourlyRate: number | null
     photoUrl: string | null
     createdAt: Date
   }, ExtArgs["result"]["coach"]>
@@ -1364,6 +1425,7 @@ export interface CoachFieldRefs {
   readonly userId: Prisma.FieldRef<"Coach", 'Int'>
   readonly bio: Prisma.FieldRef<"Coach", 'String'>
   readonly specialty: Prisma.FieldRef<"Coach", 'String'>
+  readonly hourlyRate: Prisma.FieldRef<"Coach", 'Float'>
   readonly photoUrl: Prisma.FieldRef<"Coach", 'String'>
   readonly createdAt: Prisma.FieldRef<"Coach", 'DateTime'>
 }

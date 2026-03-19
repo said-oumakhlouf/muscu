@@ -12,6 +12,7 @@ export class AuthController {
         return this.authService.register(
             body.email,
             body.password,
+            body.role,
             body.firstname,
             body.lastname,
             body.weight,
@@ -19,6 +20,9 @@ export class AuthController {
             body.goal,
             body.gender,
             body.coachId,
+            body.speciality,
+            body.bio,
+            body.hourlyRate,
         );
     }
 

@@ -9,6 +9,10 @@ export class RegisterDto {
 
     @IsOptional()
     @IsString()
+    role?: string;
+
+    @IsOptional()
+    @IsString()
     firstname?: string;
 
     @IsOptional()
@@ -34,4 +38,17 @@ export class RegisterDto {
     @IsOptional()
     @IsNumber()
     coachId?: number;
+
+    // Champs coach
+    @IsOptional()
+    @IsString()
+    speciality?: string;
+
+    @IsOptional()
+    @IsString()
+    bio?: string;
+
+    @IsOptional()
+    @IsNumber()
+    hourlyRate?: number;
 }

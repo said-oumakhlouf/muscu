@@ -27,6 +27,7 @@ model Coach {
     user        User     @relation(fields: [userId], references: [id])
     bio         String?
     specialty   String?
+    hourlyRate  Float?
     photoUrl    String?
     clients     User[]   @relation("CoachClients")
     createdAt   DateTime @default(now())
