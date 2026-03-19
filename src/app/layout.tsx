@@ -1,7 +1,7 @@
 import Navbar from "@/components/ui/Navbar";
 import { AuthProvider } from "@/context/AuthContext";
 import type { Metadata } from "next";
-import { Barlow_Condensed } from "next/font/google";
+import { Barlow_Condensed, DM_Sans, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/ui/Footer";
@@ -12,6 +12,18 @@ const barlow = Barlow_Condensed({
   weight: ['900'],
   variable: '--font-barlow',
 });
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  variable: '--font-dm-sans',
+});
+
+const dmsSerif = DM_Serif_Display({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-dm-serif',
+})
 
 export const metadata: Metadata = {
   title: "Muscle ton Corps",
@@ -26,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body  
-        className={`${barlow.variable} antialiased bg-[#F3EEFF]`}
+        className={`${barlow.variable} ${dmSans.variable} ${dmsSerif.variable}`}
       >
         <AuthProvider >
           <Navbar />

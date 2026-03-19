@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { Dumbbell, Users, Calendar, ArrowRight } from 'lucide-react';
+import { Dumbbell, Users, Calendar } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { fetchWithAuth } from '@/utils/fetchWithAuth'; 
+import { fetchWithAuth } from '@/utils/fetchWithAuth';
 import { useEffect, useState } from 'react';
 
 const shortcuts = [
@@ -22,8 +22,8 @@ const shortcuts = [
     {
         href: '/exercises',
         icon: Dumbbell,
-        label: "Bibliothèque d'exercices",
-        description: 'Exercices disponibles',
+        label: 'Exercices',
+        description: "Bibliothèque d'exercices",
     },
 ];
 
@@ -38,32 +38,60 @@ export default function CoachWelcome() {
     }, [token]);
 
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center px-8 py-24 bg-[#cec4e2]">
-            <div className="max-w-2xl w-full text-center">
-                <span className="bg-[#7C5CBF]/10 text-[#7C5CBF] text-sm font-medium px-4 py-1 rounded-full mb-6 inline-block">
-                    🏋️ Espace coach
-                </span>
-                <h1 className="text-5xl font-black text-[#1A1A2E] mb-3 tracking-tight">
-                    Bonjour{firstname ? `, ${firstname}` : ''} 👋
-                </h1>
-                <p className="text-gray-400 mb-12 text-lg">Que veux-tu faire aujourd'hui ?</p>
+        <div className="flex min-h-screen flex-col items-center justify-center px-8 py-24">
+            <div className="max-w-xl w-full text-center">
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {/* Badge */}
+                <span className="text-[11px] font-medium tracking-widest uppercase text-[#7c3aed] bg-[#ede9fe] border border-[#7c3aed]/20 px-4 py-1.5 rounded-full inline-block mb-7">
+                    Espace coach
+                </span>
+
+                {/* Greeting */}
+                <h1
+                    className="text-[6rem] font-black uppercase leading-none text-[#1A1A2E] mb-4 tracking-tight"
+                    style={{ fontFamily: 'var(--font-barlow)' }}
+                >
+                    Bonjour,<br />
+                    <span className="text-[#7c3aed]">
+                        {firstname ?? 'Coach'}.
+                    </span>
+                </h1>
+
+                <p className="text-lg text-gray-400 font-light mb-8">
+                    Que veux-tu faire aujourd'hui ?
+                </p>
+
+                <div className="w-full h-px bg-[#e5d9f9] mb-8" />
+
+                {/* Shortcuts */}
+                <div className="flex flex-col gap-3">
                     {shortcuts.map((s) => (
                         <Link
                             key={s.href}
                             href={s.href}
-                            className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white border border-[#E8DEFF] hover:border-[#7C5CBF] hover:shadow-md transition group"
+                            className="bg-white rounded-2xl px-8 py-6 flex items-center gap-5 border-[1.5px] border-transparent hover:border-[#7c3aed] transition-colors group"
                         >
-                            <div className="w-12 h-12 bg-[#F3EEFF] rounded-xl flex items-center justify-center group-hover:bg-[#E8DEFF] transition">
-                                <s.icon size={24} className="text-[#7C5CBF]" />
+                            <div className="w-14 h-14 bg-[#F3EEFF] rounded-xl flex items-center justify-center shrink-0">
+                                <s.icon size={30} className="text-[#7c3aed]" />
                             </div>
-                            <span className="font-bold text-[#1A1A2E]">{s.label}</span>
-                            <span className="text-gray-400 text-sm">{s.description}</span>
-                            <ArrowRight size={16} className="text-[#7C5CBF] opacity-0 group-hover:opacity-100 transition" />
+                            <div className="flex-1 text-left">
+                                <span
+                                    className="block text-[1.4rem] font-black uppercase leading-none text-[#1A1A2E] mb-1"
+                                    style={{ fontFamily: 'var(--font-barlow)' }}
+                                >
+                                    {s.label}
+                                </span>
+                                <span className="text-sm text-gray-400 font-light">
+                                    {s.description}
+                                </span>
+                            </div>
+                            <span className="text-[#7c3aed] text-xl opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+                                →
+                            </span>
                         </Link>
                     ))}
                 </div>
+
             </div>
         </div>
     );

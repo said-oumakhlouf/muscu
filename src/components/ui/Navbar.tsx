@@ -11,7 +11,7 @@ export default function Navbar() {
     const { role, token, isLoading, logout } = useAuth();
     const [menuOpen, setMenuOpen] = useState(false);
     const pathname = usePathname();
-    const isHome = pathname === '/';
+    const isHome = pathname === '/' && !token;
 
     const handleLogout = () => {
         logout();
@@ -40,10 +40,10 @@ export default function Navbar() {
                     <Dumbbell size={18} className="text-white" />
                 </div>
                 <span
-                    className={`text-xl font-black tracking-tight ${isHome ? 'text-white' : 'text-[#1A1A2E]'}`}
+                    className={`text-2xl font-black tracking-tight ${isHome ? 'text-white' : 'text-[#1A1A2E]'}`}
                     style={{ fontFamily: 'var(--font-barlow)' }}
                 >
-                    MUSCULAPP
+                    TRAINITY
                 </span>
             </Link>
 
