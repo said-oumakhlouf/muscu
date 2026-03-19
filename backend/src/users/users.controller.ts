@@ -16,13 +16,20 @@ import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) { }
+    constructor(private readonly usersService: UsersService) {}
 
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles('coach')
     @Get()
     findAll() {
         return this.usersService.findAll();
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('coach')
+    @Patch(':id')
+    updateClient(@Param('id') id: string, @Body() body: UpdateUserDto) {
+        return this.usersService.updateProfile(+id, body);
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)

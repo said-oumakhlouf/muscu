@@ -6,11 +6,27 @@ import Avatar from '@/components/ui/Avatar';
 import { useAuth } from '@/context/AuthContext';
 import { sessionService } from '@/services/sessionService';
 import { userService } from '@/services/userService';
+import { fetchWithAuth } from '@/utils/fetchWithAuth';
 import { Session } from '@/types/Session';
 import { User } from '@/types/User';
 import { formatGoal } from '@/utils/goalLabels';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+
+const GOAL_OPTIONS = [
+    { value: 'weight_loss', label: 'Perte de poids' },
+    { value: 'muscle_gain', label: 'Prise de masse' },
+    { value: 'endurance', label: 'Endurance' },
+    { value: 'flexibility', label: 'Flexibilité' },
+    { value: 'general_fitness', label: 'Forme générale' },
+];
+
+const GENDER_OPTIONS = [
+    { value: 'male', label: 'Homme' },
+    { value: 'female', label: 'Femme' },
+    { value: 'other', label: 'Autre' },
+];
 
 export default function ClientDetailPage() {
     const { token, role, isLoading } = useAuth();
@@ -19,6 +35,14 @@ export default function ClientDetailPage() {
     const [sessions, setSessions] = useState<Session[]>([]);
     const [editingSession, setEditingSession] = useState<Session | null>(null);
     const [deletingSessionId, setDeletingSessionId] = useState<number | null>(null);
+    const [editingProfile, setEditingProfile] = useState(false);
+    const [profileForm, setProfileForm] = useState({
+        weight: '',
+        height: '',
+        goal: '',
+        gender: '',
+    });
+    const [savingProfile, setSavingProfile] = useState(false);
 
     const handleDelete = async () => {
         if (!deletingSessionId) return;
@@ -41,6 +65,38 @@ export default function ClientDetailPage() {
         });
         setEditingSession(null);
         userService.getSessions(token!, Number(id)).then(setSessions);
+    };
+
+    const openProfileModal = () => {
+        setProfileForm({
+            weight: client?.weight ? String(client.weight) : '',
+            height: client?.height ? String(client.height) : '',
+            goal: client?.goal ?? '',
+            gender: client?.gender ?? '',
+        });
+        setEditingProfile(true);
+    };
+
+    const handleSaveProfile = async () => {
+        setSavingProfile(true);
+        try {
+            await fetchWithAuth(`http://localhost:3000/users/${id}`, token!, {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    weight: profileForm.weight ? Number(profileForm.weight) : undefined,
+                    height: profileForm.height ? Number(profileForm.height) : undefined,
+                    goal: profileForm.goal || undefined,
+                    gender: profileForm.gender || undefined,
+                }),
+            });
+            toast.success('Profil mis à jour');
+            setEditingProfile(false);
+            userService.getOne(token!, Number(id)).then(setClient);
+        } catch {
+            toast.error('Erreur lors de la mise à jour');
+        } finally {
+            setSavingProfile(false);
+        }
     };
 
     useEffect(() => {
@@ -68,20 +124,28 @@ export default function ClientDetailPage() {
                     <div className="bg-white rounded-2xl border border-black/[0.06] p-7">
 
                         {/* Avatar + nom */}
-                        <div className="flex items-center gap-5 pb-6 border-b border-black/[0.06]">
-                            <Avatar name={`${client.firstname} ${client.lastname}`} size={64} />
-                            <div>
-                                <h1 className="text-xl font-semibold text-[#1a1a2e]">
-                                    {client.firstname} {client.lastname}
-                                </h1>
-                                <p className="text-sm text-gray-400 mt-0.5">{client.email}</p>
+                        <div className="flex items-center justify-between pb-6 border-b border-black/[0.06]">
+                            <div className="flex items-center gap-5">
+                                <Avatar name={`${client.firstname} ${client.lastname}`} size={64} />
+                                <div>
+                                    <h1 className="text-xl font-semibold text-[#1a1a2e]">
+                                        {client.firstname} {client.lastname}
+                                    </h1>
+                                    <p className="text-sm text-gray-400 mt-0.5">{client.email}</p>
+                                </div>
                             </div>
+                            <button
+                                onClick={openProfileModal}
+                                className="text-xs px-4 py-2 rounded-xl border border-[#6C5CE7]/20 text-[#6C5CE7] hover:bg-[#f0eeff] transition-colors font-medium"
+                            >
+                                ✏️ Modifier le profil
+                            </button>
                         </div>
 
                         {/* Stats */}
                         <div className="grid grid-cols-3 gap-3 mt-6">
                             {[
-                                { label: 'Poids', value: client.weight ? `${client.weight}` : '_', unit: 'kg' },
+                                { label: 'Poids', value: client.weight ? `${client.weight}` : '—', unit: client.weight ? 'kg' : '' },
                                 { label: 'Taille', value: client.height ? `${client.height}` : '—', unit: client.height ? 'cm' : '' },
                                 { label: 'Objectif', value: formatGoal(client.goal), unit: '' },
                             ].map(({ label, value, unit }) => (
@@ -150,12 +214,98 @@ export default function ClientDetailPage() {
                         </div>
                     </div>
 
+                    {/* Modal modifier profil client */}
+                    {editingProfile && (
+                        <div
+                            className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+                            onClick={() => setEditingProfile(false)}
+                        >
+                            <div
+                                className="bg-white rounded-2xl p-7 w-full max-w-md flex flex-col gap-4"
+                                onClick={e => e.stopPropagation()}
+                            >
+                                <div>
+                                    <h2 className="text-lg font-bold text-[#1a1a2e]">Modifier le profil</h2>
+                                    <p className="text-sm text-gray-400 mt-1">
+                                        {client.firstname} {client.lastname}
+                                    </p>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div className="flex flex-col gap-1.5">
+                                        <label className="text-xs font-medium text-gray-400">Poids (kg)</label>
+                                        <input
+                                            type="number"
+                                            placeholder="ex: 75"
+                                            value={profileForm.weight}
+                                            onChange={e => setProfileForm(p => ({ ...p, weight: e.target.value }))}
+                                            className="px-3 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-[#6C5CE7] transition"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-1.5">
+                                        <label className="text-xs font-medium text-gray-400">Taille (cm)</label>
+                                        <input
+                                            type="number"
+                                            placeholder="ex: 175"
+                                            value={profileForm.height}
+                                            onChange={e => setProfileForm(p => ({ ...p, height: e.target.value }))}
+                                            className="px-3 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-[#6C5CE7] transition"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col gap-1.5">
+                                    <label className="text-xs font-medium text-gray-400">Objectif</label>
+                                    <select
+                                        value={profileForm.goal}
+                                        onChange={e => setProfileForm(p => ({ ...p, goal: e.target.value }))}
+                                        className="px-3 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-[#6C5CE7] transition bg-white"
+                                    >
+                                        <option value="">— Sélectionner —</option>
+                                        {GOAL_OPTIONS.map(o => (
+                                            <option key={o.value} value={o.value}>{o.label}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="flex flex-col gap-1.5">
+                                    <label className="text-xs font-medium text-gray-400">Genre</label>
+                                    <select
+                                        value={profileForm.gender}
+                                        onChange={e => setProfileForm(p => ({ ...p, gender: e.target.value }))}
+                                        className="px-3 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-[#6C5CE7] transition bg-white"
+                                    >
+                                        <option value="">— Sélectionner —</option>
+                                        {GENDER_OPTIONS.map(o => (
+                                            <option key={o.value} value={o.value}>{o.label}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="flex gap-3 mt-1">
+                                    <button
+                                        onClick={() => setEditingProfile(false)}
+                                        className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-500 hover:bg-gray-50 transition"
+                                    >
+                                        Annuler
+                                    </button>
+                                    <button
+                                        onClick={handleSaveProfile}
+                                        disabled={savingProfile}
+                                        className="flex-1 py-2.5 rounded-xl bg-[#6C5CE7] text-white text-sm font-semibold hover:bg-[#5a4bd0] transition disabled:opacity-60"
+                                    >
+                                        {savingProfile ? 'Sauvegarde...' : 'Sauvegarder'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Modal modifier séance */}
                     {editingSession && (
                         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
                             <div className="bg-white rounded-2xl p-7 w-full max-w-md border border-black/[0.06]">
                                 <h3 className="text-base font-semibold text-[#1a1a2e] mb-5">Modifier la séance</h3>
-
                                 <div className="flex flex-col gap-1.5 mb-4">
                                     <label className="text-xs font-medium text-gray-400">Nom de la séance</label>
                                     <input
@@ -164,11 +314,9 @@ export default function ClientDetailPage() {
                                         onChange={(e) => setEditingSession({ ...editingSession, name: e.target.value })}
                                     />
                                 </div>
-
                                 <p className="text-[11px] font-semibold uppercase tracking-widest text-[#9990cc] mb-3">
                                     Exercices
                                 </p>
-
                                 {editingSession.exercises.map((se, index) => (
                                     <div key={se.id} className="flex gap-2 mb-2 items-center">
                                         <span className="flex-1 text-sm text-[#1a1a2e] truncate">{se.exercise.name}</span>
@@ -192,7 +340,6 @@ export default function ClientDetailPage() {
                                         ))}
                                     </div>
                                 ))}
-
                                 <div className="flex justify-end gap-3 mt-6">
                                     <button
                                         onClick={() => setEditingSession(null)}
