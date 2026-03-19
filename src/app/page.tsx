@@ -13,7 +13,7 @@ import { useAuth } from '@/context/AuthContext';
 
 export default function Home() {
   const { token, role, isLoading } = useAuth();
-
+  
   if (isLoading) return <div className="min-h-screen bg-[#ece9f8]" />;
 
   if (token && role === 'coach') return <CoachWelcome />;

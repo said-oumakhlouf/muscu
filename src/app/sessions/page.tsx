@@ -22,7 +22,7 @@ export default function SessionsPage() {
 
     useEffect(() => {
         if (!token) return;
-        if (role === 'admin') {
+        if (role === 'admin' || role === 'coach') {
             sessionService.getAllByCoach(token).then(setCoachSessions);
             userService.getMyClients(token).then(setClients);
         } else {
@@ -47,7 +47,7 @@ export default function SessionsPage() {
     );
 
     // ── VUE COACH ──────────────────────────────────────────────
-    if (role === 'admin') {
+    if (role === 'admin' || role === 'coach') {
         const filtered = selectedClientId === 'all'
             ? coachSessions
             : coachSessions.filter(s => s.userId === selectedClientId);

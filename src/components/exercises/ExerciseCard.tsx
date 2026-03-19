@@ -82,7 +82,7 @@ export default function ExerciseCard({ exercise, role, editingId, setEditingId, 
                     </div>
                     <p className="text-sm text-gray-500 leading-relaxed flex-1">{exercise.description}</p>
 
-                    {role === 'admin' && (
+                    {role === 'admin' || role === 'coach' && (
                         <div className="flex gap-2 mt-2 pt-3 border-t border-[#f5f3ff]">
                             <button
                                 onClick={() => setEditingId(exercise.id)}

@@ -27,7 +27,7 @@ export default function ExercisesList() {
                 <p className="text-sm text-gray-400 mt-1">{exercises.length} exercice{exercises.length !== 1 ? 's' : ''} disponible{exercises.length !== 1 ? 's' : ''}</p>
             </div>
 
-            {role === 'admin' && <ExerciseForm onCreated={loadExercises} />}
+            {role === 'admin' || role === 'coach' && <ExerciseForm onCreated={loadExercises} />}
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 {exercises.map((exercise) => (
