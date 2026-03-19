@@ -20,10 +20,10 @@ import { SessionsService } from './sessions.service';
 @Controller('sessions')
 @UseGuards(JwtAuthGuard)
 export class SessionsController {
-    constructor(private readonly sessionsService: SessionsService) {}
+    constructor(private readonly sessionsService: SessionsService) { }
 
     @UseGuards(RolesGuard)
-    @Roles('admin')
+    @Roles('coach')
     @Post()
     create(@Body() createSessionDto: CreateSessionDto) {
         return this.sessionsService.create(createSessionDto);
@@ -35,7 +35,7 @@ export class SessionsController {
     }
 
     @UseGuards(RolesGuard)
-    @Roles('admin')
+    @Roles('coach')
     @Get('user/:id')
     findByUser(@Param('id') id: string) {
         const userId = parseInt(id);
@@ -44,7 +44,7 @@ export class SessionsController {
     }
 
     @UseGuards(RolesGuard)
-    @Roles('admin')
+    @Roles('coach')
     @Get('coach/all')
     findAllByCoach(@Request() req) {
         return this.sessionsService.findAllByCoach(req.user.id);
@@ -56,14 +56,14 @@ export class SessionsController {
     }
 
     @UseGuards(RolesGuard)
-    @Roles('admin')
+    @Roles('coach')
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.sessionsService.remove(+id);
     }
 
     @UseGuards(JwtAuthGuard)
-    @Roles('admin')
+    @Roles('coach')
     @Patch(':id')
     update(@Param('id') id: string, @Body() dto: UpdateSessionDto) {
         return this.sessionsService.update(+id, dto);

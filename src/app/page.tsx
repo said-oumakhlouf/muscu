@@ -16,8 +16,8 @@ export default function Home() {
 
   if (isLoading) return <div className="min-h-screen bg-[#ece9f8]" />;
 
-  if (token && role === 'admin') return <CoachWelcome />;
-  if (token && role === 'user') return (
+  if (token && role === 'coach') return <CoachWelcome />;
+  if (token && role === 'client') return (
     <div className="min-h-screen bg-[#cec4e2]">
       <ClientDashboard />
     </div>

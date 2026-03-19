@@ -53,11 +53,13 @@ export default function Navbar() {
                     <Dumbbell size={15} />
                     Exercices
                 </Link>
-                <Link href="/sessions" className={linkClass('/sessions')}>
-                    <Calendar size={15} />
-                    Séances
-                </Link>
-                {role === 'admin' && (
+                {role !== 'coach' && (
+                    <Link href="/sessions" className={linkClass('/sessions')}>
+                        <Calendar size={15} />
+                        Séances
+                    </Link>
+                )}
+                {role === 'coach' && (
                     <Link href="/admin" className={linkClass('/admin')}>
                         <Users size={15} />
                         Clients

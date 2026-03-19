@@ -44,7 +44,7 @@ export default function ClientDetailPage() {
     };
 
     useEffect(() => {
-        if (token && role === 'admin' && id) {
+        if (token && role === 'coach' && id) {
             const numericId = Number(id);
             if (isNaN(numericId)) return;
             userService.getOne(token, numericId).then(setClient);

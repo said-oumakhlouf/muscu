@@ -18,6 +18,7 @@ export default function RegisterPage() {
     }, []);
 
     const handleSubmit = async (form: {
+        role: string;
         email: string;
         password: string;
         firstname: string;
@@ -27,6 +28,9 @@ export default function RegisterPage() {
         height: string;
         goal: string;
         coachId: string;
+        speciality: string;
+        bio: string;
+        hourlyRate: string;
     }) => {
         const res = await fetch('http://localhost:3000/auth/register', {
             method: 'POST',
@@ -36,6 +40,7 @@ export default function RegisterPage() {
                 weight: form.weight ? Number(form.weight) : undefined,
                 height: form.height ? Number(form.height) : undefined,
                 coachId: form.coachId ? Number(form.coachId) : undefined,
+                hourlyRate: form.hourlyRate ? Number(form.hourlyRate) : undefined,
             }),
         });
 
@@ -52,7 +57,10 @@ export default function RegisterPage() {
 
         const data = await loginRes.json();
         login(data.access_token);
-        router.push('/sessions');
+        
+        if (form.role === 'coach') {
+            router.push('/admin');
+        } else { router.push('/sessions') };
     };
 
     return (

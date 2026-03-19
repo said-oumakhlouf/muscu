@@ -8,19 +8,19 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { CreateExerciseDto } from './dto/create-exercise.dto';
-import { UpdateExerciseDto } from './dto/update-exercise.dto';
-import { ExercisesService } from './exercises.service';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
+import { CreateExerciseDto } from './dto/create-exercise.dto';
+import { UpdateExerciseDto } from './dto/update-exercise.dto';
+import { ExercisesService } from './exercises.service';
 
 @Controller('exercises')
 export class ExercisesController {
-  constructor(private readonly exercisesService: ExercisesService) {}
+  constructor(private readonly exercisesService: ExercisesService) { }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles('coach')
   @Post()
   create(@Body() createExerciseDto: CreateExerciseDto) {
     return this.exercisesService.create(createExerciseDto);
@@ -37,7 +37,7 @@ export class ExercisesController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles('coach')
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -47,7 +47,7 @@ export class ExercisesController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles('coach')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.exercisesService.remove(+id);

@@ -34,6 +34,7 @@ export class AuthService {
                 role: 'coach',
                 firstname,
                 lastname,
+                gender,
             });
 
             await this.usersService.createCoachProfile(user.id, {

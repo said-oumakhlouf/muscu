@@ -7,10 +7,10 @@ import { CreateCoachDto } from './dto/create-coach.dto';
 
 @Controller('coaches')
 export class CoachesController {
-    constructor(private readonly coachesService: CoachesService) {}
+    constructor(private readonly coachesService: CoachesService) { }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles('admin')
+    @Roles('coach')
     @Post()
     create(@Body() createCoachDto: CreateCoachDto) {
         return this.coachesService.create(createCoachDto);

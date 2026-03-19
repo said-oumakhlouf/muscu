@@ -46,7 +46,7 @@ export default function RegisterStepper({ coaches, onSubmit, error }: RegisterSt
         setStep(1);
     };
 
-    const totalSteps = role === 'coach' ? 2 : 4;
+    const totalSteps = role === 'coach' ? 3 : 4;
 
     const isStepValid = () => {
         if (step === 0) return false;
@@ -56,7 +56,8 @@ export default function RegisterStepper({ coaches, onSubmit, error }: RegisterSt
             if (step === 3) return !!form.weight && !!form.height && !!form.goal;
         }
         if (role === 'coach') {
-            if (step === 2) return !!form.speciality;
+            if (step === 2) return !!form.firstname && !!form.lastname && !!form.gender;
+            if (step === 3) return !!form.speciality;
         }
         return '';
     };
@@ -65,7 +66,8 @@ export default function RegisterStepper({ coaches, onSubmit, error }: RegisterSt
         if (step === 0) return 'Bienvenue';
         if (step === 1) return 'Votre compte';
         if (role === 'coach') {
-            if (step === 2) return 'Votre profil coach';
+            if (step === 2) return 'Informations';
+            if (step === 3) return 'Votre profil coach';
         }
         if (role === 'client') {
             if (step === 2) return 'Informations';
@@ -100,7 +102,9 @@ export default function RegisterStepper({ coaches, onSubmit, error }: RegisterSt
                 {role === 'client' && step === 3 && <StepPhysical form={form} update={update} />}
                 {role === 'client' && step === 4 && <StepCoach form={form} update={update} coaches={coaches} />}
 
-                {role === 'coach' && step === 2 && <StepCoachProfile form={form} update={update} />}
+                {role === 'coach' && step === 2 && <StepPersonal form={form} update={update} />}
+                {role === 'coach' && step === 3 && <StepCoachProfile form={form} update={update} />}
+
             </div>
 
             {step > 0 && (

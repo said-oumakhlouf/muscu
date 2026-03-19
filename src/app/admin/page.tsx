@@ -21,7 +21,7 @@ export default function AdminPage() {
     const router = useRouter();
 
     useEffect(() => {
-        if (token && role === 'admin') {
+        if (token && role === 'coach') {
             // Vérification abonnement
             fetchWithAuth('http://localhost:3000/stripe/status', token).then((sub) => {
                 if (sub && sub.status === 'canceled') {
@@ -41,7 +41,7 @@ export default function AdminPage() {
     }, [token, role, router]);
 
     if (isLoading) return <div className="flex min-h-screen items-center justify-center">Chargement...</div>;
-    if (role !== 'admin') return <div className="flex min-h-screen items-center justify-center text-red-500">Accès refusé</div>;
+    if (role !== 'coach') return <div className="flex min-h-screen items-center justify-center text-red-500">Accès refusé</div>;
 
     return (
         <div className="flex min-h-screen flex-col items-center p-10">

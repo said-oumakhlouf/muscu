@@ -12,7 +12,7 @@ const GOAL_LABELS: Record<string, string> = {
 
 export default function ProfilePage() {
     const { token, role, isLoading } = useAuth();
-    const isAdmin = role === 'admin';
+    const isAdmin = role === 'coach';
 
     const [form, setForm] = useState({
         firstname: '',
