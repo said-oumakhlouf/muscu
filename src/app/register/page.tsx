@@ -6,12 +6,15 @@ import { coachService } from '@/services/coachService';
 import { Coach } from '@/types/Coach';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function RegisterPage() {
     const router = useRouter();
     const { login } = useAuth();
     const [coaches, setCoaches] = useState<Coach[]>([]);
     const [error, setError] = useState('');
+    const searchParams = useSearchParams();
+    const defaultRole = searchParams.get('role') as 'coach' | 'client' | null;
 
     useEffect(() => {
         coachService.getAll().then(setCoaches);
@@ -65,7 +68,7 @@ export default function RegisterPage() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-zinc-50 py-10">
-            <RegisterStepper coaches={coaches} onSubmit={handleSubmit} error={error} />
+            <RegisterStepper coaches={coaches} onSubmit={handleSubmit} error={error} defaultRole={defaultRole}/>
         </div>
     );
 }

@@ -4,27 +4,28 @@ import { FormData } from '@/interfaces/register';
 import { Coach } from '@/types/Coach';
 import { useState } from 'react';
 import StepCoach from './StepCoach';
+import StepCoachProfile from './StepCoachProfile';
 import StepCredentials from './StepCredential';
 import StepIndicator from './StepIndicator';
 import StepPersonal from './StepPersonal';
 import StepPhysical from './StepPhysical';
 import StepRole from './StepRole';
-import StepCoachProfile from './StepCoachProfile';
 
 interface RegisterStepperProps {
     coaches: Coach[];
     onSubmit: (data: FormData) => void;
     error: string;
+    defaultRole?: 'client' | 'coach' | null;
 }
 
-export default function RegisterStepper({ coaches, onSubmit, error }: RegisterStepperProps) {
-    const [role, setRole] = useState<'client' | 'coach' | null>(null);
-    const [step, setStep] = useState(0);
+export default function RegisterStepper({ coaches, onSubmit, error, defaultRole }: RegisterStepperProps) {
+    const [role, setRole] = useState<'client' | 'coach' | null>(defaultRole ?? null);
+    const [step, setStep] = useState(defaultRole ? 1 : 0);
     const [form, setForm] = useState<FormData>({
-        role: 'client',
         email: '',
         password: '',
         firstname: '',
+        role: defaultRole ?? 'client',
         lastname: '',
         gender: '',
         weight: '',
