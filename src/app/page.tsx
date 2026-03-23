@@ -2,7 +2,6 @@
 import ClientDashboard from '@/components/client/ClientDashboard';
 import CoachWelcome from '@/components/coach/CoachWelcome';
 import Hero from '@/components/home/Hero';
-import HomePricing from '@/components/home/HomePricing';
 import HomeCertifications from '@/components/home/HomeCertifications';
 import HomeCoaches from '@/components/home/HomeCoaches';
 import HomeCTA from '@/components/home/HomeCTA';
@@ -26,7 +25,6 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <Hero />
-      <HomePricing />
       <HomeTransformation />
       <HomeHowItWorks />
       <HomeCertifications />
