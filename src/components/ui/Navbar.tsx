@@ -72,12 +72,14 @@ export default function Navbar() {
 
                 {/* CTA si non connecté */}
                 {!token && !isLoading && (
-                    <Link
-                        href="/register"
-                        className={`text-sm font-bold px-4 py-2 rounded-full transition ${isHome ? 'bg-white text-[#7C5CBF] hover:bg-zinc-100' : 'bg-[#7C5CBF] text-white hover:bg-[#6B4DAF]'}`}
-                    >
-                        Commencer
-                    </Link>
+                    <>
+                        <Link
+                            href="/coaches/join"
+                            className={`text-sm font-medium px-4 py-2 rounded-full transition ${isHome ? 'text-white/80 hover:text-white hover:bg-white/10' : 'text-[#7C5CBF] hover:bg-[#F3EEFF]'}`}
+                        >
+                            Devenir coach
+                        </Link>
+                    </>
                 )}
 
                 {/* Menu utilisateur */}
