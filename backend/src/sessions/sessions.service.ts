@@ -7,6 +7,33 @@ import { UpdateSessionDto } from './dto/update-session.dto';
 export class SessionsService {
     constructor(private prisma: PrismaService) {}
 
+    async addExercise(
+        sessionId: number,
+        dto: {
+            exerciseId: number;
+            sets: number;
+            reps: number;
+            weight?: number;
+        },
+    ) {
+        return this.prisma.sessionExercise.create({
+            data: {
+                sessionId,
+                exerciseId: dto.exerciseId,
+                sets: dto.sets,
+                reps: dto.reps,
+                weight: dto.weight,
+            },
+            include: { exercise: true },
+        });
+    }
+
+    async removeExercise(sessionId: number, exerciseId: number) {
+        return this.prisma.sessionExercise.deleteMany({
+            where: { sessionId, exerciseId },
+        });
+    }
+
     async create(createSessionDto: CreateSessionDto) {
         return this.prisma.session.create({
             data: {
@@ -72,9 +99,9 @@ export class SessionsService {
         });
     }
 
-    async findOne(id: number, userId: number) {
+    async findOne(id: number) {
         return this.prisma.session.findFirst({
-            where: { id, userId },
+            where: { id },
             include: {
                 exercises: { include: { exercise: true } },
             },

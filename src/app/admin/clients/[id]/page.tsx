@@ -1,15 +1,16 @@
 'use client';
 
-import StatusBadge from '@/components/ui/StatusBadge';
 import CreateSessionForm from '@/components/sessions/CreateSessionForm';
 import Avatar from '@/components/ui/Avatar';
+import StatusBadge from '@/components/ui/StatusBadge';
 import { useAuth } from '@/context/AuthContext';
 import { sessionService } from '@/services/sessionService';
 import { userService } from '@/services/userService';
-import { fetchWithAuth } from '@/utils/fetchWithAuth';
 import { Session } from '@/types/Session';
 import { User } from '@/types/User';
+import { fetchWithAuth } from '@/utils/fetchWithAuth';
 import { formatGoal } from '@/utils/goalLabels';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -196,6 +197,12 @@ export default function ClientDetailPage() {
                                         </p>
                                     </div>
                                     <div className="flex gap-2 shrink-0">
+                                        <Link
+                                            href={`/sessions/${session.id}`}
+                                            className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors"
+                                        >
+                                            👁️ Voir
+                                        </Link>
                                         <button
                                             onClick={() => setEditingSession(session)}
                                             className="text-xs px-3 py-1.5 rounded-lg border border-[#6C5CE7]/20 text-[#6C5CE7] hover:bg-[#f0eeff] transition-colors"

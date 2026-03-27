@@ -20,7 +20,33 @@ import { SessionsService } from './sessions.service';
 @Controller('sessions')
 @UseGuards(JwtAuthGuard)
 export class SessionsController {
-    constructor(private readonly sessionsService: SessionsService) { }
+    constructor(private readonly sessionsService: SessionsService) {}
+
+    @UseGuards(RolesGuard)
+    @Roles('coach')
+    @Post(':id/exercises')
+    addExercise(
+        @Param('id') id: string,
+        @Body()
+        body: {
+            exerciseId: number;
+            sets: number;
+            reps: number;
+            weight?: number;
+        },
+    ) {
+        return this.sessionsService.addExercise(+id, body);
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles('coach')
+    @Delete(':id/exercises/:exerciseId')
+    removeExercise(
+        @Param('id') id: string,
+        @Param('exerciseId') exerciseId: string,
+    ) {
+        return this.sessionsService.removeExercise(+id, +exerciseId);
+    }
 
     @UseGuards(RolesGuard)
     @Roles('coach')
@@ -51,8 +77,8 @@ export class SessionsController {
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string, @Request() req) {
-        return this.sessionsService.findOne(+id, req.user.id);
+    findOne(@Param('id') id: string) {
+        return this.sessionsService.findOne(+id);
     }
 
     @UseGuards(RolesGuard)

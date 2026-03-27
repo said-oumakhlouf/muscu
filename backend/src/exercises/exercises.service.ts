@@ -5,7 +5,7 @@ import { UpdateExerciseDto } from './dto/update-exercise.dto';
 
 @Injectable()
 export class ExercisesService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(createExerciseDto: CreateExerciseDto) {
     return this.prisma.exercise.create({
@@ -35,5 +35,20 @@ export class ExercisesService {
       where: { id },
     });
     return { deleted: true };
+  }
+
+  async findOrCreate(name: string) {
+    const existing = await this.prisma.exercise.findFirst({
+      where: { name },
+    });
+    if (existing) return existing;
+
+    return this.prisma.exercise.create({
+      data: {
+        name,
+        description: '',
+        muscleGroup: 'Autre',
+      },
+    });
   }
 }

@@ -7,5 +7,6 @@ export const fetchWithAuth = async (url: string, token: string, options?: Reques
             ...options?.headers,
         },
     });
-    return res.json();
+    const text = await res.text();
+    return text ? JSON.parse(text) : null;
 };

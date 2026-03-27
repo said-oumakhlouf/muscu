@@ -84,9 +84,11 @@ export class StripeController {
     @Get('status')
     @UseGuards(JwtAuthGuard)
     async getStatus(@Request() req): Promise<object> {
-        const coachId = req.user.coachId;
-        const subscription =
-            await this.stripeService.getSubscriptionByCoachId(coachId);
+        const coach = await this.stripeService.getCoachByUserId(req.user.id);
+        if (!coach) return { plan: null, status: 'inactive' };
+        const subscription = await this.stripeService.getSubscriptionByCoachId(
+            coach.id,
+        );
         return subscription ?? { plan: null, status: 'inactive' };
     }
 }

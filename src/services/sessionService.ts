@@ -45,4 +45,26 @@ export const sessionService = {
             body: JSON.stringify(data),
         });
     },
+
+    async getOne(token: string, id: number) {
+        return fetchWithAuth(`${API_URL}sessions/${id}`, token);
+    },
+
+    async addExercise(token: string, sessionId: number, data: {
+        exerciseId: number;
+        sets: number;
+        reps: number;
+        weight?: number;
+    }) {
+        return fetchWithAuth(`${API_URL}sessions/${sessionId}/exercises`, token, {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    },
+
+    async removeExercise(token: string, sessionId: number, exerciseId: number) {
+        return fetchWithAuth(`${API_URL}sessions/${sessionId}/exercises/${exerciseId}`, token, {
+            method: 'DELETE',
+        });
+    },
 };

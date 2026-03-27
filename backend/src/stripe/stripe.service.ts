@@ -96,6 +96,12 @@ export class StripeService {
         });
     }
 
+    async getCoachByUserId(userId: number) {
+        return this.prisma.coach.findUnique({
+            where: { userId },
+        });
+    }
+
     private getPlanFromPriceId(priceId: string): string {
         const plans: Record<string, string> = {
             [process.env.STRIPE_PRICE_STARTER!]: 'starter',
