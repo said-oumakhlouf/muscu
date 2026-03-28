@@ -8,26 +8,26 @@ import Footer from "@/components/ui/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 
 const barlow = Barlow_Condensed({
-  subsets: ['latin'],
-  weight: ['900'],
-  variable: '--font-barlow',
+  subsets: ["latin"],
+  weight: ["900"],
+  variable: "--font-barlow",
 });
 
 const dmSans = DM_Sans({
-  subsets: ['latin'],
-  weight: ['300', '400', '500'],
-  variable: '--font-dm-sans',
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-dm-sans",
 });
 
 const dmsSerif = DM_Serif_Display({
-  subsets: ['latin'],
-  weight: '400',
-  variable: '--font-dm-serif',
-})
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-dm-serif",
+});
 
 export const metadata: Metadata = {
-  title: "Muscle ton Corps",
-  description: "Application de suivi de musculation",
+  title: "Coachfik",
+  description: "Application de coach",
 };
 
 export default function RootLayout({
@@ -37,10 +37,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body  
+      <body
         className={`${barlow.variable} ${dmSans.variable} ${dmsSerif.variable}`}
       >
-        <AuthProvider >
+        <AuthProvider>
           <Navbar />
           <Toaster position="top-right" />
           {children}
