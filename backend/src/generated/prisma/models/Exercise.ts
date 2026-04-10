@@ -44,6 +44,7 @@ export type ExerciseMinAggregateOutputType = {
   imageUrl: string | null
   videoUrl: string | null
   difficulty: string | null
+  externalId: string | null
   createdAt: Date | null
   coachId: number | null
 }
@@ -56,6 +57,7 @@ export type ExerciseMaxAggregateOutputType = {
   imageUrl: string | null
   videoUrl: string | null
   difficulty: string | null
+  externalId: string | null
   createdAt: Date | null
   coachId: number | null
 }
@@ -68,6 +70,7 @@ export type ExerciseCountAggregateOutputType = {
   imageUrl: number
   videoUrl: number
   difficulty: number
+  externalId: number
   createdAt: number
   coachId: number
   _all: number
@@ -92,6 +95,7 @@ export type ExerciseMinAggregateInputType = {
   imageUrl?: true
   videoUrl?: true
   difficulty?: true
+  externalId?: true
   createdAt?: true
   coachId?: true
 }
@@ -104,6 +108,7 @@ export type ExerciseMaxAggregateInputType = {
   imageUrl?: true
   videoUrl?: true
   difficulty?: true
+  externalId?: true
   createdAt?: true
   coachId?: true
 }
@@ -116,6 +121,7 @@ export type ExerciseCountAggregateInputType = {
   imageUrl?: true
   videoUrl?: true
   difficulty?: true
+  externalId?: true
   createdAt?: true
   coachId?: true
   _all?: true
@@ -215,6 +221,7 @@ export type ExerciseGroupByOutputType = {
   imageUrl: string | null
   videoUrl: string | null
   difficulty: string | null
+  externalId: string | null
   createdAt: Date
   coachId: number | null
   _count: ExerciseCountAggregateOutputType | null
@@ -250,6 +257,7 @@ export type ExerciseWhereInput = {
   imageUrl?: Prisma.StringNullableFilter<"Exercise"> | string | null
   videoUrl?: Prisma.StringNullableFilter<"Exercise"> | string | null
   difficulty?: Prisma.StringNullableFilter<"Exercise"> | string | null
+  externalId?: Prisma.StringNullableFilter<"Exercise"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Exercise"> | Date | string
   coachId?: Prisma.IntNullableFilter<"Exercise"> | number | null
   sessions?: Prisma.SessionExerciseListRelationFilter
@@ -264,6 +272,7 @@ export type ExerciseOrderByWithRelationInput = {
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   difficulty?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   coachId?: Prisma.SortOrderInput | Prisma.SortOrder
   sessions?: Prisma.SessionExerciseOrderByRelationAggregateInput
@@ -281,6 +290,7 @@ export type ExerciseWhereUniqueInput = Prisma.AtLeast<{
   imageUrl?: Prisma.StringNullableFilter<"Exercise"> | string | null
   videoUrl?: Prisma.StringNullableFilter<"Exercise"> | string | null
   difficulty?: Prisma.StringNullableFilter<"Exercise"> | string | null
+  externalId?: Prisma.StringNullableFilter<"Exercise"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Exercise"> | Date | string
   coachId?: Prisma.IntNullableFilter<"Exercise"> | number | null
   sessions?: Prisma.SessionExerciseListRelationFilter
@@ -295,6 +305,7 @@ export type ExerciseOrderByWithAggregationInput = {
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   difficulty?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   coachId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ExerciseCountOrderByAggregateInput
@@ -315,6 +326,7 @@ export type ExerciseScalarWhereWithAggregatesInput = {
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Exercise"> | string | null
   videoUrl?: Prisma.StringNullableWithAggregatesFilter<"Exercise"> | string | null
   difficulty?: Prisma.StringNullableWithAggregatesFilter<"Exercise"> | string | null
+  externalId?: Prisma.StringNullableWithAggregatesFilter<"Exercise"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Exercise"> | Date | string
   coachId?: Prisma.IntNullableWithAggregatesFilter<"Exercise"> | number | null
 }
@@ -326,6 +338,7 @@ export type ExerciseCreateInput = {
   imageUrl?: string | null
   videoUrl?: string | null
   difficulty?: string | null
+  externalId?: string | null
   createdAt?: Date | string
   sessions?: Prisma.SessionExerciseCreateNestedManyWithoutExerciseInput
   coach?: Prisma.CoachCreateNestedOneWithoutExercisesInput
@@ -339,6 +352,7 @@ export type ExerciseUncheckedCreateInput = {
   imageUrl?: string | null
   videoUrl?: string | null
   difficulty?: string | null
+  externalId?: string | null
   createdAt?: Date | string
   coachId?: number | null
   sessions?: Prisma.SessionExerciseUncheckedCreateNestedManyWithoutExerciseInput
@@ -351,6 +365,7 @@ export type ExerciseUpdateInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficulty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionExerciseUpdateManyWithoutExerciseNestedInput
   coach?: Prisma.CoachUpdateOneWithoutExercisesNestedInput
@@ -364,6 +379,7 @@ export type ExerciseUncheckedUpdateInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficulty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coachId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sessions?: Prisma.SessionExerciseUncheckedUpdateManyWithoutExerciseNestedInput
@@ -377,6 +393,7 @@ export type ExerciseCreateManyInput = {
   imageUrl?: string | null
   videoUrl?: string | null
   difficulty?: string | null
+  externalId?: string | null
   createdAt?: Date | string
   coachId?: number | null
 }
@@ -388,6 +405,7 @@ export type ExerciseUpdateManyMutationInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficulty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -399,6 +417,7 @@ export type ExerciseUncheckedUpdateManyInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficulty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coachId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -411,6 +430,7 @@ export type ExerciseCountOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
+  externalId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   coachId?: Prisma.SortOrder
 }
@@ -428,6 +448,7 @@ export type ExerciseMaxOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
+  externalId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   coachId?: Prisma.SortOrder
 }
@@ -440,6 +461,7 @@ export type ExerciseMinOrderByAggregateInput = {
   imageUrl?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
+  externalId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   coachId?: Prisma.SortOrder
 }
@@ -555,6 +577,7 @@ export type ExerciseCreateWithoutCoachInput = {
   imageUrl?: string | null
   videoUrl?: string | null
   difficulty?: string | null
+  externalId?: string | null
   createdAt?: Date | string
   sessions?: Prisma.SessionExerciseCreateNestedManyWithoutExerciseInput
 }
@@ -567,6 +590,7 @@ export type ExerciseUncheckedCreateWithoutCoachInput = {
   imageUrl?: string | null
   videoUrl?: string | null
   difficulty?: string | null
+  externalId?: string | null
   createdAt?: Date | string
   sessions?: Prisma.SessionExerciseUncheckedCreateNestedManyWithoutExerciseInput
 }
@@ -608,6 +632,7 @@ export type ExerciseScalarWhereInput = {
   imageUrl?: Prisma.StringNullableFilter<"Exercise"> | string | null
   videoUrl?: Prisma.StringNullableFilter<"Exercise"> | string | null
   difficulty?: Prisma.StringNullableFilter<"Exercise"> | string | null
+  externalId?: Prisma.StringNullableFilter<"Exercise"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Exercise"> | Date | string
   coachId?: Prisma.IntNullableFilter<"Exercise"> | number | null
 }
@@ -619,6 +644,7 @@ export type ExerciseCreateWithoutSessionsInput = {
   imageUrl?: string | null
   videoUrl?: string | null
   difficulty?: string | null
+  externalId?: string | null
   createdAt?: Date | string
   coach?: Prisma.CoachCreateNestedOneWithoutExercisesInput
 }
@@ -631,6 +657,7 @@ export type ExerciseUncheckedCreateWithoutSessionsInput = {
   imageUrl?: string | null
   videoUrl?: string | null
   difficulty?: string | null
+  externalId?: string | null
   createdAt?: Date | string
   coachId?: number | null
 }
@@ -658,6 +685,7 @@ export type ExerciseUpdateWithoutSessionsInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficulty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coach?: Prisma.CoachUpdateOneWithoutExercisesNestedInput
 }
@@ -670,6 +698,7 @@ export type ExerciseUncheckedUpdateWithoutSessionsInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficulty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coachId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -682,6 +711,7 @@ export type ExerciseCreateManyCoachInput = {
   imageUrl?: string | null
   videoUrl?: string | null
   difficulty?: string | null
+  externalId?: string | null
   createdAt?: Date | string
 }
 
@@ -692,6 +722,7 @@ export type ExerciseUpdateWithoutCoachInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficulty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionExerciseUpdateManyWithoutExerciseNestedInput
 }
@@ -704,6 +735,7 @@ export type ExerciseUncheckedUpdateWithoutCoachInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficulty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionExerciseUncheckedUpdateManyWithoutExerciseNestedInput
 }
@@ -716,6 +748,7 @@ export type ExerciseUncheckedUpdateManyWithoutCoachInput = {
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   difficulty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -758,6 +791,7 @@ export type ExerciseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   imageUrl?: boolean
   videoUrl?: boolean
   difficulty?: boolean
+  externalId?: boolean
   createdAt?: boolean
   coachId?: boolean
   sessions?: boolean | Prisma.Exercise$sessionsArgs<ExtArgs>
@@ -773,6 +807,7 @@ export type ExerciseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   imageUrl?: boolean
   videoUrl?: boolean
   difficulty?: boolean
+  externalId?: boolean
   createdAt?: boolean
   coachId?: boolean
   coach?: boolean | Prisma.Exercise$coachArgs<ExtArgs>
@@ -786,6 +821,7 @@ export type ExerciseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   imageUrl?: boolean
   videoUrl?: boolean
   difficulty?: boolean
+  externalId?: boolean
   createdAt?: boolean
   coachId?: boolean
   coach?: boolean | Prisma.Exercise$coachArgs<ExtArgs>
@@ -799,11 +835,12 @@ export type ExerciseSelectScalar = {
   imageUrl?: boolean
   videoUrl?: boolean
   difficulty?: boolean
+  externalId?: boolean
   createdAt?: boolean
   coachId?: boolean
 }
 
-export type ExerciseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "muscleGroup" | "imageUrl" | "videoUrl" | "difficulty" | "createdAt" | "coachId", ExtArgs["result"]["exercise"]>
+export type ExerciseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "muscleGroup" | "imageUrl" | "videoUrl" | "difficulty" | "externalId" | "createdAt" | "coachId", ExtArgs["result"]["exercise"]>
 export type ExerciseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.Exercise$sessionsArgs<ExtArgs>
   coach?: boolean | Prisma.Exercise$coachArgs<ExtArgs>
@@ -830,6 +867,7 @@ export type $ExercisePayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     imageUrl: string | null
     videoUrl: string | null
     difficulty: string | null
+    externalId: string | null
     createdAt: Date
     coachId: number | null
   }, ExtArgs["result"]["exercise"]>
@@ -1264,6 +1302,7 @@ export interface ExerciseFieldRefs {
   readonly imageUrl: Prisma.FieldRef<"Exercise", 'String'>
   readonly videoUrl: Prisma.FieldRef<"Exercise", 'String'>
   readonly difficulty: Prisma.FieldRef<"Exercise", 'String'>
+  readonly externalId: Prisma.FieldRef<"Exercise", 'String'>
   readonly createdAt: Prisma.FieldRef<"Exercise", 'DateTime'>
   readonly coachId: Prisma.FieldRef<"Exercise", 'Int'>
 }

@@ -975,6 +975,7 @@ export const ExerciseScalarFieldEnum = {
   imageUrl: 'imageUrl',
   videoUrl: 'videoUrl',
   difficulty: 'difficulty',
+  externalId: 'externalId',
   createdAt: 'createdAt',
   coachId: 'coachId'
 } as const

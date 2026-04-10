@@ -15,6 +15,7 @@ model Exercise {
     imageUrl    String?
     videoUrl    String?
     difficulty  String?
+    externalId  String?  
     sessions    SessionExercise[]
     createdAt   DateTime @default(now())
     coachId     Int?

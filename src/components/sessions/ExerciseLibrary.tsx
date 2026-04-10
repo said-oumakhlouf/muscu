@@ -1,6 +1,6 @@
 "use client";
 import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 interface WgerExercise {
   id: number;
@@ -20,57 +20,87 @@ interface WgerApiResponse {
 }
 
 const CATEGORIES = [
-  "Tous",
-  "Abs",
-  "Arms",
-  "Back",
-  "Chest",
-  "Legs",
-  "Shoulders",
+  { label: "Tous", id: null },
+  { label: "Abdos", id: 10 },
+  { label: "Bras", id: 8 },
+  { label: "Dos", id: 12 },
+  { label: "Pectoraux", id: 11 },
+  { label: "Jambes", id: 9 },
+  { label: "Épaules", id: 13 },
+  { label: "Mollets", id: 14 },
 ];
 
-export default function ExerciseLibrary() {
-  const [exercises, setExercises] = useState<WgerExercise[]>([]);
-  const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [nextUrl, setNextUrl] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState("Tous");
+const CATEGORY_TRANSLATIONS: Record<string, string> = {
+  Abs: "Abdos",
+  Arms: "Bras",
+  Back: "Dos",
+  Chest: "Pectoraux",
+  Legs: "Jambes",
+  Shoulders: "Épaules",
+  Calves: "Mollets",
+};
 
-  const parseResults = (results: WgerApiExercise[]): WgerExercise[] => {
-    return results
-      .map((e) => {
-        const translation = e.translations?.find((t) => t.language === 2);
-        const name = translation?.name || "";
-        return {
-          id: e.id,
-          name,
-          category: e.category?.name || "Autre",
-        };
-      })
-      .filter((e) => e.name);
-  };
+const buildUrl = (categoryId: number | null) => {
+  const base =
+    "https://wger.de/api/v2/exerciseinfo/?format=json&language=2&limit=20";
+  return categoryId ? `${base}&category=${categoryId}` : base;
+};
+
+const parseResults = (results: WgerApiExercise[]): WgerExercise[] => {
+  return results
+    .map((e) => {
+      const frTranslation = e.translations?.find((t) => t.language === 12);
+      const enTranslation = e.translations?.find((t) => t.language === 2);
+      const name = frTranslation?.name || enTranslation?.name || "";
+      const rawCategory = e.category?.name || "";
+      return {
+        id: e.id,
+        name,
+        category: CATEGORY_TRANSLATIONS[rawCategory] || rawCategory || "Autre",
+      };
+    })
+    .filter((e) => e.name);
+};
+
+export default function ExerciseLibrary() {
+  const [listState, setListState] = useState<{
+    exercises: WgerExercise[];
+    loading: boolean;
+    nextUrl: string | null;
+  }>({ exercises: [], loading: true, nextUrl: null });
+
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(CATEGORIES[0]);
 
   useEffect(() => {
-    fetch(
-      "https://wger.de/api/v2/exerciseinfo/?format=json&language=2&limit=20",
-    )
+    fetch(buildUrl(selectedCategory.id))
       .then((res) => res.json())
       .then((data: WgerApiResponse) => {
-        setExercises(parseResults(data.results));
-        setNextUrl(data.next);
-        setLoading(false);
+        setListState({
+          exercises: parseResults(data.results),
+          loading: false,
+          nextUrl: data.next,
+        });
       });
-  }, []);
+  }, [selectedCategory]);
+
+  const handleCategoryChange = (cat: (typeof CATEGORIES)[number]) => {
+    setListState({ exercises: [], loading: true, nextUrl: null });
+    setSelectedCategory(cat);
+  };
 
   const loadMore = () => {
-    if (!nextUrl) return;
+    if (!listState.nextUrl) return;
     setLoadingMore(true);
-    fetch(nextUrl)
+    fetch(listState.nextUrl)
       .then((res) => res.json())
       .then((data: WgerApiResponse) => {
-        setExercises((prev) => [...prev, ...parseResults(data.results)]);
-        setNextUrl(data.next);
+        setListState((prev) => ({
+          exercises: [...prev.exercises, ...parseResults(data.results)],
+          loading: false,
+          nextUrl: data.next,
+        }));
         setLoadingMore(false);
       });
   };
@@ -81,23 +111,21 @@ export default function ExerciseLibrary() {
       JSON.stringify({
         externalId: String(exercise.id),
         name: exercise.name,
+        category: exercise.category,
       }),
     );
   };
 
-  const filtered = exercises
-    .filter(
-      (e) => selectedCategory === "Tous" || e.category === selectedCategory,
-    )
-    .filter((e) => e.name.toLowerCase().includes(search.toLowerCase()));
+  const filtered = listState.exercises.filter((e) =>
+    e.name.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
       <h2 className="text-lg font-bold text-gray-800 mb-4">
-        Bibliothèque d'exercices
+        Bibliothèque d&apos;exercices
       </h2>
 
-      {/* Recherche */}
       <div className="relative mb-3">
         <Search
           size={15}
@@ -111,25 +139,23 @@ export default function ExerciseLibrary() {
         />
       </div>
 
-      {/* Filtre catégories */}
       <div className="flex gap-2 flex-wrap mb-4">
         {CATEGORIES.map((cat) => (
           <button
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
+            key={cat.label}
+            onClick={() => handleCategoryChange(cat)}
             className={`px-3 py-1 rounded-full text-xs font-medium transition ${
-              selectedCategory === cat
+              selectedCategory.label === cat.label
                 ? "bg-[#7C5CBF] text-white"
                 : "bg-zinc-100 text-gray-500 hover:bg-[#F3EEFF] hover:text-[#7C5CBF]"
             }`}
           >
-            {cat}
+            {cat.label}
           </button>
         ))}
       </div>
 
-      {/* Liste */}
-      {loading ? (
+      {listState.loading ? (
         <p className="text-gray-400 text-sm text-center py-8">Chargement...</p>
       ) : (
         <>
@@ -160,8 +186,7 @@ export default function ExerciseLibrary() {
             )}
           </div>
 
-          {/* Load more */}
-          {nextUrl && (
+          {listState.nextUrl && (
             <button
               onClick={loadMore}
               disabled={loadingMore}
