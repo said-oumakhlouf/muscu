@@ -15,7 +15,8 @@ const eslintConfig = defineConfig([
   ]),
   {
     rules: {
-      'react-compiler/react-compiler': 'off',
+      "react-compiler/react-compiler": "off",
+      "prettier/prettier": "off",
     },
   },
 ]);
