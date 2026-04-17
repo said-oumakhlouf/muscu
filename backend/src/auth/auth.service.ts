@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+    ConflictException,
+    Injectable,
+    UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from 'src/users/users.service';
@@ -25,39 +29,47 @@ export class AuthService {
         bio?: string,
         hourlyRate?: number,
     ) {
-        const hashedPassword = await bcrypt.hash(password, 10);
+        try {
+            const hashedPassword = await bcrypt.hash(password, 10);
 
-        if (role === 'coach') {
-            const user = await this.usersService.create({
+            if (role === 'coach') {
+                const user = await this.usersService.create({
+                    email,
+                    password: hashedPassword,
+                    role: 'coach',
+                    firstname,
+                    lastname,
+                    gender,
+                });
+
+                await this.usersService.createCoachProfile(user.id, {
+                    speciality,
+                    bio,
+                    hourlyRate,
+                });
+
+                return { message: 'Coach créé avec succès' };
+            }
+
+            await this.usersService.create({
                 email,
                 password: hashedPassword,
-                role: 'coach',
                 firstname,
                 lastname,
+                weight,
+                height,
+                goal,
                 gender,
+                coachId,
             });
-
-            await this.usersService.createCoachProfile(user.id, {
-                speciality,
-                bio,
-                hourlyRate,
-            });
-
-            return { message: 'Coach créé avec succès' };
+            return { message: 'Utilisateur créé avec succès' };
+        } catch (error) {
+            const err = error as { code?: string };
+            if (err.code === 'P2002') {
+                throw new ConflictException('Cet email est déjà utilisé');
+            }
+            throw error;
         }
-
-        await this.usersService.create({
-            email,
-            password: hashedPassword,
-            firstname,
-            lastname,
-            weight,
-            height,
-            goal,
-            gender,
-            coachId,
-        });
-        return { message: 'Utilisateur créé avec succès' };
     }
 
     async login(email: string, password: string) {
