@@ -31,7 +31,7 @@ export default function AdminPage() {
   useEffect(() => {
     if (token && role === "coach") {
       fetchWithAuth(
-        "${process.env.NEXT_PUBLIC_API_URL}/stripe/status",
+        `${process.env.NEXT_PUBLIC_API_URL}/stripe/status`,
         token,
       ).then((sub) => {
         if (sub?.status === "canceled") {

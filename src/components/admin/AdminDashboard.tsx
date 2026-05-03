@@ -45,7 +45,7 @@ export default function AdminDashboard({
     setLoading(true);
     try {
       await fetchWithAuth(
-        "${process.env.NEXT_PUBLIC_API_URL}/users/invite",
+        `${process.env.NEXT_PUBLIC_API_URL}/users/invite`,
         token!,
         {
           method: "POST",
@@ -261,7 +261,7 @@ export default function AdminDashboard({
           <div>
             {clients.length === 0 ? (
               <p className="px-5 py-4 text-sm text-gray-400">
-                Aucun client pour l'instant
+                Aucun client pour l&apos;instant
               </p>
             ) : (
               clients.map((client, i) => (
