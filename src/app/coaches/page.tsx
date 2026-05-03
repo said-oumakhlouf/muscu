@@ -26,11 +26,20 @@ export default function CoachesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
+    let cancelled = false;
+
     coachService
       .getAll(specialty || undefined, search || undefined)
-      .then(setCoaches)
-      .finally(() => setLoading(false));
+      .then((data) => {
+        if (!cancelled) {
+          setCoaches(data);
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [specialty, search]);
 
   return (
