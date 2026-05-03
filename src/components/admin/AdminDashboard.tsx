@@ -45,7 +45,7 @@ export default function AdminDashboard({
     setLoading(true);
     try {
       await fetchWithAuth(
-        "${process.env.next_public_api_url}/users/invite",
+        "${process.env.NEXT_PUBLIC_API_URL}/users/invite",
         token!,
         {
           method: "POST",

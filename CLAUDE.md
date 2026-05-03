@@ -43,7 +43,7 @@ npx prisma generate       # Regenerate Prisma client (output: src/generated/pris
 
 ### Frontend request flow
 
-All API calls go through `src/utils/fetchWithAuth.ts`, which attaches the JWT Bearer token. Services in `src/services/` (`userService`, `sessionService`, `coachService`, `exerciseService`) wrap these calls and always target `${process.env.next_public_api_url}/`.
+All API calls go through `src/utils/fetchWithAuth.ts`, which attaches the JWT Bearer token. Services in `src/services/` (`userService`, `sessionService`, `coachService`, `exerciseService`) wrap these calls and always target `${process.env.NEXT_PUBLIC_API_URL}/`.
 
 Auth state lives in `src/context/AuthContext.tsx` — token + decoded role + userId stored in `sessionStorage`. JWT payload shape: `{ sub: number, email: string, role: string }`. The `isLoading` flag must be checked before any role-based rendering to avoid flash of unauthenticated content.
 

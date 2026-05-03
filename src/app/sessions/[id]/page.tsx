@@ -42,7 +42,7 @@ export default function SessionDetailPage() {
 
     try {
       const data = await fetchWithAuth(
-        "${process.env.next_public_api_url}/exercises/find-or-create",
+        "${process.env.NEXT_PUBLIC_API_URL}/exercises/find-or-create",
         token,
         {
           method: "POST",

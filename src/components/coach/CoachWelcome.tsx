@@ -34,7 +34,7 @@ export default function CoachWelcome() {
   useEffect(() => {
     if (!token) return;
     fetchWithAuth(
-      "${process.env.next_public_api_url}/users/profile",
+      `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
       token,
     ).then((data) => setFirstname(data.firstname ?? null));
   }, [token]);
@@ -58,7 +58,7 @@ export default function CoachWelcome() {
         </h1>
 
         <p className="text-lg text-gray-400 font-light mb-8">
-          Que veux-tu faire aujourd'hui ?
+          Que veux-tu faire aujourd&apos;hui ?
         </p>
 
         <div className="w-full h-px bg-[#e5d9f9] mb-8" />

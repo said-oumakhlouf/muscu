@@ -24,8 +24,8 @@ export default function ClientDashboard() {
   useEffect(() => {
     if (!token) return;
     Promise.all([
-      fetchWithAuth("${process.env.next_public_api_url}/sessions", token),
-      fetchWithAuth("${process.env.next_public_api_url}/users/profile", token),
+      fetchWithAuth("${process.env.NEXT_PUBLIC_API_URL}/sessions", token),
+      fetchWithAuth("${process.env.NEXT_PUBLIC_API_URL}/users/profile", token),
     ])
       .then(([sessionsData, profileData]) => {
         setSessions(Array.isArray(sessionsData) ? sessionsData : []);
