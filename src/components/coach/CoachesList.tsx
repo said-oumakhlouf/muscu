@@ -17,7 +17,12 @@ export default function CoachesList() {
   return (
     <div className="flex justify-center items-end gap-7 flex-wrap pt-5">
       {displayed.map((coach, index) => (
-        <CoachCard key={coach.id} coach={coach} featured={index === 1} />
+        <CoachCard
+          key={coach.id}
+          coach={coach}
+          featured={index === 1}
+          index={index}
+        />
       ))}
 
       {displayed.length === 0 && (

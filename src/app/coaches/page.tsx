@@ -141,6 +141,7 @@ export default function CoachesPage() {
                   getRating(coach.id) ===
                   Math.max(...coaches.map((c) => getRating(c.id)))
                 }
+                index={index}
               />
             ))}
           </div>

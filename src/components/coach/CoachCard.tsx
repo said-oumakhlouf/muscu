@@ -1,10 +1,12 @@
 "use client";
 
 import { Coach } from "@/types/Coach";
+import { motion } from "framer-motion";
 
 interface CoachCardProps {
   coach: Coach;
   featured?: boolean;
+  index?: number;
 }
 
 type Tier = "gold" | "platinum" | "elite" | "teal";
@@ -101,7 +103,11 @@ const tierClasses: Record<
   },
 };
 
-export default function CoachCard({ coach, featured = false }: CoachCardProps) {
+export default function CoachCard({
+  coach,
+  featured = false,
+  index = 0,
+}: CoachCardProps) {
   const fullName =
     coach.user.firstname && coach.user.lastname
       ? `${coach.user.firstname} ${coach.user.lastname[0]}.`
@@ -113,11 +119,27 @@ export default function CoachCard({ coach, featured = false }: CoachCardProps) {
   const tc = tierClasses[tier];
 
   return (
-    <div
-      className={`
-            relative cursor-pointer group flex-shrink-0
-            ${featured ? "w-[280px] h-[420px]" : "w-[220px] h-[340px]"}
-        `}
+    <motion.div
+      initial={{
+        opacity: 0,
+        x: index % 2 === 0 ? -300 : 300,
+        y: -200,
+        rotate: index % 2 === 0 ? -25 : 25,
+        scale: 0.8,
+      }}
+      animate={{
+        opacity: 1,
+        x: 0,
+        y: 0,
+        rotate: 0,
+        scale: 1,
+      }}
+      transition={{
+        duration: 0.6,
+        delay: (index ?? 0) * 0.15,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className={`relative cursor-pointer group flex-shrink-0 ${featured ? "w-[280px] h-[420px]" : "w-[220px] h-[340px]"}`}
     >
       {/* Badge Top Coach */}
       {featured && (
@@ -199,6 +221,20 @@ export default function CoachCard({ coach, featured = false }: CoachCardProps) {
           {/* Divider */}
           <div className={`h-px mb-2 ${tc.divider}`} />
 
+          {/* Prix */}
+          {coach.hourlyRate && (
+            <div className="text-center mb-1">
+              <span className={`text-[13px] font-black ${tc.name}`}>
+                {coach.hourlyRate}€
+              </span>
+              <span
+                className={`text-[9px] font-bold uppercase tracking-wide ml-1 ${tc.label}`}
+              >
+                /séance
+              </span>
+            </div>
+          )}
+
           {/* Stats */}
           <div className="grid grid-cols-3 gap-1">
             {stats.map(({ label, value }) => (
@@ -218,6 +254,6 @@ export default function CoachCard({ coach, featured = false }: CoachCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
