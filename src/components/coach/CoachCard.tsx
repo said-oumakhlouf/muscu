@@ -146,13 +146,11 @@ export default function CoachCard({ coach, featured = false }: CoachCardProps) {
           <div className="flex flex-col gap-0.5 mb-1.5">
             <span
               className={`font-black leading-none ${featured ? "text-[52px]" : "text-[40px]"} ${tc.rating}`}
-              style={{ fontFamily: "var(--font-barlow), sans-serif" }}
             >
               {rating}
             </span>
             <span
               className={`text-[11px] font-bold tracking-wide uppercase ${tc.position}`}
-              style={{ fontFamily: "var(--font-barlow), sans-serif" }}
             >
               {coach.specialty || "Fitness"}
             </span>
@@ -194,7 +192,6 @@ export default function CoachCard({ coach, featured = false }: CoachCardProps) {
           {/* Nom */}
           <p
             className={`font-black uppercase tracking-wide text-center my-2 leading-none ${featured ? "text-[22px]" : "text-[18px]"} ${tc.name}`}
-            style={{ fontFamily: "var(--font-barlow), sans-serif" }}
           >
             {fullName}
           </p>
@@ -208,13 +205,11 @@ export default function CoachCard({ coach, featured = false }: CoachCardProps) {
               <div key={label} className="flex flex-col items-center gap-0.5">
                 <span
                   className={`font-black leading-none ${featured ? "text-[18px]" : "text-[15px]"} ${tc.stat}`}
-                  style={{ fontFamily: "var(--font-barlow), sans-serif" }}
                 >
                   {value}
                 </span>
                 <span
                   className={`text-[8px] font-bold tracking-wide uppercase ${tc.label}`}
-                  style={{ fontFamily: "var(--font-barlow), sans-serif" }}
                 >
                   {label}
                 </span>

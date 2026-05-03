@@ -16,13 +16,11 @@ export default function HomeCoaches() {
         <div className="text-center mb-16">
           <span
             className="inline-block text-[#F5C518] text-xs font-bold tracking-[4px] uppercase mb-4"
-            style={{ fontFamily: "var(--font-barlow), sans-serif" }}
           >
             ⚡ CoachFik Elite
           </span>
           <h2
             className="block text-white uppercase leading-none mb-4 font-black skew-x-[-8deg] text-[clamp(48px,8vw,88px)]"
-            style={{ fontFamily: "var(--font-barlow), sans-serif" }}
           >
             Nos <span className="text-[#F5C518]">Coachs</span>
           </h2>
@@ -39,7 +37,6 @@ export default function HomeCoaches() {
           <a
             href="/coaches"
             className="inline-flex items-center gap-2 bg-[#7C5CBF] text-white font-bold text-[15px] tracking-[1.5px] uppercase px-10 py-4 rounded-full hover:bg-[#9370D8] transition hover:-translate-y-0.5 shadow-lg shadow-[#7C5CBF]/30"
-            style={{ fontFamily: "var(--font-barlow), sans-serif" }}
           >
             Voir tous les coachs
             <svg
