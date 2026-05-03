@@ -1,78 +1,228 @@
-import Image from 'next/image';
-import { BadgeCheck, Dumbbell } from 'lucide-react';
-import { Coach } from '@/types/Coach';
+"use client";
+
+import { Coach } from "@/types/Coach";
 
 interface CoachCardProps {
-    coach: Coach;
+  coach: Coach;
+  featured?: boolean;
 }
 
-export default function CoachCard({ coach }: CoachCardProps) {
-    const fullName = coach.user.firstname && coach.user.lastname
-        ? `${coach.user.firstname} ${coach.user.lastname}`
-        : coach.user.email;
+type Tier = "gold" | "platinum" | "elite" | "teal";
 
-    const initials = coach.user.firstname && coach.user.lastname
-        ? `${coach.user.firstname[0]}${coach.user.lastname[0]}`
-        : '?';
+function getRating(id: number): number {
+  return 78 + ((id * 7 + 13) % 20);
+}
 
-    return (
-        <div className="bg-white rounded-2xl overflow-hidden border border-[#E8DEFF] hover:shadow-lg hover:border-[#7C5CBF] transition group">
+function getTier(rating: number): Tier {
+  if (rating >= 95) return "elite";
+  if (rating >= 90) return "platinum";
+  if (rating >= 85) return "gold";
+  return "teal";
+}
 
-            {/* Photo */}
-            <div className="relative h-48 bg-[#F3EEFF]">
-                {coach.photoUrl ? (
-                    <Image
-                        src={coach.photoUrl}
-                        alt={fullName}
-                        fill
-                        className="object-cover object-top"
-                    />
-                ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-5xl font-black text-[#7C5CBF] opacity-30">
-                            {initials}
-                        </span>
-                    </div>
-                )}
+function getStats(rating: number, specialty?: string) {
+  const vary = (offset: number) => Math.min(99, Math.max(70, rating + offset));
 
-                {/* Badge certifié */}
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-[#7C5CBF] text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
-                    <BadgeCheck size={13} className="text-[#7C5CBF]" />
-                    Certifié
-                </div>
-            </div>
+  const map: Record<string, { labels: string[]; offsets: number[] }> = {
+    Muscu: {
+      labels: ["Force", "Nutrition", "Suivi", "Cardio", "Mental", "Récup"],
+      offsets: [5, -3, 2, -4, 1, -2],
+    },
+    Running: {
+      labels: ["Endurance", "Vitesse", "Suivi", "Nutrition", "Mental", "Récup"],
+      offsets: [6, 3, 2, -2, 4, -1],
+    },
+    Yoga: {
+      labels: ["Flexib.", "Mental", "Suivi", "Récup", "Médita.", "Cardio"],
+      offsets: [7, 5, 1, 4, 6, -5],
+    },
+    Nutrition: {
+      labels: ["Nutrition", "Masse", "Suivi", "Cardio", "Mental", "Récup"],
+      offsets: [9, -3, 2, -5, 1, 4],
+    },
+    Fitness: {
+      labels: ["Cardio", "Force", "Suivi", "Nutrition", "Mental", "Récup"],
+      offsets: [4, 2, 3, -1, 2, -2],
+    },
+  };
 
-            {/* Infos */}
-            <div className="p-5 flex flex-col gap-3">
+  const key = specialty && map[specialty] ? specialty : "Fitness";
+  const { labels, offsets } = map[key];
+  return labels.map((label, i) => ({ label, value: vary(offsets[i]) }));
+}
 
-                <div>
-                    <h3 className="text-lg font-bold text-[#1A1A2E]">{fullName}</h3>
-                    {coach.specialty && (
-                        <div className="flex items-center gap-1 mt-1">
-                            <Dumbbell size={13} className="text-[#7C5CBF]" />
-                            <span className="text-sm text-[#7C5CBF] font-medium">{coach.specialty}</span>
-                        </div>
-                    )}
-                </div>
+const tierClasses: Record<
+  Tier,
+  {
+    card: string;
+    rating: string;
+    position: string;
+    name: string;
+    stat: string;
+    label: string;
+    divider: string;
+  }
+> = {
+  gold: {
+    card: "[background:linear-gradient(160deg,#B8860B_0%,#FFD700_30%,#DAA520_55%,#8B6914_80%,#C8960C_100%)] shadow-[0_0_0_1px_rgba(255,215,0,0.4),0_20px_60px_rgba(255,180,0,0.3),0_4px_20px_rgba(0,0,0,0.6)]",
+    rating: "text-black/75",
+    position: "text-black/50",
+    name: "text-black/80",
+    stat: "text-black/80",
+    label: "text-black/50",
+    divider: "bg-black/20",
+  },
+  platinum: {
+    card: "[background:linear-gradient(160deg,#6B6B8A_0%,#C0C0D8_30%,#9898B8_55%,#5A5A78_80%,#8888A8_100%)] shadow-[0_0_0_1px_rgba(192,192,220,0.4),0_20px_60px_rgba(150,150,200,0.25),0_4px_20px_rgba(0,0,0,0.6)]",
+    rating: "text-white/85",
+    position: "text-white/50",
+    name: "text-white/90",
+    stat: "text-white/90",
+    label: "text-white/50",
+    divider: "bg-white/20",
+  },
+  elite: {
+    card: "[background:linear-gradient(160deg,#1a0533_0%,#7C5CBF_25%,#B44FE8_50%,#7C5CBF_75%,#1a0533_100%)] shadow-[0_0_0_1px_rgba(180,79,232,0.5),0_20px_60px_rgba(124,92,191,0.4),0_4px_20px_rgba(0,0,0,0.6)]",
+    rating: "text-white/85",
+    position: "text-white/50",
+    name: "text-white/90",
+    stat: "text-white/90",
+    label: "text-white/50",
+    divider: "bg-white/20",
+  },
+  teal: {
+    card: "[background:linear-gradient(160deg,#003333_0%,#00897B_30%,#26A69A_55%,#00695C_80%,#004D40_100%)] shadow-[0_0_0_1px_rgba(0,229,200,0.4),0_20px_60px_rgba(0,137,123,0.3),0_4px_20px_rgba(0,0,0,0.6)]",
+    rating: "text-black/75",
+    position: "text-black/50",
+    name: "text-black/80",
+    stat: "text-black/80",
+    label: "text-black/50",
+    divider: "bg-black/20",
+  },
+};
 
-                {coach.bio && (
-                    <p className="text-gray-400 text-sm leading-relaxed line-clamp-2">{coach.bio}</p>
-                )}
+export default function CoachCard({ coach, featured = false }: CoachCardProps) {
+  const fullName =
+    coach.user.firstname && coach.user.lastname
+      ? `${coach.user.firstname} ${coach.user.lastname[0]}.`
+      : coach.user.email.split("@")[0];
 
-                {/* Footer card */}
-                <div className="flex items-center justify-between pt-2 border-t border-[#F3EEFF]">
-                    <div className="flex items-center gap-1">
-                        {[...Array(5)].map((_, i) => (
-                            <span key={i} className="text-yellow-400 text-xs">★</span>
-                        ))}
-                        <span className="text-xs text-gray-400 ml-1">5.0</span>
-                    </div>
-                    <span className="text-xs text-[#7C5CBF] font-bold bg-[#F3EEFF] px-3 py-1 rounded-full group-hover:bg-[#7C5CBF] group-hover:text-white transition">
-                        Voir le profil →
-                    </span>
-                </div>
+  const rating = getRating(coach.id);
+  const tier = getTier(rating);
+  const stats = getStats(rating, coach.specialty);
+  const tc = tierClasses[tier];
 
-            </div>
+  return (
+    <div
+      className={`
+            relative cursor-pointer group flex-shrink-0
+            ${featured ? "w-[280px] h-[420px]" : "w-[220px] h-[340px]"}
+        `}
+    >
+      {/* Badge Top Coach */}
+      {featured && (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 bg-[#F5C518] text-[#1A1A2E] text-[10px] font-black tracking-[2px] uppercase px-3 py-1 rounded-full whitespace-nowrap shadow-[0_4px_12px_rgba(245,197,24,0.4)]">
+          ⭐ Top Coach
         </div>
-    );
+      )}
+
+      {/* Card */}
+      <div
+        className={`
+                w-full h-full rounded-2xl overflow-hidden relative
+                transition-all duration-200
+                group-hover:-translate-y-3 group-hover:scale-[1.03]
+                ${tc.card}
+            `}
+      >
+        {/* Shine overlay */}
+        <div className="absolute inset-0 z-[1] pointer-events-none rounded-2xl bg-[linear-gradient(135deg,rgba(255,255,255,0.18)_0%,transparent_50%,rgba(255,255,255,0.06)_100%)]" />
+
+        {/* Content */}
+        <div
+          className={`relative z-[3] h-full flex flex-col ${featured ? "p-[14px_16px_16px]" : "p-[12px_14px_14px]"}`}
+        >
+          {/* Rating + spécialité */}
+          <div className="flex flex-col gap-0.5 mb-1.5">
+            <span
+              className={`font-black leading-none ${featured ? "text-[52px]" : "text-[40px]"} ${tc.rating}`}
+              style={{ fontFamily: "var(--font-barlow), sans-serif" }}
+            >
+              {rating}
+            </span>
+            <span
+              className={`text-[11px] font-bold tracking-wide uppercase ${tc.position}`}
+              style={{ fontFamily: "var(--font-barlow), sans-serif" }}
+            >
+              {coach.specialty || "Fitness"}
+            </span>
+          </div>
+
+          {/* Photo / silhouette */}
+          <div className="flex-1 flex items-end justify-center overflow-hidden -mx-3.5">
+            {coach.photoUrl ? (
+              <img
+                src={coach.photoUrl}
+                alt={fullName}
+                className={`object-cover object-top drop-shadow-[0_-8px_24px_rgba(0,0,0,0.4)] ${featured ? "w-[160px] h-[190px]" : "w-[120px] h-[145px]"}`}
+              />
+            ) : (
+              <svg
+                viewBox="0 0 120 150"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className={`opacity-35 ${featured ? "w-[140px] h-[170px]" : "w-[110px] h-[130px]"}`}
+              >
+                <ellipse cx="60" cy="28" rx="22" ry="22" fill="white" />
+                <path d="M20 150 Q22 95 60 90 Q98 95 100 150Z" fill="white" />
+                <path
+                  d="M28 100 Q10 120 8 145"
+                  stroke="white"
+                  strokeWidth="14"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M92 100 Q110 120 112 145"
+                  stroke="white"
+                  strokeWidth="14"
+                  strokeLinecap="round"
+                />
+              </svg>
+            )}
+          </div>
+
+          {/* Nom */}
+          <p
+            className={`font-black uppercase tracking-wide text-center my-2 leading-none ${featured ? "text-[22px]" : "text-[18px]"} ${tc.name}`}
+            style={{ fontFamily: "var(--font-barlow), sans-serif" }}
+          >
+            {fullName}
+          </p>
+
+          {/* Divider */}
+          <div className={`h-px mb-2 ${tc.divider}`} />
+
+          {/* Stats */}
+          <div className="grid grid-cols-3 gap-1">
+            {stats.map(({ label, value }) => (
+              <div key={label} className="flex flex-col items-center gap-0.5">
+                <span
+                  className={`font-black leading-none ${featured ? "text-[18px]" : "text-[15px]"} ${tc.stat}`}
+                  style={{ fontFamily: "var(--font-barlow), sans-serif" }}
+                >
+                  {value}
+                </span>
+                <span
+                  className={`text-[8px] font-bold tracking-wide uppercase ${tc.label}`}
+                  style={{ fontFamily: "var(--font-barlow), sans-serif" }}
+                >
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

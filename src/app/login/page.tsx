@@ -24,7 +24,7 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:3000/auth/login", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -66,9 +66,17 @@ export default function LoginPage() {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-gray-400">
-              Mot de passe
-            </label>
+            <div className="flex justify-between items-center">
+              <label className="text-xs font-medium text-gray-400">
+                Mot de passe
+              </label>
+              <Link
+                href="/forgot-password"
+                className="text-xs text-[#6C5CE7] hover:underline"
+              >
+                Mot de passe oublié ?
+              </Link>
+            </div>
             <div className="relative">
               <input
                 className="bg-[#F5F5FB] border border-[#6C5CE7]/15 rounded-xl px-3 py-2.5 pr-10 text-sm text-[#1a1a2e] outline-none focus:border-[#6C5CE7] focus:bg-[#faf9ff] transition-colors placeholder:text-gray-300 w-full"

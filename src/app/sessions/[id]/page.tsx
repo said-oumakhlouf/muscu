@@ -42,7 +42,7 @@ export default function SessionDetailPage() {
 
     try {
       const data = await fetchWithAuth(
-        "http://localhost:3000/exercises/find-or-create",
+        "${process.env.next_public_api_url}/exercises/find-or-create",
         token,
         {
           method: "POST",

@@ -7,6 +7,7 @@ import { PrismaService } from './prisma.service'; // ajuste chemin
 import { SessionsModule } from './sessions/sessions.module';
 import { StripeModule } from './stripe/stripe.module';
 import { UsersModule } from './users/users.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UsersModule } from './users/users.module';
     SessionsModule,
     CoachesModule,
     StripeModule,
+    MailModule,
   ],
   providers: [PrismaService],
 })

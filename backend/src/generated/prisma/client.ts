@@ -72,3 +72,8 @@ export type Subscription = Prisma.SubscriptionModel
  * 
  */
 export type StripeConnect = Prisma.StripeConnectModel
+/**
+ * Model PasswordResetToken
+ * 
+ */
+export type PasswordResetToken = Prisma.PasswordResetTokenModel

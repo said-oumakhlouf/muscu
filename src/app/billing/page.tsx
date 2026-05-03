@@ -28,7 +28,7 @@ export default function BillingPage() {
     try {
       const token = sessionStorage.getItem("token") ?? "";
       const data = await fetchWithAuth(
-        "http://localhost:3000/stripe/status",
+        "${process.env.next_public_api_url}/stripe/status",
         token,
       );
       setSubscription(data);
@@ -42,7 +42,7 @@ export default function BillingPage() {
   const handleCheckout = async (priceId: string) => {
     const token = sessionStorage.getItem("token") ?? "";
     const { url } = await fetchWithAuth(
-      "http://localhost:3000/stripe/checkout",
+      "${process.env.next_public_api_url}/stripe/checkout",
       token,
       {
         method: "POST",

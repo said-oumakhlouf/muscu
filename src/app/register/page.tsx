@@ -4,9 +4,8 @@ import RegisterStepper from "@/components/register/RegisterStepper";
 import { useAuth } from "@/context/AuthContext";
 import { coachService } from "@/services/coachService";
 import { Coach } from "@/types/Coach";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -35,17 +34,20 @@ export default function RegisterPage() {
     bio: string;
     hourlyRate: string;
   }) => {
-    const res = await fetch("http://localhost:3000/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...form,
-        weight: form.weight ? Number(form.weight) : undefined,
-        height: form.height ? Number(form.height) : undefined,
-        coachId: form.coachId ? Number(form.coachId) : undefined,
-        hourlyRate: form.hourlyRate ? Number(form.hourlyRate) : undefined,
-      }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          weight: form.weight ? Number(form.weight) : undefined,
+          height: form.height ? Number(form.height) : undefined,
+          coachId: form.coachId ? Number(form.coachId) : undefined,
+          hourlyRate: form.hourlyRate ? Number(form.hourlyRate) : undefined,
+        }),
+      },
+    );
 
     if (!res.ok) {
       const body = await res.json();
@@ -53,11 +55,14 @@ export default function RegisterPage() {
       return;
     }
 
-    const loginRes = await fetch("http://localhost:3000/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: form.email, password: form.password }),
-    });
+    const loginRes = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: form.email, password: form.password }),
+      },
+    );
 
     if (!loginRes.ok) {
       setError(
