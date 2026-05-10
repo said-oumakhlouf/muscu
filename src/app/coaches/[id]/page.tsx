@@ -180,6 +180,22 @@ export default function CoachProfilePage() {
           </div>
         </div>
 
+        {/* Badges */}
+        <div className="flex gap-2 flex-wrap justify-center lg:justify-start mt-2">
+          <span className="flex items-center gap-1.5 bg-white/5 border border-white/10 text-white/70 text-xs font-bold px-3 py-1.5 rounded-full">
+            ✅ Certifié
+          </span>
+          <span className="flex items-center gap-1.5 bg-[#F5C518]/10 border border-[#F5C518]/20 text-[#F5C518] text-xs font-bold px-3 py-1.5 rounded-full">
+            ⭐ Top Coach
+          </span>
+          <span className="flex items-center gap-1.5 bg-[#7C5CBF]/10 border border-[#7C5CBF]/20 text-[#7C5CBF] text-xs font-bold px-3 py-1.5 rounded-full">
+            ⚡ Réponse rapide
+          </span>
+          <span className="flex items-center gap-1.5 bg-[#26A69A]/10 border border-[#26A69A]/20 text-[#26A69A] text-xs font-bold px-3 py-1.5 rounded-full">
+            🏅 Profil complet
+          </span>
+        </div>
+
         {/* Stats détaillées */}
         <div className="border border-white/5 rounded-2xl p-8 bg-white/[0.02]">
           <h2 className="text-white font-black uppercase text-2xl mb-8 skew-x-[-4deg] inline-block">
