@@ -12,8 +12,45 @@ export class CoachesService {
         });
     }
 
-    async findAll() {
+    async findAll(specialty?: string, search?: string) {
         return this.prisma.coach.findMany({
+            where: {
+                ...(specialty ? { specialty } : {}),
+                ...(search
+                    ? {
+                          OR: [
+                              {
+                                  specialty: {
+                                      contains: search,
+                                      mode: 'insensitive',
+                                  },
+                              },
+                              {
+                                  bio: {
+                                      contains: search,
+                                      mode: 'insensitive',
+                                  },
+                              },
+                              {
+                                  user: {
+                                      firstname: {
+                                          contains: search,
+                                          mode: 'insensitive',
+                                      },
+                                  },
+                              },
+                              {
+                                  user: {
+                                      lastname: {
+                                          contains: search,
+                                          mode: 'insensitive',
+                                      },
+                                  },
+                              },
+                          ],
+                      }
+                    : {}),
+            },
             include: {
                 user: {
                     select: {

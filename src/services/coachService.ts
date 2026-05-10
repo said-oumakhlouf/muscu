@@ -11,4 +11,10 @@ export const coachService = {
     const data = await res.json();
     return Array.isArray(data) ? data : [];
   },
+
+  async getOne(id: number) {
+    const res = await fetch(`${API_URL}/coaches/${id}`);
+    if (!res.ok) return null;
+    return res.json();
+  },
 };
