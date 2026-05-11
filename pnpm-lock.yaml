@@ -23,6 +23,9 @@ importers:
       react:
         specifier: 19.2.3
         version: 19.2.3
+      react-body-highlighter:
+        specifier: ^2.0.5
+        version: 2.0.5(react@19.2.3)
       react-dom:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
@@ -1664,6 +1667,12 @@ packages:
 
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
+
+  react-body-highlighter@2.0.5:
+    resolution: {integrity: sha512-yt37177vKIc+8TGxQw//G/3ah2aw/3E0g1oDt4N+46fMLVZ9BSelhc9S7kiwEkJRvYc3RyUSr9453uMJnvtxRg==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
 
   react-dom@19.2.3:
     resolution: {integrity: sha512-yELu4WmLPw5Mr/lmeEpox5rw3RETacE++JgHqQzd2dg+YbJuat3jH4ingc+WPZhxaoFzdv9y33G+F7Nl5O0GBg==}
@@ -3674,6 +3683,10 @@ snapshots:
   punycode@2.3.1: {}
 
   queue-microtask@1.2.3: {}
+
+  react-body-highlighter@2.0.5(react@19.2.3):
+    dependencies:
+      react: 19.2.3
 
   react-dom@19.2.3(react@19.2.3):
     dependencies:
