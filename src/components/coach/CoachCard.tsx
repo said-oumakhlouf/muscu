@@ -181,13 +181,15 @@ export default function CoachCard({
             </div>
 
             {/* Photo / silhouette */}
-            <div className="flex-1 flex items-end justify-center overflow-hidden -mx-3.5">
+            <div className="flex-1 flex items-center justify-center overflow-hidden -mx-3.5">
               {coach.photoUrl ? (
-                <img
-                  src={coach.photoUrl}
-                  alt={fullName}
-                  className={`object-cover object-top drop-shadow-[0_-8px_24px_rgba(0,0,0,0.4)] ${featured ? "w-[160px] h-[190px]" : "w-[120px] h-[145px]"}`}
-                />
+                <div className={`rounded-full overflow-hidden border-2 border-white/20 shrink-0 ${featured ? "w-[160px] h-[160px]" : "w-[120px] h-[120px]"}`}>
+                  <img
+                    src={coach.photoUrl}
+                    alt={fullName}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               ) : (
                 <svg
                   viewBox="0 0 120 150"
@@ -197,18 +199,8 @@ export default function CoachCard({
                 >
                   <ellipse cx="60" cy="28" rx="22" ry="22" fill="white" />
                   <path d="M20 150 Q22 95 60 90 Q98 95 100 150Z" fill="white" />
-                  <path
-                    d="M28 100 Q10 120 8 145"
-                    stroke="white"
-                    strokeWidth="14"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M92 100 Q110 120 112 145"
-                    stroke="white"
-                    strokeWidth="14"
-                    strokeLinecap="round"
-                  />
+                  <path d="M28 100 Q10 120 8 145" stroke="white" strokeWidth="14" strokeLinecap="round" />
+                  <path d="M92 100 Q110 120 112 145" stroke="white" strokeWidth="14" strokeLinecap="round" />
                 </svg>
               )}
             </div>

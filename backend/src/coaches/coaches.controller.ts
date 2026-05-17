@@ -3,9 +3,11 @@ import {
     Controller,
     Get,
     Param,
+    Patch,
     Post,
-    UseGuards,
     Query,
+    Request,
+    UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -22,6 +24,22 @@ export class CoachesController {
     @Post()
     create(@Body() createCoachDto: CreateCoachDto) {
         return this.coachesService.create(createCoachDto);
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('coach')
+    @Patch('me')
+    updateMe(
+        @Request() req: any,
+        @Body()
+        body: {
+            bio?: string;
+            specialty?: string;
+            hourlyRate?: number;
+            photoUrl?: string;
+        },
+    ) {
+        return this.coachesService.updateByUserId(req.user.id, body);
     }
 
     @Get()

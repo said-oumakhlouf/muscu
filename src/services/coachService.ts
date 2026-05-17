@@ -17,4 +17,16 @@ export const coachService = {
     if (!res.ok) return null;
     return res.json();
   },
+
+  async updateProfile(token: string, data: { bio?: string; specialty?: string; hourlyRate?: number; photoUrl?: string }) {
+    const res = await fetch(`${API_URL}/coaches/me`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  },
 };

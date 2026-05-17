@@ -4,7 +4,7 @@ import { CreateCoachDto } from './dto/create-coach.dto';
 
 @Injectable()
 export class CoachesService {
-    constructor(private prisma: PrismaService) {}
+    constructor(private prisma: PrismaService) { }
 
     async create(createCoachDto: CreateCoachDto) {
         return this.prisma.coach.create({
@@ -18,37 +18,37 @@ export class CoachesService {
                 ...(specialty ? { specialty } : {}),
                 ...(search
                     ? {
-                          OR: [
-                              {
-                                  specialty: {
-                                      contains: search,
-                                      mode: 'insensitive',
-                                  },
-                              },
-                              {
-                                  bio: {
-                                      contains: search,
-                                      mode: 'insensitive',
-                                  },
-                              },
-                              {
-                                  user: {
-                                      firstname: {
-                                          contains: search,
-                                          mode: 'insensitive',
-                                      },
-                                  },
-                              },
-                              {
-                                  user: {
-                                      lastname: {
-                                          contains: search,
-                                          mode: 'insensitive',
-                                      },
-                                  },
-                              },
-                          ],
-                      }
+                        OR: [
+                            {
+                                specialty: {
+                                    contains: search,
+                                    mode: 'insensitive',
+                                },
+                            },
+                            {
+                                bio: {
+                                    contains: search,
+                                    mode: 'insensitive',
+                                },
+                            },
+                            {
+                                user: {
+                                    firstname: {
+                                        contains: search,
+                                        mode: 'insensitive',
+                                    },
+                                },
+                            },
+                            {
+                                user: {
+                                    lastname: {
+                                        contains: search,
+                                        mode: 'insensitive',
+                                    },
+                                },
+                            },
+                        ],
+                    }
                     : {}),
             },
             include: {
@@ -78,6 +78,21 @@ export class CoachesService {
                 },
                 clients: true,
             },
+        });
+    }
+
+    async updateByUserId(
+        userId: number,
+        data: {
+            bio?: string;
+            specialty?: string;
+            hourlyRate?: number;
+            photoUrl?: string;
+        },
+    ) {
+        return this.prisma.coach.update({
+            where: { userId },
+            data,
         });
     }
 }
